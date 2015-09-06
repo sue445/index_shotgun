@@ -1,0 +1,4 @@
+test:
+  adapter: postgresql
+  database: index_shotgun_test
+  username: postgres
