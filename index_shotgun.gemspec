@@ -1,7 +1,7 @@
 # coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
+lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'index_shotgun/version'
+require "index_shotgun/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "index_shotgun"
@@ -9,15 +9,15 @@ Gem::Specification.new do |spec|
   spec.authors       = ["sue445"]
   spec.email         = ["sue445@sue445.net"]
 
-  spec.summary       = %q{duplicate index checker}
-  spec.description   = %q{duplicate index checker}
+  spec.summary       = "duplicate index checker"
+  spec.description   = "duplicate index checker"
   spec.homepage      = "https://github.com/sue445/index_shotgun"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
   # delete this section to allow pushing this gem to any host.
   if spec.respond_to?(:metadata)
-    spec.metadata['allowed_push_host'] = "https://rubygems.org"
+    spec.metadata["allowed_push_host"] = "https://rubygems.org"
   else
     raise "RubyGems 2.0 or newer is required to protect against public gem pushes."
   end
@@ -39,5 +39,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "rspec-its"
   spec.add_development_dependency "rspec-power_assert"
+  spec.add_development_dependency "rubocop", "0.31.0"
   spec.add_development_dependency "sqlite3"
 end

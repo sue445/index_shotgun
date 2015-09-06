@@ -14,7 +14,7 @@ describe IndexShotgun::Analyzer do
 
         its(:name)    { should eq index_name }
         its(:unique)  { should be false }
-        its(:columns) { should eq ["user_id", "article_id", "already_read"] }
+        its(:columns) { should eq %w(user_id article_id already_read) }
       end
 
       describe "index_user_stocks_on_user_id_and_article_id" do
@@ -24,7 +24,7 @@ describe IndexShotgun::Analyzer do
 
         its(:name)    { should eq index_name }
         its(:unique)  { should be true }
-        its(:columns) { should eq ["user_id", "article_id"] }
+        its(:columns) { should eq %w(user_id article_id) }
       end
 
       describe "index_user_stocks_on_user_id" do
@@ -53,9 +53,11 @@ describe IndexShotgun::Analyzer do
 
       its(:count) { should eq 3 }
 
+      # rubocop:disable Metrics/LineLength
       it { should include "index_user_stocks_on_user_id is a left-prefix of index_user_stocks_on_user_id_and_article_id" }
       it { should include "index_user_stocks_on_user_id is a left-prefix of index_user_stocks_on_user_id_and_article_id_and_already_read" }
       it { should include "index_user_stocks_on_user_id_and_article_id_and_already_read has unnecessary column already_read (index_user_stocks_on_user_id_and_article_id is unique index!)" }
+      # rubocop:enable Metrics/LineLength
     end
 
     context "When not exists duplicate indexes" do

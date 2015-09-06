@@ -8,29 +8,22 @@ module IndexShotgun
       def check_indexes(table)
         indexes = table_indexes(table)
 
-        response = []
-        indexes.each do |source_index|
-          indexes.each do |target_index|
-            next if source_index.name == target_index.name
+        indexes.permutation(2).each_with_object([]) do |(source_index, target_index), response|
+          next unless source_index.columns.start_with?(target_index.columns)
 
-            if source_index.columns.start_with?(target_index.columns)
-              if target_index.unique
-                last_column = source_index.columns.last
-                response << {
-                  index:  source_index,
-                  result: "#{source_index.name} has unnecessary column #{last_column} (#{target_index.name} is unique index!)",
-                }
-              else
-                response << {
-                  index:  target_index,
-                  result: "#{target_index.name} is a left-prefix of #{source_index.name}",
-                }
-              end
-            end
+          if target_index.unique
+            last_column = source_index.columns.last
+            response << {
+              index:  source_index,
+              result: "#{source_index.name} has unnecessary column #{last_column} (#{target_index.name} is unique index!)",
+            }
+          else
+            response << {
+              index:  target_index,
+              result: "#{target_index.name} is a left-prefix of #{source_index.name}",
+            }
           end
         end
-
-        response
       end
 
       # get indexes of table
