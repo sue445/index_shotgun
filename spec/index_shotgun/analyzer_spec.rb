@@ -14,7 +14,7 @@ describe IndexShotgun::Analyzer do
 
         its(:name)    { should eq index_name }
         its(:unique)  { should be false }
-        its(:columns) { should eq ["user_id", "article_id", "already_read"] }
+        its(:columns) { should eq %w(user_id article_id already_read) }
       end
 
       describe "index_user_stocks_on_user_id_and_article_id" do
@@ -24,7 +24,7 @@ describe IndexShotgun::Analyzer do
 
         its(:name)    { should eq index_name }
         its(:unique)  { should be true }
-        its(:columns) { should eq ["user_id", "article_id"] }
+        its(:columns) { should eq %w(user_id article_id) }
       end
 
       describe "index_user_stocks_on_user_id" do
