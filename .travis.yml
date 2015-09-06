@@ -1,4 +1,22 @@
 language: ruby
 rvm:
-  - 2.2.3
+  - 2.1
+  - 2.2
+  - ruby-head
+env:
+  - DATABASE=mysql
+  - DATABASE=postgresql
+  - DATABASE=sqlite3
 before_install: gem install bundler -v 1.10.6
+script: ./travis_ci/build.sh
+branches:
+  only:
+    - master
+notifications:
+  email: false
+  slack: $SLACK_TOKEN
+matrix:
+  allow_failures:
+  - rvm: ruby-head
+cache: bundler
+sudo: false
