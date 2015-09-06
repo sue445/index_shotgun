@@ -4,6 +4,7 @@ Welcome to your new gem! In this directory, you'll find the files you need to be
 
 TODO: Delete this and the text above, and describe your gem
 
+[![Gem Version](https://badge.fury.io/rb/index_shotgun.svg)](http://badge.fury.io/rb/index_shotgun)
 [![Build Status](https://travis-ci.org/sue445/index_shotgun.svg?branch=master)](https://travis-ci.org/sue445/index_shotgun)
 [![Code Climate](https://codeclimate.com/github/sue445/index_shotgun/badges/gpa.svg)](https://codeclimate.com/github/sue445/index_shotgun)
 [![Coverage Status](https://coveralls.io/repos/sue445/index_shotgun/badge.svg?branch=master&service=github)](https://coveralls.io/github/sue445/index_shotgun?branch=master)
