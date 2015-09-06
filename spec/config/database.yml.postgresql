@@ -1,0 +1,7 @@
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: index_shotgun_test
+  pool: 5
+  # username: root
+  # password: root
