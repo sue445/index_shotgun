@@ -30,6 +30,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency "activerecord"
 
   spec.add_development_dependency "bundler", "~> 1.10"
+  spec.add_development_dependency "codeclimate-test-reporter"
+  spec.add_development_dependency "coveralls"
   spec.add_development_dependency "mysql2"
   spec.add_development_dependency "pg"
   spec.add_development_dependency "pry-byebug"
