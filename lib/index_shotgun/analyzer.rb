@@ -17,14 +17,14 @@ module IndexShotgun
           end
 
         duplicate_indexes.each_with_object("") do |info, message|
-          message << <<-EOS
-# =============================
-# #{info[:index].table}
-# =============================
+          message << <<-EOS.strip_heredoc
+            # =============================
+            # #{info[:index].table}
+            # =============================
 
-# #{info[:result]}
-# To remove this duplicate index, execute:
-ALTER TABLE `#{info[:index].table}` DROP INDEX `#{info[:index].name}`;
+            # #{info[:result]}
+            # To remove this duplicate index, execute:
+            ALTER TABLE `#{info[:index].table}` DROP INDEX `#{info[:index].name}`;
 
           EOS
         end
