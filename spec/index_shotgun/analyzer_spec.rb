@@ -66,4 +66,10 @@ describe IndexShotgun::Analyzer do
       its(:count) { should eq 0 }
     end
   end
+
+  describe "#perform" do
+    subject { IndexShotgun::Analyzer.perform }
+
+    it { should_not be_blank }
+  end
 end
