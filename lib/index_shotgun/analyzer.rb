@@ -5,6 +5,36 @@ module IndexShotgun
     class << self
       using IndexShotgun::ArrayStartWith
 
+      # Search duplicate index
+      # @return [String] result message
+      def perform
+        tables = ActiveRecord::Base.connection.tables
+
+        duplicate_indexes =
+          tables.each_with_object([]) do |table, array|
+            response = check_indexes(table)
+            array.push(*response)
+          end
+
+        duplicate_indexes.each_with_object("") do |info, message|
+          message << <<-EOS
+# =============================
+# #{info[:index].table}
+# =============================
+
+# #{info[:result]}
+# To remove this duplicate index, execute:
+ALTER TABLE `#{info[:index].table}` DROP INDEX `#{info[:index].name}`;
+
+          EOS
+        end
+      end
+
+      # check duplicate indexes of table
+      # @param table [String] table name
+      # @return [Array<Hash>] array of index info
+      #   index: index info {ActiveRecord::ConnectionAdapters::IndexDefinition}
+      #   result: search result message
       def check_indexes(table)
         indexes = table_indexes(table)
 
