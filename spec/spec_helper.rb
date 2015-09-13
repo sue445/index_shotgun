@@ -19,8 +19,12 @@ require "index_shotgun"
 require "pry"
 require "rspec/its"
 require "rspec-power_assert"
+require "rake_shared_context"
 
 Dir["#{__dir__}/support/**/*.rb"].each { |f| require f }
+
+DUMMY_APP_DIR = "#{__dir__}/dummy"
+TASK_DIR      = "#{__dir__}/../lib/index_shotgun/tasks"
 
 require_relative "./db/setup"
 
