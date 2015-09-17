@@ -16,18 +16,33 @@ module IndexShotgun
             array.push(*response)
           end
 
-        duplicate_indexes.each_with_object("") do |info, message|
-          message << <<-EOS.strip_heredoc
-            # =============================
-            # #{info[:index].table}
-            # =============================
+        message =
+          duplicate_indexes.each_with_object("") do |info, message|
+            message << <<-EOS.strip_heredoc
+              # =============================
+              # #{info[:index].table}
+              # =============================
 
-            # #{info[:result]}
-            # To remove this duplicate index, execute:
-            ALTER TABLE `#{info[:index].table}` DROP INDEX `#{info[:index].name}`;
+              # #{info[:result]}
+              # To remove this duplicate index, execute:
+              ALTER TABLE `#{info[:index].table}` DROP INDEX `#{info[:index].name}`;
 
-          EOS
-        end
+            EOS
+          end
+
+        total_index_count = tables.map { |table| table_indexes(table).count }.sum
+        message << <<-EOS.strip_heredoc
+          # ########################################################################
+          # Summary of indexes
+          # ########################################################################
+
+          # Total Duplicate Indexes  #{duplicate_indexes.count}
+          # Total Indexes            #{total_index_count}
+          # Total Tables             #{tables.count}
+
+        EOS
+
+        message
       end
 
       # check duplicate indexes of table
