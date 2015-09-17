@@ -70,6 +70,8 @@ describe IndexShotgun::Analyzer do
   describe "#perform" do
     subject { IndexShotgun::Analyzer.perform }
 
-    it { should_not be_blank }
+    it { should include "# Total Duplicate Indexes  3" }
+    it { should include "# Total Indexes            6" }
+    it { should include "# Total Tables             5" }
   end
 end
