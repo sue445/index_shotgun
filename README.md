@@ -39,6 +39,10 @@ ALTER TABLE `user_stocks` DROP INDEX `index_user_stocks_on_user_id`;
 # Total Tables             5
 ```
 
+## Requirements
+* Ruby 2.1+
+* Database you want to use (MySQL, PostgreSQL or SQLite3)
+
 ## Installation
 
 Add this line to your application's Gemfile:
