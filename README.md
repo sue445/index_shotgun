@@ -15,18 +15,23 @@ $ index_shotgun postgresql --database=index_shotgun_test
 # =============================
 # user_stocks
 # =============================
+
 # index_user_stocks_on_user_id is a left-prefix of index_user_stocks_on_user_id_and_article_id
 # To remove this duplicate index, execute:
 ALTER TABLE `user_stocks` DROP INDEX `index_user_stocks_on_user_id`;
+
 # =============================
 # user_stocks
 # =============================
-# index_user_stocks_on_user_id_and_article_id_and_already_read has unnecessary column already_read (index_user_stocks_on_user_id_and_article_id is unique index!)
+
+# index_user_stocks_on_user_id_and_article_id_and_already_read has column(s) on the right side of unique index (index_user_stocks_on_user_id_and_article_id). You can drop if low cardinality
 # To remove this duplicate index, execute:
 ALTER TABLE `user_stocks` DROP INDEX `index_user_stocks_on_user_id_and_article_id_and_already_read`;
+
 # =============================
 # user_stocks
 # =============================
+
 # index_user_stocks_on_user_id is a left-prefix of index_user_stocks_on_user_id_and_article_id_and_already_read
 # To remove this duplicate index, execute:
 ALTER TABLE `user_stocks` DROP INDEX `index_user_stocks_on_user_id`;
@@ -34,6 +39,7 @@ ALTER TABLE `user_stocks` DROP INDEX `index_user_stocks_on_user_id`;
 # ########################################################################
 # Summary of indexes
 # ########################################################################
+
 # Total Duplicate Indexes  3
 # Total Indexes            6
 # Total Tables             5

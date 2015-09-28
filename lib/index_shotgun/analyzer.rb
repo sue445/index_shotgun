@@ -57,10 +57,9 @@ module IndexShotgun
           next unless source_index.columns.start_with?(target_index.columns)
 
           if target_index.unique
-            last_column = source_index.columns.last
             response << {
               index:  source_index,
-              result: "#{source_index.name} has unnecessary column #{last_column} (#{target_index.name} is unique index!)",
+              result: "#{source_index.name} has column(s) on the right side of unique index (#{target_index.name}). You can drop if low cardinality",
             }
           else
             response << {

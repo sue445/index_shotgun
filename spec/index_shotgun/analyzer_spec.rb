@@ -56,7 +56,7 @@ describe IndexShotgun::Analyzer do
       # rubocop:disable Metrics/LineLength
       it { should include "index_user_stocks_on_user_id is a left-prefix of index_user_stocks_on_user_id_and_article_id" }
       it { should include "index_user_stocks_on_user_id is a left-prefix of index_user_stocks_on_user_id_and_article_id_and_already_read" }
-      it { should include "index_user_stocks_on_user_id_and_article_id_and_already_read has unnecessary column already_read (index_user_stocks_on_user_id_and_article_id is unique index!)" }
+      it { should include "index_user_stocks_on_user_id_and_article_id_and_already_read has column(s) on the right side of unique index (index_user_stocks_on_user_id_and_article_id). You can drop if low cardinality" }
       # rubocop:enable Metrics/LineLength
     end
 
