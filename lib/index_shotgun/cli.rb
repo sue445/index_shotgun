@@ -12,6 +12,7 @@ module IndexShotgun
     option :port, aliases: "P", default: 3306, type: :numeric
     option :username, aliases: "u"
     option :password, aliases: "p"
+    option :ask_password, default: false, type: :boolean
     def mysql
       analyze("mysql2")
     end
@@ -24,6 +25,7 @@ module IndexShotgun
     option :port, aliases: "P", default: 5432, type: :numeric
     option :username, aliases: "u"
     option :password, aliases: "p"
+    option :ask_password, default: false, type: :boolean
     def postgresql
       analyze("postgresql", "pg")
     end
@@ -51,6 +53,10 @@ module IndexShotgun
       end
 
       config = options.reverse_merge(adapter: adapter_name)
+
+      ask_password = config.delete("ask_password")
+      config[:password] = ask("Input password (hidden):", echo: false) if ask_password
+
       ActiveRecord::Base.establish_connection(config)
       puts IndexShotgun::Analyzer.perform
     end
