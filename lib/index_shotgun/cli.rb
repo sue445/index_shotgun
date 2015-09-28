@@ -5,31 +5,31 @@ require "active_support/core_ext/hash"
 module IndexShotgun
   class CLI < Thor
     desc "mysql", "Search duplicate indexes on MySQL"
-    option :database, required: true
+    option :database, aliases: "d", required: true
     option :encoding, default: "utf8"
     option :pool, default: 5, type: :numeric
-    option :host, default: "localhost"
-    option :port, default: 3306, type: :numeric
-    option :username
-    option :password
+    option :host, aliases: "h", default: "localhost"
+    option :port, aliases: "P", default: 3306, type: :numeric
+    option :username, aliases: "u"
+    option :password, aliases: "p"
     def mysql
       analyze("mysql2")
     end
 
     desc "postgresql", "Search duplicate indexes on PostgreSQL"
-    option :database, required: true
+    option :database, aliases: "d", required: true
     option :encoding, default: "utf8"
     option :pool, default: 5, type: :numeric
-    option :host, default: "localhost"
-    option :port, default: 5432, type: :numeric
-    option :username
-    option :password
+    option :host, aliases: "h", default: "localhost"
+    option :port, aliases: "P", default: 5432, type: :numeric
+    option :username, aliases: "u"
+    option :password, aliases: "p"
     def postgresql
       analyze("postgresql", "pg")
     end
 
     desc "sqlite3", "Search duplicate indexes on sqlite3"
-    option :database, required: true
+    option :database, aliases: "d", required: true
     def sqlite3
       analyze("sqlite3")
     end
