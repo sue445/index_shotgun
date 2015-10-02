@@ -116,6 +116,64 @@ Commands:
 
 **Details:** check `index_shotgun help <database>`
 
+#### MySQL
+```sh
+$ index_shotgun help mysql
+Usage:
+  index_shotgun mysql d, --database=DATABASE
+
+Options:
+  d, --database=DATABASE
+      [--encoding=ENCODING]
+                                             # Default: utf8
+      [--pool=N]
+                                             # Default: 5
+  h, [--host=HOST]
+                                             # Default: localhost
+  P, [--port=N]
+                                             # Default: 3306
+  u, [--username=USERNAME]
+  p, [--password=PASSWORD]
+      [--ask-password], [--no-ask-password]
+
+Search duplicate indexes on MySQL
+```
+
+#### PostgreSQL
+```sh
+$ index_shotgun help postgresql
+Usage:
+  index_shotgun postgresql d, --database=DATABASE
+
+Options:
+  d, --database=DATABASE
+      [--encoding=ENCODING]
+                                             # Default: utf8
+      [--pool=N]
+                                             # Default: 5
+  h, [--host=HOST]
+                                             # Default: localhost
+  P, [--port=N]
+                                             # Default: 5432
+  u, [--username=USERNAME]
+  p, [--password=PASSWORD]
+      [--ask-password], [--no-ask-password]
+
+Search duplicate indexes on PostgreSQL
+```
+
+#### SQLite3
+```sh
+$ index_shotgun help sqlite3
+Usage:
+  index_shotgun sqlite3 d, --database=DATABASE
+
+Options:
+  d, --database=DATABASE
+
+Search duplicate indexes on sqlite3
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment. Run `bundle exec index_shotgun` to use the gem in this directory, ignoring other installed copies of this gem.
