@@ -11,6 +11,7 @@ before_script:
 - export CI=true
 - export CODECLIMATE_REPO_TOKEN=377596024a4c6f3c4c4b9a0cd16add92fb5e7f716663629b5efd080377c0b838
 before_install: gem install bundler -v 1.10.6
+bundler_args: --without oracle
 script: "./travis_ci/build.sh"
 branches:
   only:
