@@ -17,6 +17,19 @@ module IndexShotgun
       analyze("mysql2")
     end
 
+    desc "oracle", "Search duplicate indexes on Oracle"
+    option :database, aliases: "d", required: true
+    option :encoding, default: "utf8"
+    option :pool, default: 5, type: :numeric
+    option :host, aliases: "h", default: "localhost"
+    option :port, aliases: "P", default: 1521, type: :numeric
+    option :username, aliases: "u"
+    option :password, aliases: "p"
+    option :ask_password, default: false, type: :boolean
+    def oracle
+      analyze("oracle_enhanced", "activerecord-oracle_enhanced-adapter")
+    end
+
     desc "postgresql", "Search duplicate indexes on PostgreSQL"
     option :database, aliases: "d", required: true
     option :encoding, default: "utf8"
