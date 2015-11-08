@@ -5,7 +5,7 @@
 [![Coverage Status](https://coveralls.io/repos/sue445/index_shotgun/badge.svg?branch=master&service=github)](https://coveralls.io/github/sue445/index_shotgun?branch=master)
 [![Dependency Status](https://gemnasium.com/sue445/index_shotgun.svg)](https://gemnasium.com/sue445/index_shotgun)
 
-Duplicate index checker. 
+Duplicate index checker.
 
 This like [pt-duplicate-key-checker](https://www.percona.com/doc/percona-toolkit/2.1/pt-duplicate-key-checker.html), but also supports database other than MySQL
 
@@ -62,7 +62,14 @@ end
 And then execute:
 
 ```sh
-$ bundle
+# MySQL
+$ bundle install --without postgresql sqlite3
+
+# PostgreSQL
+$ bundle install --without mysql sqlite3
+
+# sqlite3
+$ bundle install --without mysql postgresql
 ```
 
 Or install it yourself as:
