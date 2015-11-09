@@ -1,5 +1,13 @@
 # Change Log
 
+## [v0.2.0](https://github.com/sue445/index_shotgun/tree/v0.2.0) (2015/11/09)
+[Full Changelog](https://github.com/sue445/index_shotgun/compare/v0.1.0...v0.2.0)
+
+**Merged pull requests:**
+
+- Support Oracle Database [\#17](https://github.com/sue445/index_shotgun/pull/17) ([koic](https://github.com/koic))
+- Add group to database gem dependency [\#16](https://github.com/sue445/index_shotgun/pull/16) ([sue445](https://github.com/sue445))
+
 ## [v0.1.0](https://github.com/sue445/index_shotgun/tree/v0.1.0) (2015/09/30)
 [Full Changelog](https://github.com/sue445/index_shotgun/compare/v0.1.0.beta3...v0.1.0)
 
