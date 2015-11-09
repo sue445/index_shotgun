@@ -63,13 +63,16 @@ And then execute:
 
 ```sh
 # MySQL
-$ bundle install --without postgresql sqlite3
+$ bundle install --without oracle postgresql sqlite3
+
+# Oracle
+$ bundle install --without mysql postgresql sqlite3
 
 # PostgreSQL
-$ bundle install --without mysql sqlite3
+$ bundle install --without mysql oracle sqlite3
 
 # sqlite3
-$ bundle install --without mysql postgresql
+$ bundle install --without mysql oracle postgresql
 ```
 
 Or install it yourself as:
@@ -83,6 +86,9 @@ If you want to use as commandline tool, you need to install these gems.
 ```sh
 # MySQL
 $ gem install mysql2 -v 0.3.20
+
+# Oracle
+$ gem install activerecord-oracle_enhanced-adapter ruby-oci8
 
 # PostgreSQL
 $ gem install pg
@@ -116,6 +122,7 @@ $ index_shotgun
 Commands:
   index_shotgun help [COMMAND]                  # Describe available commands or one specific command
   index_shotgun mysql --database=DATABASE       # Search duplicate indexes on MySQL
+  index_shotgun oracle --database=DATABASE      # Search duplicate indexes on Oracle
   index_shotgun postgresql --database=DATABASE  # Search duplicate indexes on PostgreSQL
   index_shotgun sqlite3 --database=DATABASE     # Search duplicate indexes on sqlite3
   index_shotgun version                         # Show index_shotgun version
@@ -144,6 +151,29 @@ Options:
       [--ask-password], [--no-ask-password]
 
 Search duplicate indexes on MySQL
+```
+
+#### Oracle
+```sh
+$ index_shotgun help oracle
+Usage:
+  index_shotgun oracle d, --database=DATABASE
+
+Options:
+  d, --database=DATABASE
+      [--encoding=ENCODING]
+                                             # Default: utf8
+      [--pool=N]
+                                             # Default: 5
+  h, [--host=HOST]
+                                             # Default: localhost
+  P, [--port=N]
+                                             # Default: 1521
+  u, [--username=USERNAME]
+  p, [--password=PASSWORD]
+      [--ask-password], [--no-ask-password]
+
+Search duplicate indexes on Oracle
 ```
 
 #### PostgreSQL

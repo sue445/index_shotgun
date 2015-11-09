@@ -7,6 +7,11 @@ group :mysql do
   gem "mysql2", "< 0.4.0"
 end
 
+group :oracle do
+  gem "activerecord-oracle_enhanced-adapter"
+  gem "ruby-oci8"
+end
+
 group :postgresql do
   gem "pg"
 end
