@@ -97,7 +97,7 @@ $ gem install pg
 $ gem install sqlite3
 ```
 
-**Details:** requirements `activerecord` gem v4.2.5+ when using `mysql2` gem v0.4.0+
+**Note:** requirements `activerecord` gem v4.2.5+ when using `mysql2` gem v0.4.0+
 
 ## Usage
 ### Ruby app
