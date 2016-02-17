@@ -4,7 +4,7 @@ source "https://rubygems.org"
 gemspec
 
 group :mysql do
-  gem "mysql2", "< 0.4.0"
+  gem "mysql2"
 end
 
 group :oracle do

@@ -85,7 +85,7 @@ If you want to use as commandline tool, you need to install these gems.
 
 ```sh
 # MySQL
-$ gem install mysql2 -v 0.3.20
+$ gem install mysql2
 
 # Oracle
 $ gem install activerecord-oracle_enhanced-adapter ruby-oci8
@@ -97,7 +97,7 @@ $ gem install pg
 $ gem install sqlite3
 ```
 
-**Details:** `index_shotgun` does not yet support `mysql2` v0.4+
+**Details:** requirements `activerecord` gem v4.2.5+ when using `mysql2` gem v0.4.0+
 
 ## Usage
 ### Ruby app
