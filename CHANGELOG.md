@@ -1,5 +1,18 @@
 # Change Log
 
+## [v0.2.1](https://github.com/sue445/index_shotgun/tree/v0.2.1) (2016/02/17)
+[Full Changelog](https://github.com/sue445/index_shotgun/compare/v0.2.0...v0.2.1)
+
+**Closed issues:**
+
+- Support mysql2 0.4.x [\#8](https://github.com/sue445/index_shotgun/issues/8)
+
+**Merged pull requests:**
+
+- Support mysql2 0.4+ [\#20](https://github.com/sue445/index_shotgun/pull/20) ([sue445](https://github.com/sue445))
+- Relax bundler version [\#19](https://github.com/sue445/index_shotgun/pull/19) ([sue445](https://github.com/sue445))
+- Add ruby 2.3 [\#18](https://github.com/sue445/index_shotgun/pull/18) ([sue445](https://github.com/sue445))
+
 ## [v0.2.0](https://github.com/sue445/index_shotgun/tree/v0.2.0) (2015/11/09)
 [Full Changelog](https://github.com/sue445/index_shotgun/compare/v0.1.0...v0.2.0)
 
