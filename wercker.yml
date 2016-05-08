@@ -1,0 +1,47 @@
+# This references the default Ruby container from
+# the Docker Hub.
+# https://registry.hub.docker.com/_/ruby/
+# If you want to use a specific version you would use a tag:
+# ruby:2.2.2
+box: wnameless/oracle-xe-11g:16.04
+# You can also use services such as databases. Read more on our dev center:
+# http://devcenter.wercker.com/docs/services/index.html
+services:
+    # - postgres
+    # http://devcenter.wercker.com/docs/services/postgresql.html
+
+    # - mongodb
+    # http://devcenter.wercker.com/docs/services/mongodb.html
+
+# This is the build pipeline. Pipelines are the core of wercker
+# Read more about pipelines on our dev center
+# http://devcenter.wercker.com/docs/pipelines/index.html
+build:
+    # Steps make up the actions in your pipeline
+    # Read more about steps on our dev center:
+    # http://devcenter.wercker.com/docs/steps/index.html
+    steps:
+        - script:
+            name: Setup variables
+            code: |
+              export ORACLE_HOME=/u01/app/oracle/product/11.2.0/xe
+              export PATH=$ORACLE_HOME/bin:$PATH
+              export ORACLE_SID=XE
+              export LD_LIBRARY_PATH=$ORACLE_HOME/lib
+              export ORACLE_SYSTEM_PASSWORD=oracle
+
+        - script:
+            name: Setup container
+            code: ./ci/wercker_setup.sh
+        - bundle-install:
+            jobs: 4
+            without: mysql postgresql sqlite3
+            gemfile: ./gemfiles/wercker_oracle.gemfile
+        - script:
+            name: Test oracle
+            code: BUNDLE_GEMFILE=./gemfiles/wercker_oracle.gemfile DATABASE=oracle ./ci/build.sh
+
+    after-steps:
+        - wantedly/pretty-slack-notify:
+            webhook_url: $SLACK_WEBHOOK_URL
+            username: wercker_build
