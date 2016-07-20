@@ -1,6 +1,6 @@
 #!/bin/bash -xe
 
-cp travis_ci/database.yml.${DATABASE} spec/config/database.yml
+cp ci/database.yml.${DATABASE} spec/config/database.yml
 bundle exec rspec
 
 bundle exec ./exe/index_shotgun version

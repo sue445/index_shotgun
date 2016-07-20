@@ -71,7 +71,7 @@ describe IndexShotgun::Analyzer do
     subject { IndexShotgun::Analyzer.perform }
 
     it { should include "# Total Duplicate Indexes  3" }
-    it { should include "# Total Indexes            6" }
-    it { should include "# Total Tables             5" }
+    it { should include "# Total Indexes            5" }
+    it { should include "# Total Tables             4" }
   end
 end
