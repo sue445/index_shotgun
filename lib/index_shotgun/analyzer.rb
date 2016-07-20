@@ -5,10 +5,13 @@ module IndexShotgun
     class << self
       using IndexShotgun::ArrayStartWith
 
+      EXCLUDE_TABLES = %w(ar_internal_metadata)
+
       # Search duplicate index
       # @return [String] result message
       def perform
         tables = ActiveRecord::Base.connection.tables
+        tables.reject! { |table| EXCLUDE_TABLES.include?(table) }
 
         duplicate_indexes =
           tables.each_with_object([]) do |table, array|
