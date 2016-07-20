@@ -9,3 +9,4 @@
 /tmp/
 spec/config/database.yml
 *.db
+gemfiles/*.lock

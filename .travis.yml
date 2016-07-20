@@ -3,6 +3,9 @@ rvm:
 - 2.2.2
 - 2.3.1
 - ruby-head
+gemfile:
+- gemfiles/activerecord_4_2.gemfile
+- gemfiles/activerecord_5_0.gemfile
 env:
 - DATABASE=mysql
 - DATABASE=postgresql
