@@ -5,7 +5,7 @@ module IndexShotgun
     class << self
       using IndexShotgun::ArrayStartWith
 
-      EXCLUDE_TABLES = %w(ar_internal_metadata schema_migrations)
+      EXCLUDE_TABLES = %w(ar_internal_metadata schema_migrations).freeze
 
       # Search duplicate index
       # @return [String] result message
