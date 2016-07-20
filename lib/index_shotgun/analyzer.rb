@@ -10,7 +10,10 @@ module IndexShotgun
       # Search duplicate index
       # @return [String] result message
       def perform
-        tables = ActiveRecord::Base.connection.tables
+        tables =
+          ActiveSupport::Deprecation.silence do
+            ActiveRecord::Base.connection.tables
+          end
         tables.reject! { |table| EXCLUDE_TABLES.include?(table) }
 
         duplicate_indexes =
