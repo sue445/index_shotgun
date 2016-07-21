@@ -3,10 +3,10 @@ if ENV["CI"]
   require "coveralls"
   require "codeclimate-test-reporter"
 
-  SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
+  SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
     CodeClimate::TestReporter::Formatter,
     Coveralls::SimpleCov::Formatter
-  ]
+  ])
   SimpleCov.start do
     %w(spec).each do |ignore_path|
       add_filter(ignore_path)
