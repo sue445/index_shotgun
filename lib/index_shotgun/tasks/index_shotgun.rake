@@ -1,6 +1,8 @@
 namespace :index_shotgun do
   desc "Search duplicate indexes"
   task :fire => :environment do
-    puts IndexShotgun::Analyzer.perform
+    response = IndexShotgun::Analyzer.perform
+    puts response.message
+    response.exit_if_failure!
   end
 end

@@ -70,8 +70,11 @@ describe IndexShotgun::Analyzer do
   describe "#perform" do
     subject { IndexShotgun::Analyzer.perform }
 
-    it { should include "# Total Duplicate Indexes  3" }
-    it { should include "# Total Indexes            5" }
-    it { should include "# Total Tables             4" }
+    its(:message) { should include "# Total Duplicate Indexes  3" }
+    its(:message) { should include "# Total Indexes            5" }
+    its(:message) { should include "# Total Tables             4" }
+    its(:duplicate_index_count) { should eq 3 }
+    its(:total_index_count)     { should eq 5 }
+    its(:total_table_count)     { should eq 4 }
   end
 end

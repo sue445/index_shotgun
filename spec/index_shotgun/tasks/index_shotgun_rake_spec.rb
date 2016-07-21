@@ -4,6 +4,12 @@ describe :index_shotgun do
   describe :fire do
     subject { rake["index_shotgun:fire"].invoke }
 
+    let(:response) do
+      response = IndexShotgun::Analyzer::Response.new
+      response.message = message
+      response
+    end
+
     let(:message) do
       <<-EOS.strip_heredoc
         # =============================
@@ -17,7 +23,7 @@ describe :index_shotgun do
     end
 
     it "should call IndexShotgun::Analyzer#perform" do
-      expect(IndexShotgun::Analyzer).to receive(:perform) { message }
+      expect(IndexShotgun::Analyzer).to receive(:perform) { response }
       subject
     end
   end

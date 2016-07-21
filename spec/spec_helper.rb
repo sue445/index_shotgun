@@ -121,4 +121,8 @@ RSpec.configure do |config|
   #   # test failures related to randomization by passing the same `--seed` value
   #   # as the one that triggered the failure.
   #   Kernel.srand config.seed
+
+  config.before do
+    allow_any_instance_of(IndexShotgun::Analyzer::Response).to receive(:exit_if_failure!)
+  end
 end
