@@ -8,6 +8,10 @@ module IndexShotgun
       def successful?
         duplicate_index_count == 0
       end
+
+      def exit_if_failure!
+        exit(1) unless successful?
+      end
     end
 
     class << self

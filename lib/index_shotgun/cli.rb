@@ -73,6 +73,7 @@ module IndexShotgun
       ActiveRecord::Base.establish_connection(config)
       response = IndexShotgun::Analyzer.perform
       puts response.message
+      response.exit_if_failure!
     end
   end
 end
