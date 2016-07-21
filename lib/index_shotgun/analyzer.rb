@@ -2,13 +2,21 @@ module IndexShotgun
   module Analyzer
     require "index_shotgun/array_start_with"
 
+    class Response
+      attr_accessor :message, :duplicate_index_count, :total_index_count, :total_table_count
+
+      def successful?
+        duplicate_index_count == 0
+      end
+    end
+
     class << self
       using IndexShotgun::ArrayStartWith
 
       EXCLUDE_TABLES = %w(ar_internal_metadata schema_migrations).freeze
 
       # Search duplicate index
-      # @return [String] result message
+      # @return [IndexShotgun::Analyzer::Response]
       def perform
         tables =
           ActiveSupport::Deprecation.silence do
@@ -48,7 +56,13 @@ module IndexShotgun
 
         EOS
 
-        message
+        response = Response.new
+        response.duplicate_index_count = duplicate_indexes.count
+        response.message               = message
+        response.total_index_count     = total_index_count
+        response.total_table_count     = tables.count
+
+        response
       end
 
       # check duplicate indexes of table

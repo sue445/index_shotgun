@@ -71,7 +71,8 @@ module IndexShotgun
       config[:password] = ask("Input password (hidden):", echo: false) if ask_password
 
       ActiveRecord::Base.establish_connection(config)
-      puts IndexShotgun::Analyzer.perform
+      response = IndexShotgun::Analyzer.perform
+      puts response.message
     end
   end
 end
