@@ -1,5 +1,6 @@
 language: ruby
 rvm:
+- 2.1
 - 2.2.2
 - 2.3.1
 - ruby-head
@@ -26,5 +27,9 @@ notifications:
 matrix:
   allow_failures:
   - rvm: ruby-head
+  exclude:
+  # NOTE: activesupport 5.x requires Ruby version >= 2.2.2
+  - rvm: 2.1
+    gemfile: gemfiles/activerecord_5_0.gemfile
 cache: bundler
 sudo: false
