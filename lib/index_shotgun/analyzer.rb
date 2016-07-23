@@ -100,6 +100,8 @@ module IndexShotgun
       end
 
       def exclude_tables
+        return @exclude_tables if @exclude_tables
+
         # Rails default tables
         tables = %w(ar_internal_metadata schema_migrations)
 
@@ -281,7 +283,8 @@ module IndexShotgun
           TABQUOTAS
         )
 
-        tables.map(&:downcase)
+        @exclude_tables = tables.map(&:downcase)
+        @exclude_tables
       end
     end
   end

@@ -31,6 +31,6 @@ ActiveRecord::Schema.define(version: 1) do
 
     t.timestamps null: false
   end
-  add_index :user_stocks, [:user_id, :article_id], unique: true
-  add_index :user_stocks, [:user_id, :article_id, :already_read]
+  add_index :user_stocks, [:user_id, :article_id], unique: true, name: "user_id_article_id"
+  add_index :user_stocks, [:user_id, :article_id, :already_read], name: "user_id_article_id_already"
 end
