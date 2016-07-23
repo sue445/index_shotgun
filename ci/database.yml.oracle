@@ -1,0 +1,5 @@
+test:
+  adapter: oracle_enhanced
+  database: //localhost:1521/xe
+  username: system
+  password: oracle

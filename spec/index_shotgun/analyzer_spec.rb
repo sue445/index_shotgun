@@ -10,7 +10,7 @@ describe IndexShotgun::Analyzer do
       describe "index_user_stocks_on_user_id_and_article_id_and_already_read" do
         subject { table_indexes.find { |index| index.name == index_name } }
 
-        let(:index_name) { "index_user_stocks_on_user_id_and_article_id_and_already_read" }
+        let(:index_name) { "user_id_article_id_already" }
 
         its(:name)    { should eq index_name }
         its(:unique)  { should be false }
@@ -20,7 +20,7 @@ describe IndexShotgun::Analyzer do
       describe "index_user_stocks_on_user_id_and_article_id" do
         subject { table_indexes.find { |index| index.name == index_name } }
 
-        let(:index_name) { "index_user_stocks_on_user_id_and_article_id" }
+        let(:index_name) { "user_id_article_id" }
 
         its(:name)    { should eq index_name }
         its(:unique)  { should be true }
@@ -54,9 +54,9 @@ describe IndexShotgun::Analyzer do
       its(:count) { should eq 3 }
 
       # rubocop:disable Metrics/LineLength
-      it { should include "index_user_stocks_on_user_id is a left-prefix of index_user_stocks_on_user_id_and_article_id" }
-      it { should include "index_user_stocks_on_user_id is a left-prefix of index_user_stocks_on_user_id_and_article_id_and_already_read" }
-      it { should include "index_user_stocks_on_user_id_and_article_id_and_already_read has column(s) on the right side of unique index (index_user_stocks_on_user_id_and_article_id). You can drop if low cardinality" }
+      it { should include "index_user_stocks_on_user_id is a left-prefix of user_id_article_id" }
+      it { should include "index_user_stocks_on_user_id is a left-prefix of user_id_article_id_already" }
+      it { should include "user_id_article_id_already has column(s) on the right side of unique index (user_id_article_id). You can drop if low cardinality" }
       # rubocop:enable Metrics/LineLength
     end
 

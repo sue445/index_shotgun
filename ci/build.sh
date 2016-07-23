@@ -17,6 +17,9 @@ elif [ ${DATABASE} = "postgresql" ]; then
 elif [ ${DATABASE} = "sqlite3" ]; then
   bundle exec ./exe/index_shotgun sqlite3 --database=spec/db/index_shotgun_test.db
   RET=$?
+elif [ ${DATABASE} = "oracle" ]; then
+  bundle exec ./exe/index_shotgun oracle --database=xe --username=system --password=oracle
+  RET=$?
 fi
 
 set -e
