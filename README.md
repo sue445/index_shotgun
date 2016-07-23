@@ -5,6 +5,8 @@
 [![Coverage Status](https://coveralls.io/repos/sue445/index_shotgun/badge.svg?branch=master&service=github)](https://coveralls.io/github/sue445/index_shotgun?branch=master)
 [![Dependency Status](https://gemnasium.com/sue445/index_shotgun.svg)](https://gemnasium.com/sue445/index_shotgun)
 
+[![wercker status](https://app.wercker.com/status/1af95c0c5debe57562ec3036c849f80d/m/master "wercker status")](https://app.wercker.com/project/bykey/1af95c0c5debe57562ec3036c849f80d)
+
 Duplicate index checker.
 
 This like [pt-duplicate-key-checker](https://www.percona.com/doc/percona-toolkit/2.1/pt-duplicate-key-checker.html), but also supports database other than MySQL
