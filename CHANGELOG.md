@@ -1,5 +1,16 @@
 # Change Log
 
+## [v0.3.0](https://github.com/sue445/index_shotgun/tree/v0.3.0) (2016/07/23)
+[Full Changelog](https://github.com/sue445/index_shotgun/compare/v0.2.1...v0.3.0)
+
+**Merged pull requests:**
+
+- exit on failure if exists duplicate index [\#26](https://github.com/sue445/index_shotgun/pull/26) ([sue445](https://github.com/sue445))
+- Resupport ruby 2.1 [\#25](https://github.com/sue445/index_shotgun/pull/25) ([sue445](https://github.com/sue445))
+- Support activerecord 5 [\#24](https://github.com/sue445/index_shotgun/pull/24) ([sue445](https://github.com/sue445))
+- Add CI for oracle [\#23](https://github.com/sue445/index_shotgun/pull/23) ([sue445](https://github.com/sue445))
+- Test ruby 2.3.1 [\#22](https://github.com/sue445/index_shotgun/pull/22) ([sue445](https://github.com/sue445))
+
 ## [v0.2.1](https://github.com/sue445/index_shotgun/tree/v0.2.1) (2016/02/17)
 [Full Changelog](https://github.com/sue445/index_shotgun/compare/v0.2.0...v0.2.1)
 
