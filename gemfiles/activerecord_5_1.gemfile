@@ -1,0 +1,7 @@
+source "https://rubygems.org"
+
+gem "activerecord", "~> 5.1.0.beta1"
+
+gemspec path: '../'
+
+eval(Pathname("#{__dir__}/databases.gemfile").read)
