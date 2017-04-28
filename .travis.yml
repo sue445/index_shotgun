@@ -29,7 +29,6 @@ notifications:
 matrix:
   allow_failures:
   - rvm: ruby-head
-  - gemfile: gemfiles/activerecord_5_1.gemfile
   exclude:
   # NOTE: activesupport 5.x requires Ruby version >= 2.2.2
   - rvm: 2.1
