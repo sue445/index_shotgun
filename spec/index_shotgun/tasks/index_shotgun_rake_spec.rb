@@ -1,7 +1,7 @@
-describe :index_shotgun do
+describe "index_shotgun" do
   include_context :rake_task
 
-  describe :fire do
+  describe ":fire" do
     subject { rake["index_shotgun:fire"].invoke }
 
     let(:response) do
