@@ -126,6 +126,6 @@ RSpec.configure do |config|
   #   Kernel.srand config.seed
 
   config.before do
-    allow_any_instance_of(IndexShotgun::Analyzer::Response).to receive(:exit_if_failure!)
+    allow_any_instance_of(IndexShotgun::Analyzer::Response).to receive(:exit_if_failure!) # rubocop:disable RSpec/AnyInstance
   end
 end
