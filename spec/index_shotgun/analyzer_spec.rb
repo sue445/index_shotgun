@@ -14,7 +14,7 @@ describe IndexShotgun::Analyzer do
 
         its(:name)    { should eq index_name }
         its(:unique)  { should be false }
-        its(:columns) { should eq %w(user_id article_id already_read) }
+        its(:columns) { should eq %w[user_id article_id already_read] }
       end
 
       describe "index_user_stocks_on_user_id_and_article_id" do
@@ -24,7 +24,7 @@ describe IndexShotgun::Analyzer do
 
         its(:name)    { should eq index_name }
         its(:unique)  { should be true }
-        its(:columns) { should eq %w(user_id article_id) }
+        its(:columns) { should eq %w[user_id article_id] }
       end
 
       describe "index_user_stocks_on_user_id" do
@@ -52,8 +52,6 @@ describe IndexShotgun::Analyzer do
       let(:table) { "user_stocks" }
 
       its(:count) { should eq 3 }
-
-      # rubocop:disable Metrics/LineLength
       it { should include "index_user_stocks_on_user_id is a left-prefix of user_id_article_id" }
       it { should include "index_user_stocks_on_user_id is a left-prefix of user_id_article_id_already" }
       it { should include "user_id_article_id_already has column(s) on the right side of unique index (user_id_article_id). You can drop if low cardinality" }

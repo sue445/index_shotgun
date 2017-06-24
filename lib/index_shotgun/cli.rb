@@ -56,24 +56,24 @@ module IndexShotgun
 
     private
 
-    def analyze(adapter_name, gem_name = nil)
-      gem_name ||= adapter_name
-      begin
-        require gem_name
-      rescue LoadError
-        puts "[ERROR] #{adapter_name} is not installed. Please run `gem install #{gem_name}` and install gem"
-        exit!
+      def analyze(adapter_name, gem_name = nil)
+        gem_name ||= adapter_name
+        begin
+          require gem_name
+        rescue LoadError
+          puts "[ERROR] #{adapter_name} is not installed. Please run `gem install #{gem_name}` and install gem"
+          exit!
+        end
+
+        config = options.reverse_merge(adapter: adapter_name)
+
+        ask_password = config.delete("ask_password")
+        config[:password] = ask("Input password (hidden):", echo: false) if ask_password
+
+        ActiveRecord::Base.establish_connection(config)
+        response = IndexShotgun::Analyzer.perform
+        puts response.message
+        response.exit_if_failure!
       end
-
-      config = options.reverse_merge(adapter: adapter_name)
-
-      ask_password = config.delete("ask_password")
-      config[:password] = ask("Input password (hidden):", echo: false) if ask_password
-
-      ActiveRecord::Base.establish_connection(config)
-      response = IndexShotgun::Analyzer.perform
-      puts response.message
-      response.exit_if_failure!
-    end
   end
 end

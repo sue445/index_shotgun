@@ -1,7 +1,7 @@
-describe :index_shotgun do
+describe "index_shotgun" do # rubocop:disable RSpec/DescribeClass
   include_context :rake_task
 
-  describe :fire do
+  describe ":fire" do
     subject { rake["index_shotgun:fire"].invoke }
 
     let(:response) do
@@ -22,9 +22,10 @@ describe :index_shotgun do
       EOS
     end
 
-    it "should call IndexShotgun::Analyzer#perform" do
-      expect(IndexShotgun::Analyzer).to receive(:perform) { response }
+    it "calls IndexShotgun::Analyzer#perform" do
+      allow(IndexShotgun::Analyzer).to receive(:perform) { response }
       subject
+      expect(IndexShotgun::Analyzer).to have_received(:perform)
     end
   end
 end

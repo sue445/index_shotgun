@@ -1,4 +1,18 @@
-inherit_from: .rubocop_standard.yml
+inherit_gem:
+  onkcop:
+    - "config/rubocop.yml"
+    - "config/rspec.yml"
 
-Rails/Output:
+AllCops:
+  TargetRubyVersion: 2.3
+  # uncomment if use rails cops
+  # TargetRailsVersion: 5.1
+
+RSpec/NestedGroups:
   Enabled: false
+
+Metrics/AbcSize:
+  Max: 33
+
+Metrics/MethodLength:
+  Max: 25

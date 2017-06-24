@@ -1,4 +1,5 @@
 # coding: utf-8
+
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "index_shotgun/version"
@@ -27,12 +28,13 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "codeclimate-test-reporter", "~> 1.0.0"
   spec.add_development_dependency "coveralls"
+  spec.add_development_dependency "onkcop", "0.49.1.0"
   spec.add_development_dependency "pry-byebug"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rake_shared_context", "0.2.2"
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "rspec-its"
   spec.add_development_dependency "rspec-power_assert"
-  spec.add_development_dependency "rubocop", "0.31.0"
+  spec.add_development_dependency "rubocop", "0.49.1"
   spec.add_development_dependency "simplecov"
 end

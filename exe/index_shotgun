@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
 
-require 'index_shotgun/cli'
+require "index_shotgun/cli"
 
 IndexShotgun::CLI.start(ARGV)
