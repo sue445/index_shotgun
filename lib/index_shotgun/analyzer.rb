@@ -33,8 +33,8 @@ module IndexShotgun
           end
 
         message =
-          duplicate_indexes.each_with_object("") do |info, message|
-            message << <<-EOS.strip_heredoc
+          duplicate_indexes.each_with_object("") do |info, str|
+            str << <<-EOS.strip_heredoc
               # =============================
               # #{info[:index].table}
               # =============================
