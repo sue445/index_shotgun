@@ -1,0 +1,9 @@
+inherit_gem:
+  onkcop:
+    - "config/rubocop.yml"
+    - "config/rspec.yml"
+
+AllCops:
+  TargetRubyVersion: 2.3
+  # uncomment if use rails cops
+  # TargetRailsVersion: 5.1
