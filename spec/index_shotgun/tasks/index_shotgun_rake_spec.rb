@@ -22,7 +22,7 @@ describe :index_shotgun do
       EOS
     end
 
-    it "should call IndexShotgun::Analyzer#perform" do
+    it "calls IndexShotgun::Analyzer#perform" do
       expect(IndexShotgun::Analyzer).to receive(:perform) { response }
       subject
     end

@@ -4,7 +4,7 @@ if ENV["CI"]
 
   SimpleCov.formatter = Coveralls::SimpleCov::Formatter
   SimpleCov.start do
-    %w(spec).each do |ignore_path|
+    %w[spec].each do |ignore_path|
       add_filter(ignore_path)
     end
   end
@@ -26,8 +26,8 @@ end
 
 Dir["#{__dir__}/support/**/*.rb"].each { |f| require f }
 
-DUMMY_APP_DIR = "#{__dir__}/dummy"
-TASK_DIR      = "#{__dir__}/../lib/index_shotgun/tasks"
+DUMMY_APP_DIR = "#{__dir__}/dummy".freeze
+TASK_DIR      = "#{__dir__}/../lib/index_shotgun/tasks".freeze
 
 require_relative "./db/setup"
 

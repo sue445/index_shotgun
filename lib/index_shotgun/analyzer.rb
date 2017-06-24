@@ -103,10 +103,10 @@ module IndexShotgun
         return @exclude_tables if @exclude_tables
 
         # Rails default tables
-        tables = %w(ar_internal_metadata schema_migrations)
+        tables = %w[ar_internal_metadata schema_migrations]
 
         # Oracle system tables
-        tables += %w(
+        tables += %w[
           AQ$DEF$_AQCALL
           AQ$DEF$_AQERROR
           AQ$_DEF$_AQCALL_F
@@ -281,7 +281,7 @@ module IndexShotgun
           SYSFILES
           TAB
           TABQUOTAS
-        )
+        ]
 
         @exclude_tables = tables.map(&:downcase)
         @exclude_tables
