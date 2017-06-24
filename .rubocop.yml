@@ -10,3 +10,9 @@ AllCops:
 
 RSpec/NestedGroups:
   Enabled: false
+
+Metrics/AbcSize:
+  Max: 33
+
+Metrics/MethodLength:
+  Max: 25
