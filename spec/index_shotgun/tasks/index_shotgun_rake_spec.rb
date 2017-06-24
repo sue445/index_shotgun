@@ -23,8 +23,9 @@ describe :index_shotgun do
     end
 
     it "calls IndexShotgun::Analyzer#perform" do
-      expect(IndexShotgun::Analyzer).to receive(:perform) { response }
+      allow(IndexShotgun::Analyzer).to receive(:perform) { response }
       subject
+      expect(IndexShotgun::Analyzer).to have_received(:perform)
     end
   end
 end
