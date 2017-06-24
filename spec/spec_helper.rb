@@ -21,7 +21,7 @@ begin
   require "activerecord-oracle_enhanced-adapter"
   require "active_record/connection_adapters/oracle_enhanced_adapter"
   require "active_record/connection_adapters/oracle_enhanced/database_tasks"
-rescue LoadError
+rescue LoadError # rubocop:disable Lint/HandleExceptions
 end
 
 Dir["#{__dir__}/support/**/*.rb"].each { |f| require f }

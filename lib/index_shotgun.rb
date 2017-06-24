@@ -15,5 +15,5 @@ begin
      ActiveRecord.version < Gem::Version.create("4.2.5")
     raise "Requirements activerecord gem v4.2.5+ when using mysql2 gem v0.4.0+"
   end
-rescue LoadError
+rescue LoadError # rubocop:disable Lint/HandleExceptions
 end
