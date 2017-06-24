@@ -1,5 +1,5 @@
 module IndexShotgun
-  module Analyzer
+  module Analyzer # rubocop:disable Metrics/ModuleLength
     require "index_shotgun/array_start_with"
 
     class Response
