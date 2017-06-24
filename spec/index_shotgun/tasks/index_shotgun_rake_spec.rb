@@ -1,4 +1,4 @@
-describe "index_shotgun" do
+describe "index_shotgun" do # rubocop:disable RSpec/DescribeClass
   include_context :rake_task
 
   describe ":fire" do
