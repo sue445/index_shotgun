@@ -37,3 +37,4 @@ matrix:
     gemfile: gemfiles/activerecord_5_1.gemfile
 cache: bundler
 sudo: false
+dist: precise
