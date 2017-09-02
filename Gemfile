@@ -3,4 +3,4 @@ source "https://rubygems.org"
 # Specify your gem's dependencies in index_shotgun.gemspec
 gemspec
 
-eval(Pathname("gemfiles/databases.gemfile").read) # rubocop:disable Security/Eval
+eval(Pathname("gemfiles/common.gemfile").read) # rubocop:disable Security/Eval
