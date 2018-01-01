@@ -4,6 +4,7 @@ rvm:
 - 2.2.2
 - 2.3.1
 - 2.4.0
+- 2.5.0
 - ruby-head
 gemfile:
 - gemfiles/activerecord_4_2.gemfile
@@ -17,7 +18,9 @@ env:
 before_script:
 - export CI=true
 - export CODECLIMATE_REPO_TOKEN=377596024a4c6f3c4c4b9a0cd16add92fb5e7f716663629b5efd080377c0b838
-before_install: gem install bundler -v 1.10.6
+before_install:
+- gem update --system --no-document
+- gem install bundler -v 1.16.1 --no-document
 bundler_args: --without oracle
 script: "./ci/build.sh"
 branches:
