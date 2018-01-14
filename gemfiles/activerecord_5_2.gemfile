@@ -2,6 +2,11 @@ source "https://rubygems.org"
 
 gem "activerecord", "~> 5.2.0.beta2"
 
+group :postgresql do
+  # https://github.com/rails/rails/blob/v5.2.0.beta2/activerecord/lib/active_record/connection_adapters/postgresql_adapter.rb#L4
+  gem "pg", "~> 0.18"
+end
+
 gemspec path: '../'
 
 eval(Pathname("#{__dir__}/common.gemfile").read)
