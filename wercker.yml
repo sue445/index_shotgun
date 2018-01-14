@@ -15,8 +15,8 @@ services:
 
 default: &default
     after-steps:
-        - wantedly/pretty-slack-notify:
-            webhook_url: $SLACK_WEBHOOK_URL
+        - slack-notifier:
+            url: $SLACK_WEBHOOK_URL
             username: wercker_build
 
 build:
