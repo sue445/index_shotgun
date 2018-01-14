@@ -1,7 +1,7 @@
 #!/bin/bash -xe
 
 apt-get update
-apt-get install -y ruby2.3 ruby2.3-dev git build-essential
+apt-get install -y ruby2.3 ruby2.3-dev git build-essential curl
 gem update --system --no-document
 
 /usr/sbin/startup.sh
