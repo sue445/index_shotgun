@@ -8,7 +8,7 @@ describe IndexShotgun::Analyzer do
       its(:count) { should eq 3 }
 
       describe "index_user_stocks_on_user_id_and_article_id_and_already_read" do
-        subject { table_indexes.find { |index| index.name == index_name } }
+        subject { table_indexes.find {|index| index.name == index_name } }
 
         let(:index_name) { "user_id_article_id_already" }
 
@@ -18,7 +18,7 @@ describe IndexShotgun::Analyzer do
       end
 
       describe "index_user_stocks_on_user_id_and_article_id" do
-        subject { table_indexes.find { |index| index.name == index_name } }
+        subject { table_indexes.find {|index| index.name == index_name } }
 
         let(:index_name) { "user_id_article_id" }
 
@@ -28,7 +28,7 @@ describe IndexShotgun::Analyzer do
       end
 
       describe "index_user_stocks_on_user_id" do
-        subject { table_indexes.find { |index| index.name == index_name } }
+        subject { table_indexes.find {|index| index.name == index_name } }
 
         let(:index_name) { "index_user_stocks_on_user_id" }
 
@@ -46,7 +46,7 @@ describe IndexShotgun::Analyzer do
   end
 
   describe "#check_indexes" do
-    subject(:check_indexes) { IndexShotgun::Analyzer.check_indexes(table).map { |row| row[:result] } }
+    subject(:check_indexes) { IndexShotgun::Analyzer.check_indexes(table).map {|row| row[:result] } }
 
     context "When exists duplicate indexes" do
       let(:table) { "user_stocks" }

@@ -24,7 +24,7 @@ module IndexShotgun
           ActiveSupport::Deprecation.silence do
             ActiveRecord::Base.connection.tables
           end
-        tables.reject! { |table| exclude_tables.include?(table.downcase) }
+        tables.reject! {|table| exclude_tables.include?(table.downcase) }
 
         duplicate_indexes =
           tables.each_with_object([]) do |table, array|
@@ -46,7 +46,7 @@ module IndexShotgun
             EOS
           end
 
-        total_index_count = tables.map { |table| table_indexes(table).count }.sum
+        total_index_count = tables.map {|table| table_indexes(table).count }.sum
         message << <<-EOS.strip_heredoc
           # ########################################################################
           # Summary of indexes
