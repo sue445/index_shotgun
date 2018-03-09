@@ -55,7 +55,7 @@ describe IndexShotgun::Analyzer do
       it { should include "index_user_stocks_on_user_id is a left-prefix of user_id_article_id" }
       it { should include "index_user_stocks_on_user_id is a left-prefix of user_id_article_id_already" }
       it { should include "user_id_article_id_already has column(s) on the right side of unique index (user_id_article_id). You can drop if low cardinality" }
-      
+
     end
 
     context "When not exists duplicate indexes" do
