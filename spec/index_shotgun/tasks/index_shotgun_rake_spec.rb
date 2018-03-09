@@ -11,7 +11,7 @@ describe "index_shotgun" do # rubocop:disable RSpec/DescribeClass
     end
 
     let(:message) do
-      <<-EOS.strip_heredoc
+      <<-MSG.strip_heredoc
         # =============================
         # user_stocks
         # =============================
@@ -19,7 +19,7 @@ describe "index_shotgun" do # rubocop:disable RSpec/DescribeClass
         # index_user_stocks_on_user_id is a left-prefix of index_user_stocks_on_user_id_and_article_id
         # To remove this duplicate index, execute:
         ALTER TABLE `user_stocks` DROP INDEX `index_user_stocks_on_user_id`;
-      EOS
+      MSG
     end
 
     it "calls IndexShotgun::Analyzer#perform" do
