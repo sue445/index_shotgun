@@ -24,7 +24,7 @@ module IndexShotgun
           ActiveSupport::Deprecation.silence do
             ActiveRecord::Base.connection.tables
           end
-        tables.reject! { |table| exclude_tables.include?(table.downcase) }
+        tables.reject! {|table| exclude_tables.include?(table.downcase) }
 
         duplicate_indexes =
           tables.each_with_object([]) do |table, array|
@@ -34,7 +34,7 @@ module IndexShotgun
 
         message =
           duplicate_indexes.each_with_object("") do |info, str|
-            str << <<-EOS.strip_heredoc
+            str << <<-MSG.strip_heredoc
               # =============================
               # #{info[:index].table}
               # =============================
@@ -43,11 +43,11 @@ module IndexShotgun
               # To remove this duplicate index, execute:
               ALTER TABLE `#{info[:index].table}` DROP INDEX `#{info[:index].name}`;
 
-            EOS
+            MSG
           end
 
-        total_index_count = tables.map { |table| table_indexes(table).count }.sum
-        message << <<-EOS.strip_heredoc
+        total_index_count = tables.map {|table| table_indexes(table).count }.sum
+        message << <<-MSG.strip_heredoc
           # ########################################################################
           # Summary of indexes
           # ########################################################################
@@ -56,7 +56,7 @@ module IndexShotgun
           # Total Indexes            #{total_index_count}
           # Total Tables             #{tables.count}
 
-        EOS
+        MSG
 
         response = Response.new
         response.duplicate_index_count = duplicate_indexes.count

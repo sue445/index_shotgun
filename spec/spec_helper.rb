@@ -10,7 +10,7 @@ if ENV["CI"]
   end
 end
 
-$LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
+$LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 require "index_shotgun"
 require "pry"
 require "rspec/its"
@@ -24,7 +24,7 @@ begin
 rescue LoadError # rubocop:disable Lint/HandleExceptions
 end
 
-Dir["#{__dir__}/support/**/*.rb"].each { |f| require f }
+Dir["#{__dir__}/support/**/*.rb"].each {|f| require f }
 
 DUMMY_APP_DIR = "#{__dir__}/dummy".freeze
 TASK_DIR      = "#{__dir__}/../lib/index_shotgun/tasks".freeze

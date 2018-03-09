@@ -4,9 +4,7 @@ inherit_gem:
     - "config/rspec.yml"
 
 AllCops:
-  TargetRubyVersion: 2.3
-  # uncomment if use rails cops
-  # TargetRailsVersion: 5.1
+  TargetRubyVersion: 2.1
 
 RSpec/NestedGroups:
   Enabled: false
@@ -16,3 +14,8 @@ Metrics/AbcSize:
 
 Metrics/MethodLength:
   Max: 25
+
+Security/Eval:
+  Exclude:
+    - "Gemfile"
+    - "gemfiles/*.gemfile"

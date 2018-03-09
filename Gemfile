@@ -7,4 +7,4 @@ group :postgresql do
   gem "pg"
 end
 
-eval(Pathname("gemfiles/common.gemfile").read) # rubocop:disable Security/Eval
+eval(Pathname("gemfiles/common.gemfile").read)
