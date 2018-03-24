@@ -7,6 +7,11 @@ group :postgresql do
   gem "pg", "~> 0.18"
 end
 
+group :mysql do
+  # https://github.com/rails/rails/blob/v5.0.6/activerecord/lib/active_record/connection_adapters/mysql2_adapter.rb#L4
+  gem "mysql2", ">= 0.3.18", "< 0.5"
+end
+
 gemspec path: "../"
 
 eval(Pathname("#{__dir__}/common.gemfile").read)
