@@ -19,3 +19,6 @@ Security/Eval:
   Exclude:
     - "Gemfile"
     - "gemfiles/*.gemfile"
+
+RSpec/SharedExamples:
+  Enabled: false
