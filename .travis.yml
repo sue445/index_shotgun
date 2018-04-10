@@ -34,9 +34,6 @@ matrix:
   allow_failures:
   - rvm: ruby-head
 
-  # TODO: Remove after rails 5.2.0 is released!
-  - gemfile: gemfiles/activerecord_5_2.gemfile
-
   exclude:
   # NOTE: activesupport 5.x requires Ruby version >= 2.2.2
   - rvm: 2.1
