@@ -12,9 +12,11 @@ gemfile:
 - gemfiles/activerecord_5_1.gemfile
 - gemfiles/activerecord_5_2.gemfile
 env:
-- DATABASE=mysql
-- DATABASE=postgresql
-- DATABASE=sqlite3
+# TODO: enable after
+# - DATABASE=mysql
+# - DATABASE=postgresql
+# - DATABASE=sqlite3
+- DATABASE=oracle
 before_script:
 - export CI=true
 - export CODECLIMATE_REPO_TOKEN=377596024a4c6f3c4c4b9a0cd16add92fb5e7f716663629b5efd080377c0b838
