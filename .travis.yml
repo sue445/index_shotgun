@@ -12,16 +12,22 @@ gemfile:
 - gemfiles/activerecord_5_1.gemfile
 - gemfiles/activerecord_5_2.gemfile
 env:
-- DATABASE=mysql
-- DATABASE=postgresql
-- DATABASE=sqlite3
+# TODO: enable after
+# - DATABASE=mysql
+# - DATABASE=postgresql
+# - DATABASE=sqlite3
+- DATABASE=oracle
 before_script:
 - export CI=true
 - export CODECLIMATE_REPO_TOKEN=377596024a4c6f3c4c4b9a0cd16add92fb5e7f716663629b5efd080377c0b838
 before_install:
 - gem update --system --no-document
 - gem install bundler -v 1.16.1 --no-document
-bundler_args: --without oracle
+- export ORACLE_HOME=/u01/app/oracle/product/11.2.0/xe
+- export ORACLE_SID=XE
+- export ORACLE_SYSTEM_PASSWORD=oracle
+install:
+- ./ci/bundle_install.sh
 script: "./ci/build.sh"
 branches:
   only:
@@ -43,5 +49,5 @@ matrix:
   - rvm: 2.1
     gemfile: gemfiles/activerecord_5_2.gemfile
 cache: bundler
-sudo: false
+sudo: required
 dist: precise
