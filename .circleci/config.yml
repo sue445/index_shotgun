@@ -89,9 +89,11 @@ build_jobs: &build_jobs
   - oracle:activerecord:5.1:
       requires:
         - checkout_code
-  - oracle:activerecord:5.2:
-      requires:
-        - checkout_code
+  # FIXME: only AR 5.2 is very slow...
+  # https://circleci.com/gh/sue445/index_shotgun/99
+  # - oracle:activerecord:5.2:
+  #     requires:
+  #       - checkout_code
   - rubocop:
       requires:
         - checkout_code
