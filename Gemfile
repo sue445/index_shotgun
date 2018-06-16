@@ -11,4 +11,9 @@ group :mysql do
   gem "mysql2"
 end
 
+group :oracle do
+  gem "activerecord-oracle_enhanced-adapter"
+  gem "ruby-oci8"
+end
+
 eval(Pathname("gemfiles/common.gemfile").read)

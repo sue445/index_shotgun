@@ -1,7 +1,0 @@
-source "https://rubygems.org"
-
-gem "activerecord", "~> 4.2.0"
-gem "activerecord-oracle_enhanced-adapter", "~> 1.6.0"
-gem "ruby-oci8"
-
-gemspec path: "../"

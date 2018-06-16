@@ -12,7 +12,7 @@ module Rails
 end
 
 # db:drop
-ActiveRecord::Tasks::DatabaseTasks.drop(test_configuration)
+ActiveRecord::Tasks::DatabaseTasks.drop(test_configuration) unless ENV["CI"]
 
 # db:create
 ActiveRecord::Tasks::DatabaseTasks.create(test_configuration)
