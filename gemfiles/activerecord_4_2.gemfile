@@ -12,6 +12,11 @@ group :mysql do
   gem "mysql2", ">= 0.3.13", "< 0.5"
 end
 
+group :oracle do
+  gem "activerecord-oracle_enhanced-adapter", "~> 1.6.0"
+  gem "ruby-oci8"
+end
+
 gemspec path: "../"
 
 eval(Pathname("#{__dir__}/common.gemfile").read)

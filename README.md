@@ -1,6 +1,7 @@
 # IndexShotgun :fire: :gun: :cop:
 [![Gem Version](https://badge.fury.io/rb/index_shotgun.svg)](http://badge.fury.io/rb/index_shotgun)
 [![Build Status](https://travis-ci.org/sue445/index_shotgun.svg?branch=master)](https://travis-ci.org/sue445/index_shotgun)
+[![CircleCI](https://circleci.com/gh/sue445/index_shotgun/tree/master.svg?style=svg)](https://circleci.com/gh/sue445/index_shotgun/tree/master)
 [![Code Climate](https://codeclimate.com/github/sue445/index_shotgun/badges/gpa.svg)](https://codeclimate.com/github/sue445/index_shotgun)
 [![Coverage Status](https://coveralls.io/repos/sue445/index_shotgun/badge.svg?branch=master&service=github)](https://coveralls.io/github/sue445/index_shotgun?branch=master)
 
