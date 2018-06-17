@@ -33,6 +33,7 @@ oracle: &oracle
         ORACLE_HOME: /u01/app/oracle/product/11.2.0/xe
         ORACLE_SID: XE
         ORACLE_SYSTEM_PASSWORD: oracle
+        NLS_LANG: AMERICAN_AMERICA.UTF8
 
   working_directory: /home/circleci/app
 
@@ -46,11 +47,11 @@ save_repo_cache_option: &save_repo_cache_option
 
 restore_bundle_cache_option: &restore_bundle_cache_option
   keys:
-    - v2-bundle-{{ .Environment.CIRCLE_JOB }}-{{ checksum "index_shotgun.gemspec" }}
-    - v2-bundle-{{ .Environment.CIRCLE_JOB }}
+    - v3-bundle-{{ .Environment.CIRCLE_JOB }}-{{ epoch }}
+    - v3-bundle-{{ .Environment.CIRCLE_JOB }}
 
 save_bundle_cache_option: &save_bundle_cache_option
-  key: v2-bundle-{{ .Environment.CIRCLE_JOB }}-{{ checksum "index_shotgun.gemspec" }}
+  key: v3-bundle-{{ .Environment.CIRCLE_JOB }}-{{ epoch }}
   paths:
     - /home/circleci/app/vendor/bundle
     - /home/circleci/app/gemfiles/vendor/bundle
