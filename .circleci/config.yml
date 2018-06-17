@@ -33,6 +33,7 @@ oracle: &oracle
         ORACLE_HOME: /u01/app/oracle/product/11.2.0/xe
         ORACLE_SID: XE
         ORACLE_SYSTEM_PASSWORD: oracle
+        NLS_LANG: AMERICAN_AMERICA.UTF8
 
   working_directory: /home/circleci/app
 
