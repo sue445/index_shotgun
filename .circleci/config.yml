@@ -64,7 +64,7 @@ rspec_steps: &rspec_steps
         export PATH=$ORACLE_HOME/bin:$PATH
         export LD_LIBRARY_PATH=$ORACLE_HOME/lib
         apt-get update
-        apt-get install -y ruby2.3 ruby2.3-dev git build-essential curl tar
+        apt-get install -y ruby2.3 ruby2.3-dev git build-essential tar
         /usr/sbin/startup.sh
         /etc/init.d/oracle-xe status
       shell: /bin/bash -xe
