@@ -77,7 +77,9 @@ rspec_steps: &rspec_steps
   - save_cache:
       <<: *save_bundle_cache_option
 
-  - run: ./ci/build.sh
+  - run:
+      command: ./ci/build.sh
+      no_output_timeout: "1h"
 
 build_jobs: &build_jobs
   - checkout_code
