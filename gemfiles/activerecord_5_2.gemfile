@@ -15,8 +15,8 @@ end
 group :oracle do
   # gem "activerecord-oracle_enhanced-adapter", "~> 5.2.2"
 
-  # https://github.com/rsim/oracle-enhanced/issues/1720#issuecomment-407228848
-  gem "activerecord-oracle_enhanced-adapter", github: "yahonda/oracle-enhanced", branch: "diag1720_release52"
+  # https://github.com/rsim/oracle-enhanced/issues/1720#issuecomment-409207938
+  gem "activerecord-oracle_enhanced-adapter", github: "yahonda/oracle-enhanced", branch: "diag1720_release52", ref: "2dc2ef9"
 
   gem "ruby-oci8"
 end
