@@ -37,14 +37,6 @@ oracle: &oracle
 
   working_directory: /home/circleci/app
 
-restore_repo_cache_option: &restore_repo_cache_option
-  key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-
-save_repo_cache_option: &save_repo_cache_option
-  key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-  paths:
-    - ~/app
-
 restore_bundle_cache_option: &restore_bundle_cache_option
   keys:
     - v3-bundle-{{ .Environment.CIRCLE_JOB }}-{{ epoch }}
@@ -69,8 +61,7 @@ rspec_steps: &rspec_steps
         /etc/init.d/oracle-xe status
       shell: /bin/bash -xe
 
-  - restore_cache:
-      <<: *restore_repo_cache_option
+  - checkout
   - restore_cache:
       <<: *restore_bundle_cache_option
   - run: ./.circleci/setup.sh
@@ -80,33 +71,13 @@ rspec_steps: &rspec_steps
   - run: ./ci/build.sh
 
 build_jobs: &build_jobs
-  - checkout_code
-  - oracle:activerecord:4.2:
-      requires:
-        - checkout_code
-  - oracle:activerecord:5.0:
-      requires:
-        - checkout_code
-  - oracle:activerecord:5.1:
-      requires:
-        - checkout_code
-  - oracle:activerecord:5.2:
-      requires:
-        - checkout_code
-  - rubocop:
-      requires:
-        - checkout_code
+  - oracle:activerecord:4.2
+  - oracle:activerecord:5.0
+  - oracle:activerecord:5.1
+  - oracle:activerecord:5.2
+  - rubocop
 
 jobs:
-  checkout_code:
-    <<: *default
-
-    steps:
-      - checkout
-
-      - save_cache:
-          <<: *save_repo_cache_option
-
   oracle:activerecord:4.2:
     <<: *oracle
 
@@ -143,8 +114,7 @@ jobs:
     <<: *default
 
     steps:
-      - restore_cache:
-          <<: *restore_repo_cache_option
+      - checkout
       - restore_cache:
           <<: *restore_bundle_cache_option
       - run: ./.circleci/setup.sh
