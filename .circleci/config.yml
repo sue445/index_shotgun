@@ -1,8 +1,4 @@
-# Ruby CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-ruby/ for more details
-#
-version: 2
+version: 2.1
 
 environment: &environment
   LANG:     en_US.UTF-8
@@ -10,118 +6,117 @@ environment: &environment
   LC_ALL:   C.UTF-8
 
   BUNDLE_PATH: vendor/bundle
-  BUNDLE_JOBS: 4
   CODECLIMATE_REPO_TOKEN: 377596024a4c6f3c4c4b9a0cd16add92fb5e7f716663629b5efd080377c0b838
 
-default: &default
-  docker:
-    - image: circleci/ruby:2.1
-      environment:
-        <<: *environment
-        BUNDLE_WITHOUT: mysql postgresql sqlite3 oracle
+executors:
+  ruby:
+    docker:
+      - image: circleci/ruby:2.1
+        environment:
+          <<: *environment
 
-  working_directory: /home/circleci/app
+    working_directory: /home/circleci/app
 
-oracle: &oracle
-  docker:
-    - image: wnameless/oracle-xe-11g:16.04
-      environment:
-        <<: *environment
-        BUNDLE_WITHOUT: mysql postgresql sqlite3
-        DATABASE: oracle
+  oracle:
+    docker:
+      - image: wnameless/oracle-xe-11g:16.04
+        environment:
+          <<: *environment
+          DATABASE: oracle
 
-        ORACLE_HOME: /u01/app/oracle/product/11.2.0/xe
-        ORACLE_SID: XE
-        ORACLE_SYSTEM_PASSWORD: oracle
-        NLS_LANG: AMERICAN_AMERICA.UTF8
+          ORACLE_HOME: /u01/app/oracle/product/11.2.0/xe
+          ORACLE_SID: XE
+          ORACLE_SYSTEM_PASSWORD: oracle
+          NLS_LANG: AMERICAN_AMERICA.UTF8
 
-  working_directory: /home/circleci/app
+    working_directory: /home/circleci/app
 
-restore_bundle_cache_option: &restore_bundle_cache_option
-  keys:
-    - v3-bundle-{{ .Environment.CIRCLE_JOB }}-{{ epoch }}
-    - v3-bundle-{{ .Environment.CIRCLE_JOB }}
+commands:
+  setup_bundle:
+    description: "Setup bundle with cache"
 
-save_bundle_cache_option: &save_bundle_cache_option
-  key: v3-bundle-{{ .Environment.CIRCLE_JOB }}-{{ epoch }}
-  paths:
-    - /home/circleci/app/vendor/bundle
-    - /home/circleci/app/gemfiles/vendor/bundle
-    - /home/circleci/app/Gemfile.lock
+    parameters:
+      bundle_without:
+        type: string
 
-rspec_steps: &rspec_steps
-  - run:
-      name: Setup oracle
-      command: |
-        export PATH=$ORACLE_HOME/bin:$PATH
-        export LD_LIBRARY_PATH=$ORACLE_HOME/lib
-        apt-get update
-        apt-get install -y ruby2.3 ruby2.3-dev git build-essential tar
-        /usr/sbin/startup.sh
-        /etc/init.d/oracle-xe status
-      shell: /bin/bash -xe
+    steps:
+      - restore_cache:
+          keys:
+            - v3-bundle-{{ .Environment.CIRCLE_JOB }}-{{ epoch }}
+            - v3-bundle-{{ .Environment.CIRCLE_JOB }}
 
-  - checkout
-  - restore_cache:
-      <<: *restore_bundle_cache_option
-  - run: ./.circleci/setup.sh
-  - save_cache:
-      <<: *save_bundle_cache_option
+      - run:
+          name: Setup
+          command: |
+            set -xe
+            gem install bundler --no-document
 
-  - run: ./ci/build.sh
+            ruby --version
+            bundle --version
+            gem --version
 
-build_jobs: &build_jobs
-  - oracle:activerecord:4.2
-  - oracle:activerecord:5.0
-  - oracle:activerecord:5.1
-  - oracle:activerecord:5.2
-  - rubocop
+            bundle check || bundle install --jobs=4 --without << parameters.bundle_without >> --path=${BUNDLE_PATH:-vendor/bundle}
+            bundle clean
+
+      - save_cache:
+          key: v3-bundle-{{ .Environment.CIRCLE_JOB }}-{{ epoch }}
+          paths:
+            - /home/circleci/app/vendor/bundle
+            - /home/circleci/app/gemfiles/vendor/bundle
+            - /home/circleci/app/Gemfile.lock
 
 jobs:
-  oracle:activerecord:4.2:
-    <<: *oracle
-
+  oracle_activerecord:
+    parameters:
+      gemfile:
+        type: string
+    executor:
+      name: oracle
     environment:
-      BUNDLE_GEMFILE: gemfiles/activerecord_4_2.gemfile
+      BUNDLE_GEMFILE: gemfiles/<< parameters.gemfile >>.gemfile
+    steps:
+      - run:
+          name: Setup oracle
+          command: |
+            export PATH=$ORACLE_HOME/bin:$PATH
+            export LD_LIBRARY_PATH=$ORACLE_HOME/lib
+            apt-get update
+            apt-get install -y ruby2.3 ruby2.3-dev git build-essential tar
+            /usr/sbin/startup.sh
+            /etc/init.d/oracle-xe status
+          shell: /bin/bash -xe
 
-    steps: *rspec_steps
+      - checkout
+      - setup_bundle:
+          bundle_without: mysql postgresql sqlite3
 
-  oracle:activerecord:5.0:
-    <<: *oracle
-
-    environment:
-      BUNDLE_GEMFILE: gemfiles/activerecord_5_0.gemfile
-
-    steps: *rspec_steps
-
-  oracle:activerecord:5.1:
-    <<: *oracle
-
-    environment:
-      BUNDLE_GEMFILE: gemfiles/activerecord_5_1.gemfile
-
-    steps: *rspec_steps
-
-  oracle:activerecord:5.2:
-    <<: *oracle
-
-    environment:
-      BUNDLE_GEMFILE: gemfiles/activerecord_5_2.gemfile
-
-    steps: *rspec_steps
+      - run: ./ci/build.sh
 
   rubocop:
-    <<: *default
+    executor:
+      name: ruby
 
     steps:
       - checkout
-      - restore_cache:
-          <<: *restore_bundle_cache_option
-      - run: ./.circleci/setup.sh
-      - save_cache:
-          <<: *save_bundle_cache_option
+      - setup_bundle:
+          bundle_without: mysql postgresql sqlite3 oracle
 
       - run: bundle exec rubocop
+
+build_jobs: &build_jobs
+  - oracle_activerecord:
+      name:    "oracle_activerecord:4.2"
+      gemfile: "activerecord_4_2"
+  - oracle_activerecord:
+      name:    "oracle_activerecord:5.0"
+      gemfile: "activerecord_5_0"
+  - oracle_activerecord:
+      name:    "oracle_activerecord:5.1"
+      gemfile: "activerecord_5_1"
+  - oracle_activerecord:
+      name:    "oracle_activerecord:5.2"
+      gemfile: "activerecord_5_2"
+  - rubocop
 
 workflows:
   version: 2
