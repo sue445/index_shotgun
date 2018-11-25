@@ -6,7 +6,7 @@ environment: &environment
   LC_ALL:   C.UTF-8
 
   BUNDLE_PATH: vendor/bundle
-  CODECLIMATE_REPO_TOKEN: 377596024a4c6f3c4c4b9a0cd16add92fb5e7f716663629b5efd080377c0b838
+  CC_TEST_REPORTER_ID: 377596024a4c6f3c4c4b9a0cd16add92fb5e7f716663629b5efd080377c0b838
 
 executors:
   ruby:
@@ -65,6 +65,26 @@ commands:
             - /home/circleci/app/gemfiles/vendor/bundle
             - /home/circleci/app/Gemfile.lock
 
+  with-cc-test-reporter:
+    description: "Run test with cc-test-reporter"
+    parameters:
+      steps:
+        type: steps
+        default: []
+        description: "Run steps between `before-build` and `after-build`"
+    steps:
+      - run:
+          name: Setup Code Climate test-reporter
+          command: |
+            # download test reporter as a static binary
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+            chmod +x ./cc-test-reporter
+      - run: ./cc-test-reporter before-build
+      - steps: << parameters.steps >>
+      - run:
+          command: ./cc-test-reporter after-build --coverage-input-type simplecov --exit-code $?
+          when: always
+
 jobs:
   oracle_activerecord:
     parameters:
@@ -81,7 +101,7 @@ jobs:
             export PATH=$ORACLE_HOME/bin:$PATH
             export LD_LIBRARY_PATH=$ORACLE_HOME/lib
             apt-get update
-            apt-get install -y ruby2.3 ruby2.3-dev git build-essential tar
+            apt-get install -y ruby2.3 ruby2.3-dev git build-essential tar curl
             /usr/sbin/startup.sh
             /etc/init.d/oracle-xe status
           shell: /bin/bash -xe
@@ -90,7 +110,9 @@ jobs:
       - setup_bundle:
           bundle_without: mysql postgresql sqlite3
 
-      - run: ./ci/build.sh
+      - with-cc-test-reporter:
+          steps:
+            - run: ./ci/build.sh
 
   rubocop:
     executor:
