@@ -16,13 +16,17 @@ env:
   - DATABASE=postgresql
   - DATABASE=sqlite3
 before_script:
-  - export CI=true
-  - export CODECLIMATE_REPO_TOKEN=377596024a4c6f3c4c4b9a0cd16add92fb5e7f716663629b5efd080377c0b838
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+  - export CC_TEST_REPORTER_ID=377596024a4c6f3c4c4b9a0cd16add92fb5e7f716663629b5efd080377c0b838
 before_install:
   - gem update --system --no-document
   - gem install bundler -v 1.16.1 --no-document
 bundler_args: --without oracle
 script: "./ci/build.sh"
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 branches:
   only:
     - master
