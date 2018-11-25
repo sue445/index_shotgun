@@ -1,47 +1,47 @@
 language: ruby
 rvm:
-- 2.1
-- 2.2.2
-- 2.3.1
-- 2.4.0
-- 2.5.0
-- ruby-head
+  - 2.1
+  - 2.2.2
+  - 2.3.1
+  - 2.4.0
+  - 2.5.0
+  - ruby-head
 gemfile:
-- gemfiles/activerecord_4_2.gemfile
-- gemfiles/activerecord_5_0.gemfile
-- gemfiles/activerecord_5_1.gemfile
-- gemfiles/activerecord_5_2.gemfile
+  - gemfiles/activerecord_4_2.gemfile
+  - gemfiles/activerecord_5_0.gemfile
+  - gemfiles/activerecord_5_1.gemfile
+  - gemfiles/activerecord_5_2.gemfile
 env:
-- DATABASE=mysql
-- DATABASE=postgresql
-- DATABASE=sqlite3
+  - DATABASE=mysql
+  - DATABASE=postgresql
+  - DATABASE=sqlite3
 before_script:
-- export CI=true
-- export CODECLIMATE_REPO_TOKEN=377596024a4c6f3c4c4b9a0cd16add92fb5e7f716663629b5efd080377c0b838
+  - export CI=true
+  - export CODECLIMATE_REPO_TOKEN=377596024a4c6f3c4c4b9a0cd16add92fb5e7f716663629b5efd080377c0b838
 before_install:
-- gem update --system --no-document
-- gem install bundler -v 1.16.1 --no-document
+  - gem update --system --no-document
+  - gem install bundler -v 1.16.1 --no-document
 bundler_args: --without oracle
 script: "./ci/build.sh"
 branches:
   only:
-  - master
+    - master
 notifications:
   email: false
   slack:
     secure: YGQKOd0oz96gfQtyfTLj7N2Riq93oj1lR9X5hf4071Zu9q3wQjLD4a5y39iVAtOpK2Lw3ShM93kcGREZfpThx9jQ0jUd26DWLLFokZvM82l5+hD7PMhLU1Pv/EbW7mTGAw1TR0su98m91A71qJghdZsT/UrP+QN/4zV72I8XiYrkAiKaTLaucEN4Pn2GgSAGV4Hs7eqT7jNBkGbxSOio3MttoYMDz7dBfR3Z8GRk7jSL5z820zejHNPbfbpwZQhtx/rY/KGSHoIRDc7je6Aiebd5wElQFKsh13LFYSbGaYvB2gRdU/ZmyG0YLV+0hUvWYS14QvCUFrCbiKmRf58tTk3Y/FVtBga+Aj11JrAgpvR9qf2y+gC3BwBwBwaElZ2gMmfZOzXPI7P+OATKbVCQOE4PCAIUkfBbaYkg6FJlYwaume5n+ObLhZPZwa8EGaOkrzonKRhU7hMBT6A+aQkwz0wfccErEog8vB/5OYSMquxZtfWywLgUpnyg97SYeC8aaON+/U8edWsYUR+0bBIySNYEAq0algQEo52cLh4qNpLJeb/zRdFX2b+CI1EYPa+rDSygD7NpT+mx5/5leAcxyvp4S3iKxjFEVkoKwIEoLnqbqjarwz2LjJ+l32wZDhmBV5UggpKoieV5KtpkIwOCJ4g6t+aq786oSW+/GWWI9s0=
 matrix:
   allow_failures:
-  - rvm: ruby-head
+    - rvm: ruby-head
 
   exclude:
-  # NOTE: activesupport 5.x requires Ruby version >= 2.2.2
-  - rvm: 2.1
-    gemfile: gemfiles/activerecord_5_0.gemfile
-  - rvm: 2.1
-    gemfile: gemfiles/activerecord_5_1.gemfile
-  - rvm: 2.1
-    gemfile: gemfiles/activerecord_5_2.gemfile
+    # NOTE: activesupport 5.x requires Ruby version >= 2.2.2
+    - rvm: 2.1
+      gemfile: gemfiles/activerecord_5_0.gemfile
+    - rvm: 2.1
+      gemfile: gemfiles/activerecord_5_1.gemfile
+    - rvm: 2.1
+      gemfile: gemfiles/activerecord_5_2.gemfile
 cache: bundler
 sudo: false
 dist: precise
