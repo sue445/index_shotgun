@@ -24,7 +24,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "thor"
 
   spec.add_development_dependency "bundler"
-  spec.add_development_dependency "codeclimate-test-reporter", "~> 1.0.0"
   spec.add_development_dependency "coveralls"
   spec.add_development_dependency "onkcop", "0.53.0.0"
   spec.add_development_dependency "pry-byebug"

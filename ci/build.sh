@@ -2,7 +2,6 @@
 
 cp ci/database.yml.${DATABASE} spec/config/database.yml
 bundle exec rspec --profile
-bundle exec codeclimate-test-reporter
 
 bundle exec ./exe/index_shotgun version
 
