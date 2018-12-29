@@ -37,6 +37,11 @@ notifications:
 matrix:
   allow_failures:
     - rvm: ruby-head
+  include:
+    - rvm: 2.6.0
+      env: RUBYOPT="--jit"
+    - rvm: ruby-head
+      env: RUBYOPT="--jit"
 
   exclude:
     # NOTE: activesupport 5.x requires Ruby version >= 2.2.2
