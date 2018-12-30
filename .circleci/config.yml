@@ -96,12 +96,20 @@ jobs:
       BUNDLE_GEMFILE: gemfiles/<< parameters.gemfile >>.gemfile
     steps:
       - run:
+          name: Setup ruby
+          command: |
+            apt-get update
+            apt-get install -y software-properties-common
+            apt-add-repository -y ppa:brightbox/ruby-ng
+            apt-get update
+            apt-get install -y ruby2.5 ruby2.5-dev git build-essential tar curl
+          shell: /bin/bash -xe
+
+      - run:
           name: Setup oracle
           command: |
             export PATH=$ORACLE_HOME/bin:$PATH
             export LD_LIBRARY_PATH=$ORACLE_HOME/lib
-            apt-get update
-            apt-get install -y ruby2.3 ruby2.3-dev git build-essential tar curl
             /usr/sbin/startup.sh
             /etc/init.d/oracle-xe status
           shell: /bin/bash -xe
