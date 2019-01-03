@@ -46,12 +46,9 @@ commands:
             - v3-bundle-{{ .Environment.CIRCLE_JOB }}
 
       - run:
-          name: Setup
+          name: Setup bundle
           command: |
             set -xe
-            gem update --system --no-document
-            gem install bundler --no-document
-
             ruby --version
             bundle --version
             gem --version
@@ -104,6 +101,9 @@ jobs:
             apt-add-repository -y ppa:brightbox/ruby-ng
             apt-get update
             apt-get install -y ruby2.5 ruby2.5-dev git build-essential tar curl
+
+            gem update --system --no-document
+            gem install bundler --no-document
           shell: /bin/bash -xe
 
       - run:
