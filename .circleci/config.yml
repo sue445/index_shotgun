@@ -49,6 +49,7 @@ commands:
           name: Setup
           command: |
             set -xe
+            gem update --system --no-document
             gem install bundler --no-document
 
             ruby --version
