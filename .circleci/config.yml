@@ -11,7 +11,7 @@ environment: &environment
 executors:
   ruby:
     docker:
-      - image: circleci/ruby:2.1
+      - image: circleci/ruby
         environment:
           <<: *environment
 
