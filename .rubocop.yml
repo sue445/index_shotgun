@@ -6,8 +6,9 @@ inherit_gem:
 AllCops:
   TargetRubyVersion: 2.3
 
-RSpec/NestedGroups:
-  Enabled: false
+Layout/AlignHash:
+  EnforcedHashRocketStyle: table
+  EnforcedColonStyle:      table
 
 Metrics/AbcSize:
   Max: 33
@@ -15,10 +16,13 @@ Metrics/AbcSize:
 Metrics/MethodLength:
   Max: 25
 
+RSpec/NestedGroups:
+  Enabled: false
+
+RSpec/SharedExamples:
+  Enabled: false
+
 Security/Eval:
   Exclude:
     - "Gemfile"
     - "gemfiles/*.gemfile"
-
-RSpec/SharedExamples:
-  Enabled: false
