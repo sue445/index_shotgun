@@ -46,7 +46,7 @@ ALTER TABLE `user_stocks` DROP INDEX `index_user_stocks_on_user_id`;
 ```
 
 ## Requirements
-* Ruby 2.1+
+* Ruby 2.3+
 * Database you want to use (ex. MySQL, PostgreSQL or SQLite3)
 
 ## Installation
