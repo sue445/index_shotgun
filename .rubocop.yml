@@ -9,6 +9,10 @@ AllCops:
 RSpec/NestedGroups:
   Enabled: false
 
+Layout/AlignHash:
+  EnforcedHashRocketStyle: table
+  EnforcedColonStyle:      table
+
 Metrics/AbcSize:
   Max: 33
 
