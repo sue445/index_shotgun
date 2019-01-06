@@ -11,7 +11,7 @@ describe "index_shotgun" do # rubocop:disable RSpec/DescribeClass
     end
 
     let(:message) do
-      <<-MSG.strip_heredoc
+      <<~MSG
         # =============================
         # user_stocks
         # =============================

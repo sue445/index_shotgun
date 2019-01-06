@@ -1,14 +1,11 @@
 language: ruby
 rvm:
-  - 2.1
-  - 2.2.2
   - 2.3
   - 2.4
   - 2.5
   - 2.6
   - ruby-head
 gemfile:
-  - gemfiles/activerecord_4_2.gemfile
   - gemfiles/activerecord_5_0.gemfile
   - gemfiles/activerecord_5_1.gemfile
   - gemfiles/activerecord_5_2.gemfile
@@ -38,14 +35,5 @@ notifications:
 matrix:
   allow_failures:
     - rvm: ruby-head
-
-  exclude:
-    # NOTE: activesupport 5.x requires Ruby version >= 2.2.2
-    - rvm: 2.1
-      gemfile: gemfiles/activerecord_5_0.gemfile
-    - rvm: 2.1
-      gemfile: gemfiles/activerecord_5_1.gemfile
-    - rvm: 2.1
-      gemfile: gemfiles/activerecord_5_2.gemfile
 cache: bundler
 sudo: false

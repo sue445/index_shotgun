@@ -34,7 +34,7 @@ module IndexShotgun
 
         message =
           duplicate_indexes.each_with_object("") do |info, str|
-            str << <<-MSG.strip_heredoc
+            str << <<~MSG
               # =============================
               # #{info[:index].table}
               # =============================
@@ -47,7 +47,7 @@ module IndexShotgun
           end
 
         total_index_count = tables.map {|table| table_indexes(table).count }.sum
-        message << <<-MSG.strip_heredoc
+        message << <<~MSG
           # ########################################################################
           # Summary of indexes
           # ########################################################################

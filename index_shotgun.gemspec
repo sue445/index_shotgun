@@ -13,14 +13,14 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/sue445/index_shotgun"
   spec.license       = "MIT"
 
-  spec.required_ruby_version = ">= 2.1"
+  spec.required_ruby_version = ">= 2.3.0"
 
   spec.files         = `git ls-files -z`.split("\x0").reject {|f| f.match(%r{^(test|spec|features)/}) }
   spec.bindir        = "exe"
   spec.executables   = spec.files.grep(%r{^exe/}) {|f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "activerecord"
+  spec.add_dependency "activerecord", ">= 5.0.0"
   spec.add_dependency "thor"
 
   spec.add_development_dependency "bundler"
