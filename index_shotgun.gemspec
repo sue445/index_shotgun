@@ -25,13 +25,13 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "coveralls"
-  spec.add_development_dependency "onkcop", "0.53.0.0"
+  spec.add_development_dependency "onkcop", "0.53.0.2"
   spec.add_development_dependency "pry-byebug"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rake_shared_context", "0.2.2"
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "rspec-its"
   spec.add_development_dependency "rspec-power_assert"
-  spec.add_development_dependency "rubocop", "0.53.0"
+  spec.add_development_dependency "rubocop", "0.62.0"
   spec.add_development_dependency "simplecov"
 end
