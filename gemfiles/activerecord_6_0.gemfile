@@ -1,0 +1,23 @@
+source "https://rubygems.org"
+
+gem "activerecord", "~> 6.0.0.beta1"
+
+group :postgresql do
+  # https://github.com/rails/rails/blob/v6.0.0.beta1/activerecord/lib/active_record/connection_adapters/postgresql_adapter.rb#L4
+  gem "pg", ">= 0.18", "< 2.0"
+end
+
+group :mysql do
+  # https://github.com/rails/rails/blob/v6.0.0.beta1/activerecord/lib/active_record/connection_adapters/mysql2_adapter.rb#L6
+  gem "mysql2", ">= 0.4.4"
+end
+
+group :oracle do
+  # TODO: Edit version after activerecord-oracle_enhanced-adapter supports rails 6.0
+  # gem "activerecord-oracle_enhanced-adapter", "~> 5.2.3"
+  gem "ruby-oci8"
+end
+
+gemspec path: "../"
+
+eval(Pathname("#{__dir__}/common.gemfile").read)
