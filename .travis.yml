@@ -9,6 +9,10 @@ gemfile:
   - gemfiles/activerecord_5_0.gemfile
   - gemfiles/activerecord_5_1.gemfile
   - gemfiles/activerecord_5_2.gemfile
+  - gemfiles/activerecord_6_0.gemfile
+addons:
+  # Rails 6.0 requires PostgreSQL 9.3+
+  postgresql: "9.3"
 env:
   - DATABASE=mysql
   - DATABASE=postgresql
@@ -35,5 +39,12 @@ notifications:
 matrix:
   allow_failures:
     - rvm: ruby-head
+    - gemfile: gemfiles/activerecord_6_0.gemfile # TODO: Remove after Rails 6.0.0 is released
+  exclude:
+    # Rails 6.0 requires Ruby 2.5+
+    - rvm:     2.3
+      gemfile: gemfiles/activerecord_6_0.gemfile
+    - rvm:     2.4
+      gemfile: gemfiles/activerecord_6_0.gemfile
 cache: bundler
 sudo: false
