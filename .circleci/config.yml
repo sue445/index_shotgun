@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  ruby-orbs: sue445/ruby-orbs@volatile
+
 environment: &environment
   LANG:     en_US.UTF-8
   LANGUAGE: en_US.UTF-8
@@ -32,37 +35,6 @@ executors:
     working_directory: /home/circleci/app
 
 commands:
-  setup_bundle:
-    description: "Setup bundle with cache"
-
-    parameters:
-      bundle_without:
-        type: string
-
-    steps:
-      - restore_cache:
-          keys:
-            - v3-bundle-{{ .Environment.CIRCLE_JOB }}-{{ epoch }}
-            - v3-bundle-{{ .Environment.CIRCLE_JOB }}
-
-      - run:
-          name: Setup bundle
-          command: |
-            set -xe
-            ruby --version
-            bundle --version
-            gem --version
-
-            bundle check || bundle install --jobs=4 --without << parameters.bundle_without >> --path=${BUNDLE_PATH:-vendor/bundle}
-            bundle clean
-
-      - save_cache:
-          key: v3-bundle-{{ .Environment.CIRCLE_JOB }}-{{ epoch }}
-          paths:
-            - /home/circleci/app/vendor/bundle
-            - /home/circleci/app/gemfiles/vendor/bundle
-            - /home/circleci/app/Gemfile.lock
-
   with-cc-test-reporter:
     description: "Run test with cc-test-reporter"
     parameters:
@@ -116,8 +88,14 @@ jobs:
           shell: /bin/bash -xe
 
       - checkout
-      - setup_bundle:
-          bundle_without: mysql postgresql sqlite3
+
+      - ruby-orbs/bundle-install:
+          with_gemfile_lock: false
+          gemspec_name:      "index_shotgun"
+          cache_key_prefix:  "v3-bundle"
+          bundle_gemfile:    "gemfiles/<< parameters.gemfile >>.gemfile"
+          bundle_path:       "gemfiles/vendor/bundle"
+          bundle_extra_args: "--without mysql postgresql sqlite3"
 
       - with-cc-test-reporter:
           steps:
@@ -129,8 +107,13 @@ jobs:
 
     steps:
       - checkout
-      - setup_bundle:
-          bundle_without: mysql postgresql sqlite3 oracle
+      - ruby-orbs/bundle-install:
+          with_gemfile_lock: false
+          gemspec_name:      "index_shotgun"
+          cache_key_prefix:  "v3-bundle"
+          bundle_gemfile:    "Gemfile"
+          bundle_path:       "vendor/bundle"
+          bundle_extra_args: "--without mysql postgresql sqlite3 oracle"
 
       - run: bundle exec rubocop
 
