@@ -19,5 +19,3 @@ end
 group :sqlite3 do
   gem "sqlite3"
 end
-
-eval(Pathname("gemfiles/common.gemfile").read)
