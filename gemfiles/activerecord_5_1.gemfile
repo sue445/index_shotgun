@@ -17,6 +17,10 @@ group :oracle do
   gem "ruby-oci8"
 end
 
+group :sqlite3 do
+  gem "sqlite3", "~> 1.3.6"
+end
+
 gemspec path: "../"
 
 eval(Pathname("#{__dir__}/common.gemfile").read)
