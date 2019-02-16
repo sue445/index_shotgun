@@ -22,13 +22,10 @@ executors:
 
   oracle:
     docker:
-      - image: wnameless/oracle-xe-11g:16.04
+      - image: deepdiver/docker-oracle-xe-11g
         environment:
           <<: *environment
           DATABASE: oracle
-
-          ORACLE_HOME: /u01/app/oracle/product/11.2.0/xe
-          ORACLE_SID: XE
           ORACLE_SYSTEM_PASSWORD: oracle
           NLS_LANG: AMERICAN_AMERICA.UTF8
 
@@ -81,9 +78,12 @@ jobs:
       - run:
           name: Setup oracle
           command: |
-            export PATH=$ORACLE_HOME/bin:$PATH
             export LD_LIBRARY_PATH=$ORACLE_HOME/lib
-            /usr/sbin/startup.sh
+
+            # https://github.com/DeepDiver1975/docker-oracle-xe-11g/blob/2ebd4ebca56ea9833ded912612abfbc22914a64a/Dockerfile#L53-L54
+            sed -i -E "s/HOST = [^)]+/HOST = $HOSTNAME/g" /u01/app/oracle/product/11.2.0/xe/network/admin/listener.ora
+            service oracle-xe start
+
             /etc/init.d/oracle-xe status
           shell: /bin/bash -xe
 
