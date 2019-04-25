@@ -39,7 +39,6 @@ notifications:
 matrix:
   allow_failures:
     - rvm: ruby-head
-    - gemfile: gemfiles/activerecord_6_0.gemfile # TODO: Remove after Rails 6.0.0 is released
   exclude:
     # Rails 6.0 requires Ruby 2.5+
     - rvm:     2.3
