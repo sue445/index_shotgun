@@ -13,8 +13,7 @@ group :mysql do
 end
 
 group :oracle do
-  # TODO: Edit version after activerecord-oracle_enhanced-adapter supports rails 6.0
-  # gem "activerecord-oracle_enhanced-adapter", "~> 5.2.3"
+  gem "activerecord-oracle_enhanced-adapter", "~> 6.0.0.rc1"
   gem "ruby-oci8"
 end
 
