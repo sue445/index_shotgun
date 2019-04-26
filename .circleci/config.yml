@@ -127,6 +127,9 @@ build_jobs: &build_jobs
   - oracle_activerecord:
       name:    "oracle_activerecord:5.2"
       gemfile: "activerecord_5_2"
+  - oracle_activerecord:
+      name:    "oracle_activerecord:6.0"
+      gemfile: "activerecord_6_0"
   - rubocop
 
 workflows:
