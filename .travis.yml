@@ -10,9 +10,9 @@ gemfile:
   - gemfiles/activerecord_5_1.gemfile
   - gemfiles/activerecord_5_2.gemfile
   - gemfiles/activerecord_6_0.gemfile
-addons:
-  # Rails 6.0 requires PostgreSQL 9.3+
-  postgresql: "9.3"
+services:
+  - mysql
+  - postgresql
 env:
   - DATABASE=mysql
   - DATABASE=postgresql
@@ -47,4 +47,4 @@ matrix:
       gemfile: gemfiles/activerecord_6_0.gemfile
 cache: bundler
 sudo: false
-dist: trusty
+dist: xenial
