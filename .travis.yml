@@ -47,4 +47,4 @@ matrix:
       gemfile: gemfiles/activerecord_6_0.gemfile
 cache: bundler
 sudo: false
-dist: trusty
+dist: xenial
