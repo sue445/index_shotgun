@@ -1,7 +1,8 @@
 version: 2.1
 
 orbs:
-  ruby-orbs: sue445/ruby-orbs@volatile
+  codeclimate: sue445/codeclimate@volatile
+  ruby-orbs:   sue445/ruby-orbs@volatile
 
 environment: &environment
   LANG:     en_US.UTF-8
@@ -30,27 +31,6 @@ executors:
           NLS_LANG: AMERICAN_AMERICA.UTF8
 
     working_directory: /home/circleci/app
-
-commands:
-  with-cc-test-reporter:
-    description: "Run test with cc-test-reporter"
-    parameters:
-      steps:
-        type: steps
-        default: []
-        description: "Run steps between `before-build` and `after-build`"
-    steps:
-      - run:
-          name: Setup Code Climate test-reporter
-          command: |
-            # download test reporter as a static binary
-            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-            chmod +x ./cc-test-reporter
-      - run: ./cc-test-reporter before-build
-      - steps: << parameters.steps >>
-      - run:
-          command: ./cc-test-reporter after-build --coverage-input-type simplecov --exit-code $?
-          when: always
 
 jobs:
   oracle_activerecord:
@@ -97,7 +77,8 @@ jobs:
           bundle_path:       "gemfiles/vendor/bundle"
           bundle_extra_args: "--without mysql postgresql sqlite3"
 
-      - with-cc-test-reporter:
+      - codeclimate/with-cc-test-reporter:
+          after_build_args: '--coverage-input-type simplecov'
           steps:
             - run: ./ci/build.sh
 
