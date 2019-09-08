@@ -9,16 +9,16 @@ bundle exec ./exe/index_shotgun version
 set +e
 
 if [ ${DATABASE} = "mysql" ]; then
-  bundle exec ./exe/index_shotgun mysql --database=index_shotgun_test --username=travis
+  bundle exec ./exe/index_shotgun mysql --database=index_shotgun_test --username=root --password=root --port=$MYSQL_PORT
   RET=$?
 elif [ ${DATABASE} = "postgresql" ]; then
-  bundle exec ./exe/index_shotgun postgresql --database=index_shotgun_test --username=postgres
+  bundle exec ./exe/index_shotgun postgresql --database=index_shotgun_test --username=postgres --password=postgres --port=$POSTGRESQL_PORT
   RET=$?
 elif [ ${DATABASE} = "sqlite3" ]; then
   bundle exec ./exe/index_shotgun sqlite3 --database=spec/db/index_shotgun_test.db
   RET=$?
 elif [ ${DATABASE} = "oracle" ]; then
-  bundle exec ./exe/index_shotgun oracle --database=xe --username=system --password=oracle
+  bundle exec ./exe/index_shotgun oracle --database=xe --username=system --password=oracle --port=$ORACLE_PORT
   RET=$?
 fi
 

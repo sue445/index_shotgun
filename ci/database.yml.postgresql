@@ -2,3 +2,6 @@ test:
   adapter: postgresql
   database: index_shotgun_test
   username: postgres
+  password: postgres
+  port: <%= ENV["POSTGRESQL_PORT"] %>
+  host: localhost
