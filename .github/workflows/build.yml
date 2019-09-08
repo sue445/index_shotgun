@@ -6,7 +6,7 @@ on:
     - cron: "0 20 * * 5" # JST 5:00 (Sat)
 
 jobs:
-  sqlite3:
+  matrix:
     runs-on: ubuntu-latest
 
     strategy:
@@ -21,78 +21,11 @@ jobs:
           - activerecord_5_1.gemfile
           - activerecord_5_2.gemfile
           - activerecord_6_0.gemfile
-        exclude:
-          # Rails 6.0 requires Ruby 2.5+
-          - ruby:    v2.3.x
-            gemfile: activerecord_6_0.gemfile
-          - ruby:    v2.4.x
-            gemfile: activerecord_6_0.gemfile
-
-    steps:
-      - uses: actions/checkout@v1
-
-      - name: Set up Ruby
-        uses: actions/setup-ruby@v1
-        with:
-          ruby-version: ${{ matrix.ruby }}
-
-      - name: Install
-        run: |
-          set -xe
-          ./ci/install.sh
-        env:
-          BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}
-          DATABASE: sqlite3
-
-      - name: setup cc-test-reporter
-        run: |
-          set -xe
-          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-          chmod +x ./cc-test-reporter
-          ./cc-test-reporter before-build
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-
-      - name: Run test
-        run: |
-          set -xe
-          ./ci/build.sh
-        env:
-          BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}
-          DATABASE: sqlite3
-          CI: "true"
-
-      - name: teardown cc-test-reporter
-        run: |
-          ./cc-test-reporter after-build --exit-code $?
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-        if: always()
-
-      - name: Slack Notification (not success)
-        uses: homoluctus/slatify@v1.5
-        if: "! success()"
-        with:
-          job_name: '*build*'
-          type: ${{ job.status }}
-          icon_emoji: ":octocat:"
-          url: ${{ secrets.SLACK_WEBHOOK }}
-
-  mysql:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        ruby:
-          - v2.3.x
-          - v2.4.x
-          - v2.5.x
-          - v2.6.x
-        gemfile:
-          - activerecord_5_0.gemfile
-          - activerecord_5_1.gemfile
-          - activerecord_5_2.gemfile
-          - activerecord_6_0.gemfile
+        database:
+          - sqlite3
+          - mysql
+          - postgresql
+          - oracle
         exclude:
           # Rails 6.0 requires Ruby 2.5+
           - ruby:    v2.3.x
@@ -107,81 +40,6 @@ jobs:
           - 3306
         env:
           MYSQL_ROOT_PASSWORD: root
-
-    steps:
-      - uses: actions/checkout@v1
-
-      - name: Set up Ruby
-        uses: actions/setup-ruby@v1
-        with:
-          ruby-version: ${{ matrix.ruby }}
-
-      - name: Install
-        run: |
-          set -xe
-          ./ci/install.sh
-        env:
-          BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}
-          DATABASE: mysql
-
-      - name: setup cc-test-reporter
-        run: |
-          set -xe
-          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-          chmod +x ./cc-test-reporter
-          ./cc-test-reporter before-build
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-
-      - name: Run test
-        run: |
-          set -xe
-          ./ci/build.sh
-        env:
-          BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}
-          DATABASE: mysql
-          CI: "true"
-          MYSQL_PORT: ${{ job.services.mysql.ports['3306'] }}
-
-      - name: teardown cc-test-reporter
-        run: |
-          ./cc-test-reporter after-build --exit-code $?
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-        if: always()
-
-      - name: Slack Notification (not success)
-        uses: homoluctus/slatify@v1.5
-        if: "! success()"
-        with:
-          job_name: '*build*'
-          type: ${{ job.status }}
-          icon_emoji: ":octocat:"
-          url: ${{ secrets.SLACK_WEBHOOK }}
-
-  postgresql:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        ruby:
-          - v2.3.x
-          - v2.4.x
-          - v2.5.x
-          - v2.6.x
-        gemfile:
-          - activerecord_5_0.gemfile
-          - activerecord_5_1.gemfile
-          - activerecord_5_2.gemfile
-          - activerecord_6_0.gemfile
-        exclude:
-          # Rails 6.0 requires Ruby 2.5+
-          - ruby:    v2.3.x
-            gemfile: activerecord_6_0.gemfile
-          - ruby:    v2.4.x
-            gemfile: activerecord_6_0.gemfile
-
-    services:
       postgresql:
         image: postgres:10-alpine
         ports:
@@ -190,81 +48,6 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-
-    steps:
-      - uses: actions/checkout@v1
-
-      - name: Set up Ruby
-        uses: actions/setup-ruby@v1
-        with:
-          ruby-version: ${{ matrix.ruby }}
-
-      - name: Install
-        run: |
-          set -xe
-          ./ci/install.sh
-        env:
-          BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}
-          DATABASE: postgresql
-
-      - name: setup cc-test-reporter
-        run: |
-          set -xe
-          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-          chmod +x ./cc-test-reporter
-          ./cc-test-reporter before-build
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-
-      - name: Run test
-        run: |
-          set -xe
-          ./ci/build.sh
-        env:
-          BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}
-          DATABASE: postgresql
-          CI: "true"
-          POSTGRESQL_PORT: ${{ job.services.postgresql.ports['5432'] }}
-
-      - name: teardown cc-test-reporter
-        run: |
-          ./cc-test-reporter after-build --exit-code $?
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-        if: always()
-
-      - name: Slack Notification (not success)
-        uses: homoluctus/slatify@v1.5
-        if: "! success()"
-        with:
-          job_name: '*build*'
-          type: ${{ job.status }}
-          icon_emoji: ":octocat:"
-          url: ${{ secrets.SLACK_WEBHOOK }}
-
-  oracle:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        ruby:
-          - v2.3.x
-          - v2.4.x
-          - v2.5.x
-          - v2.6.x
-        gemfile:
-          - activerecord_5_0.gemfile
-          - activerecord_5_1.gemfile
-          - activerecord_5_2.gemfile
-          - activerecord_6_0.gemfile
-        exclude:
-          # Rails 6.0 requires Ruby 2.5+
-          - ruby:    v2.3.x
-            gemfile: activerecord_6_0.gemfile
-          - ruby:    v2.4.x
-            gemfile: activerecord_6_0.gemfile
-
-    services:
       oracle:
         image: deepdiver/docker-oracle-xe-11g
         ports:
@@ -286,7 +69,7 @@ jobs:
           ./ci/install.sh
         env:
           BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}
-          DATABASE: oracle
+          DATABASE: ${{ matrix.database }}
           LD_LIBRARY_PATH: /opt/oracle/instantclient_19_3
 
       - name: setup cc-test-reporter
@@ -304,8 +87,10 @@ jobs:
           ./ci/build.sh
         env:
           BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}
-          DATABASE: oracle
+          DATABASE: ${{ matrix.database }}
           CI: "true"
+          MYSQL_PORT: ${{ job.services.mysql.ports['3306'] }}
+          POSTGRESQL_PORT: ${{ job.services.postgresql.ports['5432'] }}
           ORACLE_PORT: ${{ job.services.oracle.ports['1521'] }}
           LD_LIBRARY_PATH: /opt/oracle/instantclient_19_3
           NLS_LANG: AMERICAN_AMERICA.UTF8
@@ -359,10 +144,7 @@ jobs:
 
   notify:
     needs:
-      - sqlite3
-      - mysql
-      - postgresql
-      - oracle
+      - matrix
       - rubocop
 
     runs-on: ubuntu-latest
