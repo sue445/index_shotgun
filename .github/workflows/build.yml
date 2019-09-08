@@ -1,0 +1,92 @@
+name: Build
+
+on:
+  push:
+
+jobs:
+  matrix:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        ruby:
+          - 2.3
+          - 2.4
+          - 2.5
+          - 2.6
+        gemfile:
+          - activerecord_5_0.gemfile
+          - activerecord_5_1.gemfile
+          - activerecord_5_2.gemfile
+          - activerecord_6_0.gemfile
+        database:
+          - sqlite3
+        exclude:
+          # Rails 6.0 requires Ruby 2.5+
+          - ruby:    2.3
+            gemfile: activerecord_6_0.gemfile
+          - ruby:    2.4
+            gemfile: activerecord_6_0.gemfile
+
+    container:
+      image: ruby:${{ matrix.ruby }}
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Install
+        run: |
+          set -xe
+          ./ci/install.sh
+        env:
+          BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}
+          DATABASE: ${{ matrix.database }}
+
+      - name: setup cc-test-reporter
+        run: |
+          set -xe
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+          chmod +x ./cc-test-reporter
+          ./cc-test-reporter before-build
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+
+      - name: Run test
+        run: |
+          set -xe
+          ./ci/build.sh
+        env:
+          BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}
+          DATABASE: ${{ matrix.database }}
+          CI: "true"
+
+      - name: teardown cc-test-reporter
+        run: |
+          ./cc-test-reporter after-build --exit-code $?
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+        if: always()
+
+      - name: Slack Notification (not success)
+        uses: homoluctus/slatify@v1.5
+        if: "! success()"
+        with:
+          job_name: '*build*'
+          type: ${{ job.status }}
+          icon_emoji: ":octocat:"
+          url: ${{ secrets.SLACK_WEBHOOK }}
+
+  notify:
+    needs:
+      - matrix
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Slack Notification (success)
+        uses: homoluctus/slatify@v1.5
+        if: always()
+        with:
+          job_name: '*build*'
+          type: ${{ job.status }}
+          icon_emoji: ":octocat:"
+          url: ${{ secrets.SLACK_WEBHOOK }}
