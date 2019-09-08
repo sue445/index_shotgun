@@ -10,10 +10,10 @@ jobs:
     strategy:
       matrix:
         ruby:
-          - 2.3
-          - 2.4
-          - 2.5
-          - 2.6
+          - v2.3.x
+          - v2.4.x
+          - v2.5.x
+          - v2.6.x
         gemfile:
           - activerecord_5_0.gemfile
           - activerecord_5_1.gemfile
@@ -23,16 +23,18 @@ jobs:
           - sqlite3
         exclude:
           # Rails 6.0 requires Ruby 2.5+
-          - ruby:    2.3
+          - ruby:    v2.3.x
             gemfile: activerecord_6_0.gemfile
-          - ruby:    2.4
+          - ruby:    v2.4.x
             gemfile: activerecord_6_0.gemfile
-
-    container:
-      image: ruby:${{ matrix.ruby }}
 
     steps:
       - uses: actions/checkout@v1
+
+      - name: Set up Ruby
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
 
       - name: Install
         run: |
@@ -79,11 +81,13 @@ jobs:
   rubocop:
     runs-on: ubuntu-latest
 
-    container:
-      image: ruby:2.3
-
     steps:
       - uses: actions/checkout@v1
+
+      - name: Set up Ruby
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: v2.3.x
 
       - name: Install
         run: |
