@@ -39,7 +39,7 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: root
       postgresql:
-        image: postgres:10
+        image: postgres:10-alpine
         ports:
           - 5432
         env:
