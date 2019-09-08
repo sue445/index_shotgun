@@ -22,6 +22,7 @@ jobs:
         database:
           - sqlite3
           - mysql
+          - postgresql
         exclude:
           # Rails 6.0 requires Ruby 2.5+
           - ruby:    v2.3.x
@@ -36,6 +37,14 @@ jobs:
           - 3306
         env:
           MYSQL_ROOT_PASSWORD: root
+      postgresql:
+        image: postgres:10
+        ports:
+          - 5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
       - uses: actions/checkout@v1
@@ -71,6 +80,7 @@ jobs:
           DATABASE: ${{ matrix.database }}
           CI: "true"
           MYSQL_PORT: ${{ job.services.mysql.ports['3306'] }}
+          POSTGRESQL_PORT: ${{ job.services.postgresql.ports['5432'] }}
 
       - name: teardown cc-test-reporter
         run: |

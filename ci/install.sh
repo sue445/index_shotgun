@@ -10,6 +10,9 @@ if [ "${DATABASE}" = "mysql" ]; then
   bundle install --path vendor/bundle/ --jobs 4 --retry 3 --without oracle postgresql sqlite3
 
 elif [ "${DATABASE}" = "postgresql" ]; then
+  sudo apt-get update
+  sudo apt-get install -y libpq-dev
+
   bundle install --path vendor/bundle/ --jobs 4 --retry 3 --without mysql oracle sqlite3
 
 elif [ "${DATABASE}" = "sqlite3" ]; then

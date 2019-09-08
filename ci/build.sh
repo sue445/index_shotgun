@@ -12,7 +12,7 @@ if [ ${DATABASE} = "mysql" ]; then
   bundle exec ./exe/index_shotgun mysql --database=index_shotgun_test --username=root --password=root --port=$MYSQL_PORT
   RET=$?
 elif [ ${DATABASE} = "postgresql" ]; then
-  bundle exec ./exe/index_shotgun postgresql --database=index_shotgun_test --username=postgres
+  bundle exec ./exe/index_shotgun postgresql --database=index_shotgun_test --username=postgres --password=postgres --port=$POSTGRESQL_PORT
   RET=$?
 elif [ ${DATABASE} = "sqlite3" ]; then
   bundle exec ./exe/index_shotgun sqlite3 --database=spec/db/index_shotgun_test.db
