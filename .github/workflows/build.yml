@@ -76,9 +76,39 @@ jobs:
           icon_emoji: ":octocat:"
           url: ${{ secrets.SLACK_WEBHOOK }}
 
+  rubocop:
+    runs-on: ubuntu-latest
+
+    container:
+      image: ruby:2.3
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Install
+        run: |
+          set -xe
+          ./ci/install.sh
+
+      - name: Run rubocop
+        run: |
+          set -xe
+          bundle exec rubocop
+
+      - name: Slack Notification (not success)
+        uses: homoluctus/slatify@v1.5
+        if: "! success()"
+        with:
+          job_name: '*build*'
+          type: ${{ job.status }}
+          icon_emoji: ":octocat:"
+          url: ${{ secrets.SLACK_WEBHOOK }}
+
   notify:
     needs:
       - matrix
+      - rubocop
+
     runs-on: ubuntu-latest
 
     steps:
