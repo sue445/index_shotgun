@@ -1,4 +1,4 @@
-ActiveRecord::Base.configurations = YAML.load_file("#{__dir__}/../config/database.yml").with_indifferent_access
+ActiveRecord::Base.configurations = YAML.load(ERB.new(File.read("#{__dir__}/../config/database.yml")).result).with_indifferent_access
 
 test_configuration = ActiveRecord::Base.configurations["test"]
 ActiveRecord::Base.establish_connection(test_configuration)

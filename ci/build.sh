@@ -9,7 +9,7 @@ bundle exec ./exe/index_shotgun version
 set +e
 
 if [ ${DATABASE} = "mysql" ]; then
-  bundle exec ./exe/index_shotgun mysql --database=index_shotgun_test --username=travis
+  bundle exec ./exe/index_shotgun mysql --database=index_shotgun_test --username=root --password=root --port=$MYSQL_PORT
   RET=$?
 elif [ ${DATABASE} = "postgresql" ]; then
   bundle exec ./exe/index_shotgun postgresql --database=index_shotgun_test --username=postgres

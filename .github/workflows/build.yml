@@ -21,12 +21,21 @@ jobs:
           - activerecord_6_0.gemfile
         database:
           - sqlite3
+          - mysql
         exclude:
           # Rails 6.0 requires Ruby 2.5+
           - ruby:    v2.3.x
             gemfile: activerecord_6_0.gemfile
           - ruby:    v2.4.x
             gemfile: activerecord_6_0.gemfile
+
+    services:
+      mysql:
+        image: mysql:8
+        ports:
+          - 3306
+        env:
+          MYSQL_ROOT_PASSWORD: root
 
     steps:
       - uses: actions/checkout@v1
@@ -61,6 +70,7 @@ jobs:
           BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}
           DATABASE: ${{ matrix.database }}
           CI: "true"
+          MYSQL_PORT: ${{ job.services.mysql.ports['3306'] }}
 
       - name: teardown cc-test-reporter
         run: |
