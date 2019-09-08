@@ -2,6 +2,8 @@ name: Build
 
 on:
   push:
+  schedule:
+    - cron: "0 20 * * 5" # JST 5:00 (Sat)
 
 jobs:
   sqlite3:
