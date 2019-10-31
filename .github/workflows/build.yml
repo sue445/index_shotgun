@@ -69,6 +69,12 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
+      - name: Cache gemfiles/vendor/bundle
+        uses: actions/cache@preview
+        with:
+          path: gemfiles/vendor/bundle
+          key: gem-v1-${{ runner.os }}-${{ matrix.ruby }}-${{ matrix.gemfile }}-${{ matrix.database }}
+
       - name: Set up Ruby
         uses: actions/setup-ruby@v1
         with:
