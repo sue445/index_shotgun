@@ -1,6 +1,5 @@
 #!/bin/bash -xe
 
-gem update --system
 gem install bundler --no-document -v 1.17.3 || true
 
 if [ "${DATABASE}" = "mysql" ]; then

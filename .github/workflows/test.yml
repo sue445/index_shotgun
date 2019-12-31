@@ -1,4 +1,4 @@
-name: Build
+name: test
 
 on:
   push:
@@ -11,14 +11,19 @@ env:
 
 jobs:
   matrix:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.runner }}
 
     strategy:
+      fail-fast: false
+
       matrix:
         ruby:
-          - v2.4.x
-          - v2.5.x
-          - v2.6.x
+          - 2.3.0
+          - 2.4.0
+          - 2.5.0
+          - 2.6.0
+          - 2.7.0
+          - 2.8.0-dev
         gemfile:
           - activerecord_5_0.gemfile
           - activerecord_5_1.gemfile
@@ -29,11 +34,24 @@ jobs:
           - mysql
           - postgresql
           - oracle
+        include:
+          - ruby: 2.3.0
+            runner: ubuntu-16.04
+          - ruby: 2.4.0
+            runner: ubuntu-latest
+          - ruby: 2.5.0
+            runner: ubuntu-latest
+          - ruby: 2.6.0
+            runner: ubuntu-latest
+          - ruby: 2.7.0
+            runner: ubuntu-latest
+          - ruby: 2.8.0-dev
+            runner: ubuntu-latest
         exclude:
           # Rails 6.0 requires Ruby 2.5+
-          - ruby:    v2.3.x
+          - ruby:    2.3.0
             gemfile: activerecord_6_0.gemfile
-          - ruby:    v2.4.x
+          - ruby:    2.4.0
             gemfile: activerecord_6_0.gemfile
 
     env:
@@ -66,17 +84,42 @@ jobs:
           ORACLE_SYSTEM_PASSWORD: oracle
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
 
-      - name: Set up Ruby
-        uses: actions/setup-ruby@v1
+      - name: Set up rbenv
+        uses: sue445/setup-rbenv@develop
+
+      - name: Cache RBENV_ROOT
+        uses: actions/cache@v1
+        id: cache_rbenv
         with:
-          ruby-version: ${{ matrix.ruby }}
+          path: ~/.rbenv/versions
+          key: v1-rbenv-${{ runner.os }}-${{ matrix.ruby }}
+
+      - name: Reinstall libssl-dev
+        run: |
+          set -xe
+          sudo apt-get remove -y libssl-dev
+          sudo apt-get install -y libssl-dev=1.0.2g-1ubuntu4.15
+        if: matrix.runner == 'ubuntu-16.04'
+
+      - name: Install Ruby
+        run: |
+          eval "$(rbenv init -)"
+          set -xe
+          rbenv install -s $RBENV_VERSION
+        env:
+          RBENV_VERSION: ${{ matrix.ruby }}
+        continue-on-error: ${{ endsWith(matrix.ruby, '-dev') }}
 
       - name: Install
         run: |
+          eval "$(rbenv init -)"
           set -xe
           ./ci/install.sh
+        env:
+          RBENV_VERSION: ${{ matrix.ruby }}
+        continue-on-error: ${{ endsWith(matrix.ruby, '-dev') }}
 
       - name: setup cc-test-reporter
         run: |
@@ -84,49 +127,76 @@ jobs:
           curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
           chmod +x ./cc-test-reporter
           ./cc-test-reporter before-build
+        continue-on-error: ${{ endsWith(matrix.ruby, '-dev') }}
 
       - name: Run test
         run: |
+          eval "$(rbenv init -)"
           set -xe
           ./ci/build.sh
         env:
+          RBENV_VERSION: ${{ matrix.ruby }}
           MYSQL_PORT: ${{ job.services.mysql.ports['3306'] }}
           POSTGRESQL_PORT: ${{ job.services.postgresql.ports['5432'] }}
           ORACLE_PORT: ${{ job.services.oracle.ports['1521'] }}
+        continue-on-error: ${{ endsWith(matrix.ruby, '-dev') }}
 
       - name: teardown cc-test-reporter
         run: |
           ./cc-test-reporter after-build --exit-code $?
         if: always()
+        continue-on-error: ${{ endsWith(matrix.ruby, '-dev') }}
 
       - name: Slack Notification (not success)
         uses: homoluctus/slatify@v2.0.0
         if: "! success()"
         with:
-          job_name: '*build*'
+          job_name: ${{ format('*build* ({0}, {1}, {2})', matrix.ruby, matrix.gemfile, matrix.database) }}
           type: ${{ job.status }}
           icon_emoji: ":octocat:"
           url: ${{ secrets.SLACK_WEBHOOK }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
   rubocop:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-16.04
+
+    env:
+      RBENV_VERSION: 2.3.0
 
     steps:
       - uses: actions/checkout@v1
 
-      - name: Set up Ruby
-        uses: actions/setup-ruby@v1
+      - name: Set up rbenv
+        uses: sue445/setup-rbenv@develop
+
+      - name: Cache RBENV_ROOT
+        uses: actions/cache@v1
+        id: cache_rbenv
         with:
-          ruby-version: v2.4.x
+          path: ~/.rbenv/versions
+          key: v1-rbenv-${{ runner.os }}-${{ env.RBENV_VERSION }}
+
+      - name: Reinstall libssl-dev
+        run: |
+          set -xe
+          sudo apt-get remove -y libssl-dev
+          sudo apt-get install -y libssl-dev=1.0.2g-1ubuntu4.15
+
+      - name: Install Ruby
+        run: |
+          eval "$(rbenv init -)"
+          set -xe
+          rbenv install -s $RBENV_VERSION
 
       - name: Install
         run: |
+          eval "$(rbenv init -)"
           set -xe
           ./ci/install.sh
 
       - name: Run rubocop
         run: |
+          eval "$(rbenv init -)"
           set -xe
           bundle exec rubocop
 
@@ -134,7 +204,7 @@ jobs:
         uses: homoluctus/slatify@v2.0.0
         if: "! success()"
         with:
-          job_name: '*build*'
+          job_name: '*rubocop*'
           type: ${{ job.status }}
           icon_emoji: ":octocat:"
           url: ${{ secrets.SLACK_WEBHOOK }}
