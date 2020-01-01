@@ -129,13 +129,13 @@ jobs:
         env:
           RBENV_VERSION: ${{ matrix.ruby }}
 
-      - name: setup cc-test-reporter
-        run: |
-          set -xe
-          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-          chmod +x ./cc-test-reporter
-          ./cc-test-reporter before-build
- 
+      - name: Setup Code Climate Test Reporter
+        uses: aktions/codeclimate-test-reporter@v1
+        with:
+          codeclimate-test-reporter-id: ${{ secrets.CC_TEST_REPORTER_ID }}
+          command: before-build
+        continue-on-error: ${{ endsWith(matrix.ruby, '-dev') }}
+
       - name: Run test
         run: |
           eval "$(rbenv init -)"
@@ -146,12 +146,15 @@ jobs:
           MYSQL_PORT: ${{ job.services.mysql.ports['3306'] }}
           POSTGRESQL_PORT: ${{ job.services.postgresql.ports['5432'] }}
           ORACLE_PORT: ${{ job.services.oracle.ports['1521'] }}
- 
-      - name: teardown cc-test-reporter
-        run: |
-          ./cc-test-reporter after-build --exit-code $?
+
+      - name: Teardown Code Climate Test Reporter
+        uses: aktions/codeclimate-test-reporter@v1
+        with:
+          codeclimate-test-reporter-id: ${{ secrets.CC_TEST_REPORTER_ID }}
+          command: after-build
         if: always()
- 
+        continue-on-error: ${{ endsWith(matrix.ruby, '-dev') }}
+
       - name: Slack Notification (not success)
         uses: homoluctus/slatify@v2.0.0
         if: "! success()"
