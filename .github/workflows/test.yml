@@ -10,7 +10,7 @@ env:
   CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
 
 jobs:
-  matrix:
+  test:
     runs-on: ${{ matrix.runner }}
 
     strategy:
@@ -229,7 +229,7 @@ jobs:
 
   notify:
     needs:
-      - matrix
+      - test
       - rubocop
 
     runs-on: ubuntu-latest
