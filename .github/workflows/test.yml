@@ -108,6 +108,19 @@ jobs:
         env:
           RBENV_VERSION: ${{ matrix.ruby }}
 
+      - name: Generate unique cache key
+        run: uuidgen > uuid.txt
+
+      - name: Cache vendor/bundle
+        uses: actions/cache@v1
+        id: cache_gem
+        with:
+          path: vendor/bundle
+          key: v1-gem-${{ runner.os }}-${{ matrix.ruby }}-${{ matrix.gemfile }}-${{ matrix.database }}-${{ hashFiles('uuid.txt') }}
+          restore-keys: |
+            v1-gem-${{ runner.os }}-${{ matrix.ruby }}-${{ matrix.gemfile }}-${{ matrix.database }}-
+            v1-gem-${{ runner.os }}-${{ matrix.ruby }}-${{ matrix.gemfile }}-
+
       - name: Install
         run: |
           eval "$(rbenv init -)"
@@ -179,6 +192,18 @@ jobs:
           eval "$(rbenv init -)"
           set -xe
           rbenv install -s $RBENV_VERSION
+
+      - name: Generate unique cache key
+        run: uuidgen > uuid.txt
+
+      - name: Cache vendor/bundle
+        uses: actions/cache@v1
+        id: cache_gem_rubocop
+        with:
+          path: vendor/bundle
+          key: v1-gem-rubocop-${{ runner.os }}-${{ env.RBENV_VERSION }}-${{ hashFiles('uuid.txt') }}
+          restore-keys: |
+            v1-gem-rubocop-${{ runner.os }}-${{ env.RBENV_VERSION }}-
 
       - name: Install
         run: |
