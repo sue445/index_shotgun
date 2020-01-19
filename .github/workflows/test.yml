@@ -52,13 +52,13 @@ jobs:
       mysql:
         image: mysql:8
         ports:
-          - 3306
+          - 3307:3306
         env:
           MYSQL_ROOT_PASSWORD: root
       postgresql:
         image: postgres:10-alpine
         ports:
-          - 5432
+          - 5432:5432
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
@@ -66,7 +66,7 @@ jobs:
       oracle:
         image: deepdiver/docker-oracle-xe-11g
         ports:
-          - 1521
+          - 1521:1521
         env:
           ORACLE_SYSTEM_PASSWORD: oracle
 
@@ -101,7 +101,8 @@ jobs:
           set -xe
           ./ci/build.sh
         env:
-          MYSQL_PORT: ${{ job.services.mysql.ports['3306'] }}
+          # MYSQL_PORT: ${{ job.services.mysql.ports['3306'] }}
+          MYSQL_PORT: 3306
           POSTGRESQL_PORT: ${{ job.services.postgresql.ports['5432'] }}
           ORACLE_PORT: ${{ job.services.oracle.ports['1521'] }}
 

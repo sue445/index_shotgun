@@ -4,4 +4,4 @@ test:
   username: postgres
   password: postgres
   port: <%= ENV["POSTGRESQL_PORT"] %>
-  host: localhost
+  host: postgresql

@@ -1,5 +1,5 @@
 test:
   adapter: oracle_enhanced
-  database: //localhost:<%= ENV["ORACLE_PORT"] %>/xe
+  database: //oracle:<%= ENV["ORACLE_PORT"] %>/xe
   username: system
   password: oracle

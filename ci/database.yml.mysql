@@ -5,3 +5,4 @@ test:
   password: root
   encoding: utf8
   port: <%= ENV["MYSQL_PORT"] %>
+  host: mysql
