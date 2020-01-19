@@ -1,24 +1,22 @@
 #!/bin/bash -xe
 
-gem install bundler --no-document -v 1.17.3 || true
-
 if [ "${DATABASE}" = "mysql" ]; then
-  sudo apt-get update
-  sudo apt-get install -y libmysqlclient-dev
+  apt-get update
+  apt-get install -y libmariadb-dev
 
-  bundle install --path vendor/bundle/ --jobs 4 --retry 3 --without oracle postgresql sqlite3
+  BUNDLE_WITHOUT="oracle postgresql sqlite3"
 
 elif [ "${DATABASE}" = "postgresql" ]; then
-  sudo apt-get update
-  sudo apt-get install -y libpq-dev
+  apt-get update
+  apt-get install -y libpq-dev
 
-  bundle install --path vendor/bundle/ --jobs 4 --retry 3 --without mysql oracle sqlite3
+  BUNDLE_WITHOUT="mysql oracle sqlite3"
 
 elif [ "${DATABASE}" = "sqlite3" ]; then
-  sudo apt-get update
-  sudo apt-get install -y libsqlite3-dev
+  apt-get update
+  apt-get install -y libsqlite3-dev
 
-  bundle install --path vendor/bundle/ --jobs 4 --retry 3 --without mysql oracle postgresql
+  BUNDLE_WITHOUT="mysql oracle postgresql"
 
 elif [ "${DATABASE}" = "oracle" ]; then
   # c.f. https://github.com/kubo/ruby-oci8/blob/ruby-oci8-2.2.7/docs/install-instant-client.md#install-oracle-instant-client-packages
@@ -31,14 +29,19 @@ elif [ "${DATABASE}" = "oracle" ]; then
   unzip instantclient-basiclite-linux.x64-19.3.0.0.0dbru.zip
   unzip instantclient-sdk-linux.x64-19.3.0.0.0dbru.zip
 
-  sudo apt-get update
-  sudo apt-get install -y libaio1
+  apt-get update
+  apt-get install -y libaio1
 
   popd
 
-  bundle install --path vendor/bundle/ --jobs 4 --retry 3 --without mysql postgresql sqlite3
+  BUNDLE_WITHOUT="mysql postgresql sqlite3"
 
 else
-  bundle install --path vendor/bundle/ --jobs 4 --retry 3 --without mysql postgresql sqlite3 oracle
+  BUNDLE_WITHOUT="mysql postgresql sqlite3 oracle"
 
 fi
+
+bundle config path vendor/bundle
+bundle config without $BUNDLE_WITHOUT
+bundle install --path vendor/bundle/ --jobs $(nproc) --retry 3
+bundle update --jobs $(nproc) --retry 3
