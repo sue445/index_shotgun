@@ -93,6 +93,7 @@ jobs:
         with:
           codeclimate-test-reporter-id: ${{ secrets.CC_TEST_REPORTER_ID }}
           command: before-build
+        if: matrix.ruby >= 'ruby:2.4'
         continue-on-error: ${{ matrix.ruby == 'rubylang/ruby:master-nightly-bionic' }}
 
       - name: Run test
@@ -109,7 +110,7 @@ jobs:
         with:
           codeclimate-test-reporter-id: ${{ secrets.CC_TEST_REPORTER_ID }}
           command: after-build
-        if: always()
+        if: matrix.ruby >= 'ruby:2.4' && always()
         continue-on-error: ${{ matrix.ruby == 'rubylang/ruby:master-nightly-bionic' }}
 
       - name: Slack Notification (not success)
