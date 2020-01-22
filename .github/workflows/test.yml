@@ -10,7 +10,7 @@ env:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.runner }}
 
     strategy:
       fail-fast: false
@@ -32,6 +32,17 @@ jobs:
           - mysql
           - postgresql
           - oracle
+        include:
+          - ruby: 2.3
+            runner: ubuntu-16.04
+          - ruby: 2.4
+            runner: ubuntu-latest
+          - ruby: 2.5
+            runner: ubuntu-latest
+          - ruby: 2.6
+            runner: ubuntu-latest
+          - ruby: 2.7
+            runner: ubuntu-latest
         exclude:
           # Rails 6.0 requires Ruby 2.5+
           - ruby:    2.3
