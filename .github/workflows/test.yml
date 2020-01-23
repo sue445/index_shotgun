@@ -92,7 +92,7 @@ jobs:
         continue-on-error: true
 
       - name: Slack Notification (not success)
-        uses: homoluctus/slatify@v2.0.0
+        uses: homoluctus/slatify@master
         if: "! success()"
         with:
           job_name: ${{ format('*build* ({0}, {1}, {2})', matrix.ruby, matrix.gemfile, env.DATABASE) }}
@@ -194,7 +194,7 @@ jobs:
         continue-on-error: true
 
       - name: Slack Notification (not success)
-        uses: homoluctus/slatify@v2.0.0
+        uses: homoluctus/slatify@master
         if: "! success()"
         with:
           job_name: ${{ format('*build* ({0}, {1}, {2})', matrix.ruby, matrix.gemfile, env.DATABASE) }}
@@ -298,7 +298,7 @@ jobs:
         continue-on-error: true
 
       - name: Slack Notification (not success)
-        uses: homoluctus/slatify@v2.0.0
+        uses: homoluctus/slatify@master
         if: "! success()"
         with:
           job_name: ${{ format('*build* ({0}, {1}, {2})', matrix.ruby, matrix.gemfile, env.DATABASE) }}
@@ -403,7 +403,7 @@ jobs:
         continue-on-error: true
 
       - name: Slack Notification (not success)
-        uses: homoluctus/slatify@v2.0.0
+        uses: homoluctus/slatify@master
         if: "! success()"
         with:
           job_name: ${{ format('*build* ({0}, {1}, {2})', matrix.ruby, matrix.gemfile, env.DATABASE) }}
@@ -445,7 +445,7 @@ jobs:
           bundle exec rubocop
 
       - name: Slack Notification (not success)
-        uses: homoluctus/slatify@v2.0.0
+        uses: homoluctus/slatify@master
         if: "! success()"
         with:
           job_name: '*rubocop*'
@@ -466,7 +466,7 @@ jobs:
 
     steps:
       - name: Slack Notification (success)
-        uses: homoluctus/slatify@v2.0.0
+        uses: homoluctus/slatify@master
         if: always()
         with:
           job_name: '*build*'
