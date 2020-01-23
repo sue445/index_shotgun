@@ -21,4 +21,6 @@ group :sqlite3 do
   gem "sqlite3", "~> 1.3.6"
 end
 
+eval_gemfile "#{__dir__}/common.gemfile"
+
 gemspec path: "../"
