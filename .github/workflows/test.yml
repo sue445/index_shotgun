@@ -106,7 +106,7 @@ jobs:
         with:
           codeclimate-test-reporter-id: ${{ secrets.CC_TEST_REPORTER_ID }}
           command: before-build
-        continue-on-error: ${{ endsWith(matrix.ruby, '-dev') }}
+        continue-on-error: true
 
       - name: Run test
         run: |
@@ -123,7 +123,7 @@ jobs:
           codeclimate-test-reporter-id: ${{ secrets.CC_TEST_REPORTER_ID }}
           command: after-build
         if: always()
-        continue-on-error: ${{ endsWith(matrix.ruby, '-dev') }}
+        continue-on-error: true
 
       - name: Slack Notification (not success)
         uses: homoluctus/slatify@v2.0.0
