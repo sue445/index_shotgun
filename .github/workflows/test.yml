@@ -23,10 +23,10 @@ jobs:
           - 2.6
           - 2.7
         gemfile:
-          - activerecord_5_0.gemfile
-          - activerecord_5_1.gemfile
-          - activerecord_5_2.gemfile
-          - activerecord_6_0.gemfile
+          - activerecord_5_0
+          - activerecord_5_1
+          - activerecord_5_2
+          - activerecord_6_0
         database:
           - sqlite3
           - mysql
@@ -46,12 +46,12 @@ jobs:
         exclude:
           # Rails 6.0 requires Ruby 2.5+
           - ruby:    2.3
-            gemfile: activerecord_6_0.gemfile
+            gemfile: activerecord_6_0
           - ruby:    2.4
-            gemfile: activerecord_6_0.gemfile
+            gemfile: activerecord_6_0
 
     env:
-      BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}
+      BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}.gemfile
       DATABASE: ${{ matrix.database }}
       LD_LIBRARY_PATH: /opt/oracle/instantclient_19_3
       NLS_LANG: AMERICAN_AMERICA.UTF8
