@@ -82,7 +82,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: eregon/use-ruby-action@v1
+      - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
 
