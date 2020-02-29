@@ -27,7 +27,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "coveralls"
   spec.add_development_dependency "onkcop", "0.53.0.2"
   spec.add_development_dependency "pry-byebug"
-  spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency "rake"
   spec.add_development_dependency "rake_shared_context", "0.2.2"
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "rspec-its"
