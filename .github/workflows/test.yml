@@ -169,6 +169,9 @@ jobs:
           command: before-build
         continue-on-error: true
 
+      # c.f. https://github.blog/changelog/2020-02-21-github-actions-breaking-change-ubuntu-virtual-environments-will-no-longer-start-the-mysql-service-automatically/
+      - run: sudo /etc/init.d/mysql start
+
       - name: Run test
         run: |
           set -xe
