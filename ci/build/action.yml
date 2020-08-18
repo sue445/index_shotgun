@@ -1,0 +1,67 @@
+inputs:
+  ruby:
+    required: true
+  gemfile:
+    required: true
+  database:
+    required: true
+  db_port:
+    required: false
+
+runs:
+  using: "composite"
+  steps:
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ inputs.ruby }}
+
+    - name: Cache vendor/bundle
+      uses: actions/cache@v1
+      id: cache_gem
+      with:
+        path: vendor/bundle
+        key: v1-gem-${{ runner.os }}-${{ inputs.ruby }}-${{ inputs.gemfile }}-${{ inputs.database }}-${{ github.sha }}
+        restore-keys: |
+          v1-gem-${{ runner.os }}-${{ inputs.ruby }}-${{ inputs.gemfile }}-${{ inputs.database }}-
+          v1-gem-${{ runner.os }}-${{ inputs.ruby }}-${{ inputs.gemfile }}-
+
+    - name: Install
+      run: |
+        set -xe
+        ./ci/install.sh
+      env:
+        BUNDLE_GEMFILE: gemfiles/${{ inputs.gemfile }}.gemfile
+
+    - name: Setup Code Climate Test Reporter
+      uses: aktions/codeclimate-test-reporter@v1
+      with:
+        codeclimate-test-reporter-id: ${{ secrets.CC_TEST_REPORTER_ID }}
+        command: before-build
+      continue-on-error: true
+
+    - name: Run test
+      run: |
+        set -xe
+        ./ci/build.sh ${{ inputs.db_port }}
+      env:
+        BUNDLE_GEMFILE: gemfiles/${{ inputs.gemfile }}.gemfile
+        DATABASE: ${{ inputs.database }}
+
+    - name: Teardown Code Climate Test Reporter
+      uses: aktions/codeclimate-test-reporter@v1
+      with:
+        codeclimate-test-reporter-id: ${{ secrets.CC_TEST_REPORTER_ID }}
+        command: after-build
+      if: always()
+      continue-on-error: true
+
+    - name: Slack Notification (not success)
+      uses: homoluctus/slatify@master
+      if: "! success()"
+      continue-on-error: true
+      with:
+        job_name: ${{ format('*build* ({0}, {1}, {2})', inputs.ruby, inputs.gemfile, inputs.database) }}
+        type: ${{ job.status }}
+        icon_emoji: ":octocat:"
+        url: ${{ secrets.SLACK_WEBHOOK }}
+        token: ${{ secrets.GITHUB_TOKEN }}

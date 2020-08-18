@@ -41,62 +41,13 @@ jobs:
           - ruby:    2.4
             gemfile: activerecord_6_0
 
-    env:
-      BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}.gemfile
-      DATABASE: sqlite3
-
     steps:
       - uses: actions/checkout@v2
-
-      - uses: ruby/setup-ruby@v1
+      - uses: ci/build@v1
         with:
-          ruby-version: ${{ matrix.ruby }}
-
-      - name: Cache vendor/bundle
-        uses: actions/cache@v1
-        id: cache_gem
-        with:
-          path: vendor/bundle
-          key: v1-gem-${{ runner.os }}-${{ matrix.ruby }}-${{ matrix.gemfile }}-${{ env.DATABASE }}-${{ github.sha }}
-          restore-keys: |
-            v1-gem-${{ runner.os }}-${{ matrix.ruby }}-${{ matrix.gemfile }}-${{ env.DATABASE }}-
-            v1-gem-${{ runner.os }}-${{ matrix.ruby }}-${{ matrix.gemfile }}-
-
-      - name: Install
-        run: |
-          set -xe
-          ./ci/install.sh
-
-      - name: Setup Code Climate Test Reporter
-        uses: aktions/codeclimate-test-reporter@v1
-        with:
-          codeclimate-test-reporter-id: ${{ secrets.CC_TEST_REPORTER_ID }}
-          command: before-build
-        continue-on-error: true
-
-      - name: Run test
-        run: |
-          set -xe
-          ./ci/build.sh
-
-      - name: Teardown Code Climate Test Reporter
-        uses: aktions/codeclimate-test-reporter@v1
-        with:
-          codeclimate-test-reporter-id: ${{ secrets.CC_TEST_REPORTER_ID }}
-          command: after-build
-        if: always()
-        continue-on-error: true
-
-      - name: Slack Notification (not success)
-        uses: homoluctus/slatify@master
-        if: "! success()"
-        continue-on-error: true
-        with:
-          job_name: ${{ format('*build* ({0}, {1}, {2})', matrix.ruby, matrix.gemfile, env.DATABASE) }}
-          type: ${{ job.status }}
-          icon_emoji: ":octocat:"
-          url: ${{ secrets.SLACK_WEBHOOK }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+          ruby: ${{ matrix.ruby }}
+          gemfile: ${{ matrix.gemfile }}
+          database: sqlite3
 
   mysql:
     runs-on: ${{ matrix.runner }}
@@ -136,10 +87,6 @@ jobs:
           - ruby:    2.4
             gemfile: activerecord_6_0
 
-    env:
-      BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}.gemfile
-      DATABASE: mysql
-
     services:
       mysql:
         image: mysql:8
@@ -151,60 +98,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: ${{ matrix.ruby }}
-
-      - name: Cache vendor/bundle
-        uses: actions/cache@v1
-        id: cache_gem
-        with:
-          path: vendor/bundle
-          key: v1-gem-${{ runner.os }}-${{ matrix.ruby }}-${{ matrix.gemfile }}-${{ env.DATABASE }}-${{ github.sha }}
-          restore-keys: |
-            v1-gem-${{ runner.os }}-${{ matrix.ruby }}-${{ matrix.gemfile }}-${{ env.DATABASE }}-
-            v1-gem-${{ runner.os }}-${{ matrix.ruby }}-${{ matrix.gemfile }}-
-
-      - name: Install
-        run: |
-          set -xe
-          ./ci/install.sh
-
-      - name: Setup Code Climate Test Reporter
-        uses: aktions/codeclimate-test-reporter@v1
-        with:
-          codeclimate-test-reporter-id: ${{ secrets.CC_TEST_REPORTER_ID }}
-          command: before-build
-        continue-on-error: true
-
       # c.f. https://github.blog/changelog/2020-02-21-github-actions-breaking-change-ubuntu-virtual-environments-will-no-longer-start-the-mysql-service-automatically/
       - run: sudo /etc/init.d/mysql start
 
-      - name: Run test
-        run: |
-          set -xe
-          ./ci/build.sh
-        env:
-          MYSQL_PORT: ${{ job.services.mysql.ports['3306'] }}
-
-      - name: Teardown Code Climate Test Reporter
-        uses: aktions/codeclimate-test-reporter@v1
+      - uses: ci/build@v1
         with:
-          codeclimate-test-reporter-id: ${{ secrets.CC_TEST_REPORTER_ID }}
-          command: after-build
-        if: always()
-        continue-on-error: true
-
-      - name: Slack Notification (not success)
-        uses: homoluctus/slatify@master
-        if: "! success()"
-        continue-on-error: true
-        with:
-          job_name: ${{ format('*build* ({0}, {1}, {2})', matrix.ruby, matrix.gemfile, env.DATABASE) }}
-          type: ${{ job.status }}
-          icon_emoji: ":octocat:"
-          url: ${{ secrets.SLACK_WEBHOOK }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+          ruby: ${{ matrix.ruby }}
+          gemfile: ${{ matrix.gemfile }}
+          database: mysql
+          db_port: ${{ job.services.mysql.ports['3306'] }}
 
   postgresql:
     runs-on: ubuntu-latest
@@ -231,10 +133,6 @@ jobs:
           - ruby:    2.4
             gemfile: activerecord_6_0
 
-    env:
-      BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}.gemfile
-      DATABASE: postgresql
-
     services:
       postgresql:
         image: postgres:10-alpine
@@ -248,57 +146,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: ruby/setup-ruby@v1
+      - uses: ci/build@v1
         with:
-          ruby-version: ${{ matrix.ruby }}
-
-      - name: Cache vendor/bundle
-        uses: actions/cache@v1
-        id: cache_gem
-        with:
-          path: vendor/bundle
-          key: v1-gem-${{ runner.os }}-${{ matrix.ruby }}-${{ matrix.gemfile }}-${{ env.DATABASE }}-${{ github.sha }}
-          restore-keys: |
-            v1-gem-${{ runner.os }}-${{ matrix.ruby }}-${{ matrix.gemfile }}-${{ env.DATABASE }}-
-            v1-gem-${{ runner.os }}-${{ matrix.ruby }}-${{ matrix.gemfile }}-
-
-      - name: Install
-        run: |
-          set -xe
-          ./ci/install.sh
-
-      - name: Setup Code Climate Test Reporter
-        uses: aktions/codeclimate-test-reporter@v1
-        with:
-          codeclimate-test-reporter-id: ${{ secrets.CC_TEST_REPORTER_ID }}
-          command: before-build
-        continue-on-error: true
-
-      - name: Run test
-        run: |
-          set -xe
-          ./ci/build.sh
-        env:
-          POSTGRESQL_PORT: ${{ job.services.postgresql.ports['5432'] }}
-
-      - name: Teardown Code Climate Test Reporter
-        uses: aktions/codeclimate-test-reporter@v1
-        with:
-          codeclimate-test-reporter-id: ${{ secrets.CC_TEST_REPORTER_ID }}
-          command: after-build
-        if: always()
-        continue-on-error: true
-
-      - name: Slack Notification (not success)
-        uses: homoluctus/slatify@master
-        if: "! success()"
-        continue-on-error: true
-        with:
-          job_name: ${{ format('*build* ({0}, {1}, {2})', matrix.ruby, matrix.gemfile, env.DATABASE) }}
-          type: ${{ job.status }}
-          icon_emoji: ":octocat:"
-          url: ${{ secrets.SLACK_WEBHOOK }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+          ruby: ${{ matrix.ruby }}
+          gemfile: ${{ matrix.gemfile }}
+          database: postgresql
+          db_port: ${{ job.services.postgresql.ports['5432'] }}
 
   oracle:
     runs-on: ubuntu-latest
@@ -343,57 +196,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: ruby/setup-ruby@v1
+      - uses: ci/build@v1
         with:
-          ruby-version: ${{ matrix.ruby }}
-
-      - name: Cache vendor/bundle
-        uses: actions/cache@v1
-        id: cache_gem
-        with:
-          path: vendor/bundle
-          key: v1-gem-${{ runner.os }}-${{ matrix.ruby }}-${{ matrix.gemfile }}-${{ env.DATABASE }}-${{ github.sha }}
-          restore-keys: |
-            v1-gem-${{ runner.os }}-${{ matrix.ruby }}-${{ matrix.gemfile }}-${{ env.DATABASE }}-
-            v1-gem-${{ runner.os }}-${{ matrix.ruby }}-${{ matrix.gemfile }}-
-
-      - name: Install
-        run: |
-          set -xe
-          ./ci/install.sh
-
-      - name: Setup Code Climate Test Reporter
-        uses: aktions/codeclimate-test-reporter@v1
-        with:
-          codeclimate-test-reporter-id: ${{ secrets.CC_TEST_REPORTER_ID }}
-          command: before-build
-        continue-on-error: true
-
-      - name: Run test
-        run: |
-          set -xe
-          ./ci/build.sh
-        env:
-          ORACLE_PORT: ${{ job.services.oracle.ports['1521'] }}
-
-      - name: Teardown Code Climate Test Reporter
-        uses: aktions/codeclimate-test-reporter@v1
-        with:
-          codeclimate-test-reporter-id: ${{ secrets.CC_TEST_REPORTER_ID }}
-          command: after-build
-        if: always()
-        continue-on-error: true
-
-      - name: Slack Notification (not success)
-        uses: homoluctus/slatify@master
-        if: "! success()"
-        continue-on-error: true
-        with:
-          job_name: ${{ format('*build* ({0}, {1}, {2})', matrix.ruby, matrix.gemfile, env.DATABASE) }}
-          type: ${{ job.status }}
-          icon_emoji: ":octocat:"
-          url: ${{ secrets.SLACK_WEBHOOK }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+          ruby: ${{ matrix.ruby }}
+          gemfile: ${{ matrix.gemfile }}
+          database: oracle
+          db_port: ${{ job.services.oracle.ports['1521'] }}
 
   rubocop:
     runs-on: ubuntu-latest

@@ -1,6 +1,17 @@
 #!/bin/bash -xe
 
+readonly DB_PORT=$1
+
 cp ci/database.yml.${DATABASE} spec/config/database.yml
+
+if [ ${DATABASE} = "mysql" ]; then
+  export MYSQL_PORT=$1
+elif [ ${DATABASE} = "postgresql" ]; then
+  export POSTGRESQL_PORT=$1
+elif [ ${DATABASE} = "oracle" ]; then
+  export ORACLE_PORT=$1
+fi
+
 bundle exec rspec --profile
 
 bundle exec ./exe/index_shotgun version
