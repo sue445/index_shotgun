@@ -34,12 +34,19 @@ jobs:
           - activerecord_5_1
           - activerecord_5_2
           - activerecord_6_0
+          - activerecord_6_1
         exclude:
           # Rails 6.0 requires Ruby 2.5+
           - ruby:    2.3
             gemfile: activerecord_6_0
           - ruby:    2.4
             gemfile: activerecord_6_0
+
+          # Rails 6.1 requires Ruby 2.5+
+          - ruby:    2.3
+            gemfile: activerecord_6_1
+          - ruby:    2.4
+            gemfile: activerecord_6_1
 
     env:
       BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}.gemfile
