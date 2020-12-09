@@ -1,14 +1,14 @@
 source "https://rubygems.org"
 
-gem "activerecord", "~> 6.1.0.rc2"
+gem "activerecord", "~> 6.1.0"
 
 group :postgresql do
-  # c.f. https://github.com/rails/rails/blob/v6.1.0.rc1/activerecord/lib/active_record/connection_adapters/postgresql_adapter.rb#L3
+  # c.f. https://github.com/rails/rails/blob/v6.1.0/activerecord/lib/active_record/connection_adapters/postgresql_adapter.rb#L3
   gem "pg", "~> 1.1"
 end
 
 group :mysql do
-  # c.f. https://github.com/rails/rails/blob/v6.1.0.rc1/activerecord/lib/active_record/connection_adapters/mysql2_adapter.rb#L6
+  # c.f. https://github.com/rails/rails/blob/v6.1.0/activerecord/lib/active_record/connection_adapters/mysql2_adapter.rb#L6
   gem "mysql2", "~> 0.5"
 end
 
@@ -18,7 +18,7 @@ group :oracle do
 end
 
 group :sqlite3 do
-  # c.f. https://github.com/rails/rails/blob/v6.1.0.rc1/activerecord/lib/active_record/connection_adapters/sqlite3_adapter.rb#L13
+  # c.f. https://github.com/rails/rails/blob/v6.1.0/activerecord/lib/active_record/connection_adapters/sqlite3_adapter.rb#L13
   gem "sqlite3", "~> 1.4"
 end
 
