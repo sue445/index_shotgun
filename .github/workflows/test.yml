@@ -49,6 +49,14 @@ jobs:
           - ruby:    "2.4"
             gemfile: activerecord_6_1
 
+          # Rails 5.x doesn't works on Ruby 3.0+
+          - ruby:    "3.0"
+            gemfile: activerecord_5_0
+          - ruby:    "3.0"
+            gemfile: activerecord_5_1
+          - ruby:    "3.0"
+            gemfile: activerecord_5_2
+
     env:
       BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}.gemfile
       DATABASE: sqlite3
@@ -144,6 +152,14 @@ jobs:
             gemfile: activerecord_6_0
           - ruby:    "2.4"
             gemfile: activerecord_6_0
+
+          # Rails 5.x doesn't works on Ruby 3.0+
+          - ruby:    "3.0"
+            gemfile: activerecord_5_0
+          - ruby:    "3.0"
+            gemfile: activerecord_5_1
+          - ruby:    "3.0"
+            gemfile: activerecord_5_2
 
     env:
       BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}.gemfile
@@ -241,6 +257,14 @@ jobs:
           - ruby:    "2.4"
             gemfile: activerecord_6_0
 
+          # Rails 5.x doesn't works on Ruby 3.0+
+          - ruby:    "3.0"
+            gemfile: activerecord_5_0
+          - ruby:    "3.0"
+            gemfile: activerecord_5_1
+          - ruby:    "3.0"
+            gemfile: activerecord_5_2
+
     env:
       BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}.gemfile
       DATABASE: postgresql
@@ -335,6 +359,14 @@ jobs:
             gemfile: activerecord_6_0
           - ruby:    "2.4"
             gemfile: activerecord_6_0
+
+          # Rails 5.x doesn't works on Ruby 3.0+
+          - ruby:    "3.0"
+            gemfile: activerecord_5_0
+          - ruby:    "3.0"
+            gemfile: activerecord_5_1
+          - ruby:    "3.0"
+            gemfile: activerecord_5_2
 
     env:
       BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}.gemfile
