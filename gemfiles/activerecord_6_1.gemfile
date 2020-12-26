@@ -13,7 +13,7 @@ group :mysql do
 end
 
 group :oracle do
-  gem "activerecord-oracle_enhanced-adapter", "~> 6.1.0.rc1"
+  gem "activerecord-oracle_enhanced-adapter", "~> 6.1.2"
   gem "ruby-oci8"
 end
 
