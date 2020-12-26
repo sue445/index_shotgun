@@ -29,6 +29,7 @@ jobs:
           - "2.5"
           - "2.6"
           - "2.7"
+          - "3.0"
         gemfile:
           - activerecord_5_0
           - activerecord_5_1
@@ -118,6 +119,7 @@ jobs:
           - "2.5"
           - "2.6"
           - "2.7"
+          - "3.0"
         gemfile:
           - activerecord_5_0
           - activerecord_5_1
@@ -226,6 +228,7 @@ jobs:
           - "2.5"
           - "2.6"
           - "2.7"
+          - "3.0"
         gemfile:
           - activerecord_5_0
           - activerecord_5_1
@@ -320,6 +323,7 @@ jobs:
           - "2.5"
           - "2.6"
           - "2.7"
+          - "3.0"
         gemfile:
           - activerecord_5_0
           - activerecord_5_1
