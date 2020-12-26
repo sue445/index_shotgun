@@ -24,11 +24,11 @@ jobs:
 
       matrix:
         ruby:
-          - 2.3
-          - 2.4
-          - 2.5
-          - 2.6
-          - 2.7
+          - "2.3"
+          - "2.4"
+          - "2.5"
+          - "2.6"
+          - "2.7"
         gemfile:
           - activerecord_5_0
           - activerecord_5_1
@@ -113,11 +113,11 @@ jobs:
 
       matrix:
         ruby:
-          - 2.3
-          - 2.4
-          - 2.5
-          - 2.6
-          - 2.7
+          - "2.3"
+          - "2.4"
+          - "2.5"
+          - "2.6"
+          - "2.7"
         gemfile:
           - activerecord_5_0
           - activerecord_5_1
@@ -221,11 +221,11 @@ jobs:
 
       matrix:
         ruby:
-          - 2.3
-          - 2.4
-          - 2.5
-          - 2.6
-          - 2.7
+          - "2.3"
+          - "2.4"
+          - "2.5"
+          - "2.6"
+          - "2.7"
         gemfile:
           - activerecord_5_0
           - activerecord_5_1
@@ -315,11 +315,11 @@ jobs:
 
       matrix:
         ruby:
-          - 2.3
-          - 2.4
-          - 2.5
-          - 2.6
-          - 2.7
+          - "2.3"
+          - "2.4"
+          - "2.5"
+          - "2.6"
+          - "2.7"
         gemfile:
           - activerecord_5_0
           - activerecord_5_1
