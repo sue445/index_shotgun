@@ -37,15 +37,15 @@ jobs:
           - activerecord_6_1
         exclude:
           # Rails 6.0 requires Ruby 2.5+
-          - ruby:    2.3
+          - ruby:    "2.3"
             gemfile: activerecord_6_0
-          - ruby:    2.4
+          - ruby:    "2.4"
             gemfile: activerecord_6_0
 
           # Rails 6.1 requires Ruby 2.5+
-          - ruby:    2.3
+          - ruby:    "2.3"
             gemfile: activerecord_6_1
-          - ruby:    2.4
+          - ruby:    "2.4"
             gemfile: activerecord_6_1
 
     env:
@@ -126,21 +126,21 @@ jobs:
         include:
           # FIXME: SEGV on Ruby 2.3 + MySQL
           # https://github.com/sue445/index_shotgun/runs/433443396?check_suite_focus=true
-          - ruby: 2.3
+          - ruby:   "2.3"
             runner: ubuntu-16.04
-          - ruby: 2.4
+          - ruby:   "2.4"
             runner: ubuntu-latest
-          - ruby: 2.5
+          - ruby:   "2.5"
             runner: ubuntu-latest
-          - ruby: 2.6
+          - ruby:   "2.6"
             runner: ubuntu-latest
-          - ruby: 2.7
+          - ruby:   "2.7"
             runner: ubuntu-latest
         exclude:
           # Rails 6.0 requires Ruby 2.5+
-          - ruby:    2.3
+          - ruby:    "2.3"
             gemfile: activerecord_6_0
-          - ruby:    2.4
+          - ruby:    "2.4"
             gemfile: activerecord_6_0
 
     env:
@@ -233,9 +233,9 @@ jobs:
           - activerecord_6_0
         exclude:
           # Rails 6.0 requires Ruby 2.5+
-          - ruby:    2.3
+          - ruby:    "2.3"
             gemfile: activerecord_6_0
-          - ruby:    2.4
+          - ruby:    "2.4"
             gemfile: activerecord_6_0
 
     env:
@@ -327,9 +327,9 @@ jobs:
           - activerecord_6_0
         exclude:
           # Rails 6.0 requires Ruby 2.5+
-          - ruby:    2.3
+          - ruby:    "2.3"
             gemfile: activerecord_6_0
-          - ruby:    2.4
+          - ruby:    "2.4"
             gemfile: activerecord_6_0
 
     env:
