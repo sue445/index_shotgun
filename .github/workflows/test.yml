@@ -37,13 +37,11 @@ jobs:
           - activerecord_6_0
           - activerecord_6_1
         exclude:
-          # Rails 6.0 requires Ruby 2.5+
+          # Rails 6.0+ requires Ruby 2.5+
           - ruby:    "2.3"
             gemfile: activerecord_6_0
           - ruby:    "2.4"
             gemfile: activerecord_6_0
-
-          # Rails 6.1 requires Ruby 2.5+
           - ruby:    "2.3"
             gemfile: activerecord_6_1
           - ruby:    "2.4"
@@ -133,6 +131,7 @@ jobs:
           - activerecord_5_1
           - activerecord_5_2
           - activerecord_6_0
+          - activerecord_6_1
         include:
           # FIXME: SEGV on Ruby 2.3 + MySQL
           # https://github.com/sue445/index_shotgun/runs/433443396?check_suite_focus=true
@@ -149,11 +148,15 @@ jobs:
           - ruby:   "3.0"
             runner: ubuntu-latest
         exclude:
-          # Rails 6.0 requires Ruby 2.5+
+          # Rails 6.0+ requires Ruby 2.5+
           - ruby:    "2.3"
             gemfile: activerecord_6_0
           - ruby:    "2.4"
             gemfile: activerecord_6_0
+          - ruby:    "2.3"
+            gemfile: activerecord_6_1
+          - ruby:    "2.4"
+            gemfile: activerecord_6_1
 
           # Rails 5.x doesn't works on Ruby 3.0+
           - ruby:    "3.0"
@@ -252,12 +255,17 @@ jobs:
           - activerecord_5_1
           - activerecord_5_2
           - activerecord_6_0
+          - activerecord_6_1
         exclude:
-          # Rails 6.0 requires Ruby 2.5+
+          # Rails 6.0+ requires Ruby 2.5+
           - ruby:    "2.3"
             gemfile: activerecord_6_0
           - ruby:    "2.4"
             gemfile: activerecord_6_0
+          - ruby:    "2.3"
+            gemfile: activerecord_6_1
+          - ruby:    "2.4"
+            gemfile: activerecord_6_1
 
           # Rails 5.x doesn't works on Ruby 3.0+
           - ruby:    "3.0"
@@ -355,12 +363,17 @@ jobs:
           - activerecord_5_1
           - activerecord_5_2
           - activerecord_6_0
+          - activerecord_6_1
         exclude:
-          # Rails 6.0 requires Ruby 2.5+
+          # Rails 6.0+ requires Ruby 2.5+
           - ruby:    "2.3"
             gemfile: activerecord_6_0
           - ruby:    "2.4"
             gemfile: activerecord_6_0
+          - ruby:    "2.3"
+            gemfile: activerecord_6_1
+          - ruby:    "2.4"
+            gemfile: activerecord_6_1
 
           # Rails 5.x doesn't works on Ruby 3.0+
           - ruby:    "3.0"
