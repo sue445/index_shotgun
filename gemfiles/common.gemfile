@@ -1,6 +1,9 @@
 if Gem::Version.create(RUBY_VERSION) < Gem::Version.create("2.4.0")
   # byebug v11.1.0+ requires Ruby 2.4.0+
   gem "byebug", "< 11.1.0"
+
+  # simplecov-html v0.12.3+ requires Ruby 2.4.0+
+  gem "simplecov-html", "< 0.12.3"
 end
 
 if Gem::Version.create(RUBY_VERSION) < Gem::Version.create("2.4.4")
