@@ -24,7 +24,6 @@ jobs:
 
       matrix:
         ruby:
-          - "2.3"
           - "2.4"
           - "2.5"
           - "2.6"
@@ -38,12 +37,8 @@ jobs:
           - activerecord_6_1
         exclude:
           # Rails 6.0+ requires Ruby 2.5+
-          - ruby:    "2.3"
-            gemfile: activerecord_6_0
           - ruby:    "2.4"
             gemfile: activerecord_6_0
-          - ruby:    "2.3"
-            gemfile: activerecord_6_1
           - ruby:    "2.4"
             gemfile: activerecord_6_1
 
@@ -120,7 +115,6 @@ jobs:
 
       matrix:
         ruby:
-          - "2.3"
           - "2.4"
           - "2.5"
           - "2.6"
@@ -133,10 +127,6 @@ jobs:
           - activerecord_6_0
           - activerecord_6_1
         include:
-          # FIXME: SEGV on Ruby 2.3 + MySQL
-          # https://github.com/sue445/index_shotgun/runs/433443396?check_suite_focus=true
-          - ruby:   "2.3"
-            runner: ubuntu-16.04
           - ruby:   "2.4"
             runner: ubuntu-latest
           - ruby:   "2.5"
@@ -149,12 +139,8 @@ jobs:
             runner: ubuntu-latest
         exclude:
           # Rails 6.0+ requires Ruby 2.5+
-          - ruby:    "2.3"
-            gemfile: activerecord_6_0
           - ruby:    "2.4"
             gemfile: activerecord_6_0
-          - ruby:    "2.3"
-            gemfile: activerecord_6_1
           - ruby:    "2.4"
             gemfile: activerecord_6_1
 
@@ -244,7 +230,6 @@ jobs:
 
       matrix:
         ruby:
-          - "2.3"
           - "2.4"
           - "2.5"
           - "2.6"
@@ -258,12 +243,8 @@ jobs:
           - activerecord_6_1
         exclude:
           # Rails 6.0+ requires Ruby 2.5+
-          - ruby:    "2.3"
-            gemfile: activerecord_6_0
           - ruby:    "2.4"
             gemfile: activerecord_6_0
-          - ruby:    "2.3"
-            gemfile: activerecord_6_1
           - ruby:    "2.4"
             gemfile: activerecord_6_1
 
@@ -352,7 +333,6 @@ jobs:
 
       matrix:
         ruby:
-          - "2.3"
           - "2.4"
           - "2.5"
           - "2.6"
@@ -366,12 +346,8 @@ jobs:
           - activerecord_6_1
         exclude:
           # Rails 6.0+ requires Ruby 2.5+
-          - ruby:    "2.3"
-            gemfile: activerecord_6_0
           - ruby:    "2.4"
             gemfile: activerecord_6_0
-          - ruby:    "2.3"
-            gemfile: activerecord_6_1
           - ruby:    "2.4"
             gemfile: activerecord_6_1
 
@@ -457,7 +433,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      RUBY_VERSION: 2.3
+      RUBY_VERSION: 2.4
 
     steps:
       - uses: actions/checkout@v1
