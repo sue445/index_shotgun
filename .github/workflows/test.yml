@@ -13,7 +13,7 @@ on:
     - cron: "0 20 * * 5" # JST 5:00 (Sat)
 
 jobs:
-  sqlite3:
+  test:
     runs-on: ubuntu-latest
 
     strategy:
@@ -33,7 +33,16 @@ jobs:
           - activerecord_6_0
           - activerecord_6_1
           - activerecord_7_0
+        database:
+          - sqlite3
+          - mysql
+          - postgresql
+          - oracle
         exclude:
+          # TODO: Remove this after activerecord-oracle_enhanced-adapter supports activerecord v7
+          - database: oracle
+            gemfile:  activerecord_7_0
+
           # Rails 7.0+ requires Ruby 2.7+
           - ruby:    "2.4"
             gemfile: activerecord_7_0
@@ -58,120 +67,12 @@ jobs:
 
     env:
       BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}.gemfile
-      BUNDLE_WITHOUT: mysql oracle postgresql
-      DATABASE: sqlite3
+      DATABASE: ${{ matrix.database }}
 
-    steps:
-      - uses: actions/checkout@v2
-
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: ${{ matrix.ruby }}
-
-      - name: Cache vendor/bundle
-        uses: actions/cache@v1
-        id: cache_gem
-        with:
-          path: vendor/bundle
-          key: v1-gem-${{ runner.os }}-${{ matrix.ruby }}-${{ matrix.gemfile }}-${{ env.DATABASE }}-${{ github.sha }}
-          restore-keys: |
-            v1-gem-${{ runner.os }}-${{ matrix.ruby }}-${{ matrix.gemfile }}-${{ env.DATABASE }}-
-            v1-gem-${{ runner.os }}-${{ matrix.ruby }}-${{ matrix.gemfile }}-
-
-      - name: Install
-        run: |
-          set -xe
-          ./ci/install.sh
-
-      - name: Setup Code Climate Test Reporter
-        uses: aktions/codeclimate-test-reporter@v1
-        with:
-          codeclimate-test-reporter-id: ${{ secrets.CC_TEST_REPORTER_ID }}
-          command: before-build
-        continue-on-error: true
-
-      - name: Run test
-        run: |
-          set -xe
-          ./ci/build.sh
-
-      - name: Teardown Code Climate Test Reporter
-        uses: aktions/codeclimate-test-reporter@v1
-        with:
-          codeclimate-test-reporter-id: ${{ secrets.CC_TEST_REPORTER_ID }}
-          command: after-build
-        if: always()
-        continue-on-error: true
-
-      - name: Slack Notification (not success)
-        uses: lazy-actions/slatify@master
-        if: "! success()"
-        continue-on-error: true
-        with:
-          job_name: ${{ format('*build* ({0}, {1}, {2})', matrix.ruby, matrix.gemfile, env.DATABASE) }}
-          type: ${{ job.status }}
-          icon_emoji: ":octocat:"
-          url: ${{ secrets.SLACK_WEBHOOK }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-  mysql:
-    runs-on: ${{ matrix.runner }}
-
-    strategy:
-      fail-fast: false
-
-      matrix:
-        ruby:
-          - "2.4"
-          - "2.5"
-          - "2.6"
-          - "2.7"
-          - "3.0"
-        gemfile:
-          - activerecord_5_0
-          - activerecord_5_1
-          - activerecord_5_2
-          - activerecord_6_0
-          - activerecord_6_1
-          - activerecord_7_0
-        include:
-          - ruby:   "2.4"
-            runner: ubuntu-latest
-          - ruby:   "2.5"
-            runner: ubuntu-latest
-          - ruby:   "2.6"
-            runner: ubuntu-latest
-          - ruby:   "2.7"
-            runner: ubuntu-latest
-          - ruby:   "3.0"
-            runner: ubuntu-latest
-        exclude:
-          # Rails 7.0+ requires Ruby 2.7+
-          - ruby:    "2.4"
-            gemfile: activerecord_7_0
-          - ruby:    "2.5"
-            gemfile: activerecord_7_0
-          - ruby:    "2.6"
-            gemfile: activerecord_7_0
-
-          # Rails 6.0+ requires Ruby 2.5+
-          - ruby:    "2.4"
-            gemfile: activerecord_6_0
-          - ruby:    "2.4"
-            gemfile: activerecord_6_1
-
-          # Rails 5.x doesn't works on Ruby 3.0+
-          - ruby:    "3.0"
-            gemfile: activerecord_5_0
-          - ruby:    "3.0"
-            gemfile: activerecord_5_1
-          - ruby:    "3.0"
-            gemfile: activerecord_5_2
-
-    env:
-      BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}.gemfile
-      BUNDLE_WITHOUT: oracle postgresql sqlite3
-      DATABASE: mysql
+      # for oracle
+      LD_LIBRARY_PATH: /opt/oracle/instantclient_19_3
+      NLS_LANG: AMERICAN_AMERICA.UTF8
+      ORACLE_SYSTEM_PASSWORD: oracle
 
     services:
       mysql:
@@ -180,6 +81,22 @@ jobs:
           - 3306
         env:
           MYSQL_ROOT_PASSWORD: root
+
+      postgresql:
+        image: postgres:10-alpine
+        ports:
+          - 5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+      oracle:
+        image: deepdiver/docker-oracle-xe-11g
+        ports:
+          - 1521
+        env:
+          ORACLE_SYSTEM_PASSWORD: oracle
 
     steps:
       - uses: actions/checkout@v2
@@ -219,234 +136,7 @@ jobs:
           ./ci/build.sh
         env:
           MYSQL_PORT: ${{ job.services.mysql.ports['3306'] }}
-
-      - name: Teardown Code Climate Test Reporter
-        uses: aktions/codeclimate-test-reporter@v1
-        with:
-          codeclimate-test-reporter-id: ${{ secrets.CC_TEST_REPORTER_ID }}
-          command: after-build
-        if: always()
-        continue-on-error: true
-
-      - name: Slack Notification (not success)
-        uses: lazy-actions/slatify@master
-        if: "! success()"
-        continue-on-error: true
-        with:
-          job_name: ${{ format('*build* ({0}, {1}, {2})', matrix.ruby, matrix.gemfile, env.DATABASE) }}
-          type: ${{ job.status }}
-          icon_emoji: ":octocat:"
-          url: ${{ secrets.SLACK_WEBHOOK }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-  postgresql:
-    runs-on: ubuntu-latest
-
-    strategy:
-      fail-fast: false
-
-      matrix:
-        ruby:
-          - "2.4"
-          - "2.5"
-          - "2.6"
-          - "2.7"
-          - "3.0"
-        gemfile:
-          - activerecord_5_0
-          - activerecord_5_1
-          - activerecord_5_2
-          - activerecord_6_0
-          - activerecord_6_1
-          - activerecord_7_0
-        exclude:
-          # Rails 7.0+ requires Ruby 2.7+
-          - ruby:    "2.4"
-            gemfile: activerecord_7_0
-          - ruby:    "2.5"
-            gemfile: activerecord_7_0
-          - ruby:    "2.6"
-            gemfile: activerecord_7_0
-
-          # Rails 6.0+ requires Ruby 2.5+
-          - ruby:    "2.4"
-            gemfile: activerecord_6_0
-          - ruby:    "2.4"
-            gemfile: activerecord_6_1
-
-          # Rails 5.x doesn't works on Ruby 3.0+
-          - ruby:    "3.0"
-            gemfile: activerecord_5_0
-          - ruby:    "3.0"
-            gemfile: activerecord_5_1
-          - ruby:    "3.0"
-            gemfile: activerecord_5_2
-
-    env:
-      BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}.gemfile
-      BUNDLE_WITHOUT: mysql oracle sqlite3
-      DATABASE: postgresql
-
-    services:
-      postgresql:
-        image: postgres:10-alpine
-        ports:
-          - 5432
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: ${{ matrix.ruby }}
-
-      - name: Cache vendor/bundle
-        uses: actions/cache@v1
-        id: cache_gem
-        with:
-          path: vendor/bundle
-          key: v1-gem-${{ runner.os }}-${{ matrix.ruby }}-${{ matrix.gemfile }}-${{ env.DATABASE }}-${{ github.sha }}
-          restore-keys: |
-            v1-gem-${{ runner.os }}-${{ matrix.ruby }}-${{ matrix.gemfile }}-${{ env.DATABASE }}-
-            v1-gem-${{ runner.os }}-${{ matrix.ruby }}-${{ matrix.gemfile }}-
-
-      - name: Install
-        run: |
-          set -xe
-          ./ci/install.sh
-
-      - name: Setup Code Climate Test Reporter
-        uses: aktions/codeclimate-test-reporter@v1
-        with:
-          codeclimate-test-reporter-id: ${{ secrets.CC_TEST_REPORTER_ID }}
-          command: before-build
-        continue-on-error: true
-
-      - name: Run test
-        run: |
-          set -xe
-          ./ci/build.sh
-        env:
           POSTGRESQL_PORT: ${{ job.services.postgresql.ports['5432'] }}
-
-      - name: Teardown Code Climate Test Reporter
-        uses: aktions/codeclimate-test-reporter@v1
-        with:
-          codeclimate-test-reporter-id: ${{ secrets.CC_TEST_REPORTER_ID }}
-          command: after-build
-        if: always()
-        continue-on-error: true
-
-      - name: Slack Notification (not success)
-        uses: lazy-actions/slatify@master
-        if: "! success()"
-        continue-on-error: true
-        with:
-          job_name: ${{ format('*build* ({0}, {1}, {2})', matrix.ruby, matrix.gemfile, env.DATABASE) }}
-          type: ${{ job.status }}
-          icon_emoji: ":octocat:"
-          url: ${{ secrets.SLACK_WEBHOOK }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-  oracle:
-    runs-on: ubuntu-latest
-
-    strategy:
-      fail-fast: false
-
-      matrix:
-        ruby:
-          - "2.4"
-          - "2.5"
-          - "2.6"
-          - "2.7"
-          - "3.0"
-        gemfile:
-          - activerecord_5_0
-          - activerecord_5_1
-          - activerecord_5_2
-          - activerecord_6_0
-          - activerecord_6_1
-
-          # TODO: Enable this after activerecord-oracle_enhanced-adapter supports activerecord v7
-          # - activerecord_7_0
-        exclude:
-          # Rails 7.0+ requires Ruby 2.7+
-          - ruby:    "2.4"
-            gemfile: activerecord_7_0
-          - ruby:    "2.5"
-            gemfile: activerecord_7_0
-          - ruby:    "2.6"
-            gemfile: activerecord_7_0
-
-          # Rails 6.0+ requires Ruby 2.5+
-          - ruby:    "2.4"
-            gemfile: activerecord_6_0
-          - ruby:    "2.4"
-            gemfile: activerecord_6_1
-
-          # Rails 5.x doesn't works on Ruby 3.0+
-          - ruby:    "3.0"
-            gemfile: activerecord_5_0
-          - ruby:    "3.0"
-            gemfile: activerecord_5_1
-          - ruby:    "3.0"
-            gemfile: activerecord_5_2
-
-    env:
-      BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}.gemfile
-      BUNDLE_WITHOUT: mysql postgresql sqlite3
-      DATABASE: oracle
-      LD_LIBRARY_PATH: /opt/oracle/instantclient_19_3
-      NLS_LANG: AMERICAN_AMERICA.UTF8
-      ORACLE_SYSTEM_PASSWORD: oracle
-
-    services:
-      oracle:
-        image: deepdiver/docker-oracle-xe-11g
-        ports:
-          - 1521
-        env:
-          ORACLE_SYSTEM_PASSWORD: oracle
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: ${{ matrix.ruby }}
-
-      - name: Cache vendor/bundle
-        uses: actions/cache@v1
-        id: cache_gem
-        with:
-          path: vendor/bundle
-          key: v1-gem-${{ runner.os }}-${{ matrix.ruby }}-${{ matrix.gemfile }}-${{ env.DATABASE }}-${{ github.sha }}
-          restore-keys: |
-            v1-gem-${{ runner.os }}-${{ matrix.ruby }}-${{ matrix.gemfile }}-${{ env.DATABASE }}-
-            v1-gem-${{ runner.os }}-${{ matrix.ruby }}-${{ matrix.gemfile }}-
-
-      - name: Install
-        run: |
-          set -xe
-          ./ci/install.sh
-
-      - name: Setup Code Climate Test Reporter
-        uses: aktions/codeclimate-test-reporter@v1
-        with:
-          codeclimate-test-reporter-id: ${{ secrets.CC_TEST_REPORTER_ID }}
-          command: before-build
-        continue-on-error: true
-
-      - name: Run test
-        run: |
-          set -xe
-          ./ci/build.sh
-        env:
           ORACLE_PORT: ${{ job.services.oracle.ports['1521'] }}
 
       - name: Teardown Code Climate Test Reporter
@@ -462,7 +152,7 @@ jobs:
         if: "! success()"
         continue-on-error: true
         with:
-          job_name: ${{ format('*build* ({0}, {1}, {2})', matrix.ruby, matrix.gemfile, env.DATABASE) }}
+          job_name: ${{ format('*build* ({0}, {1}, {2})', matrix.ruby, matrix.gemfile, matrix.database) }}
           type: ${{ job.status }}
           icon_emoji: ":octocat:"
           url: ${{ secrets.SLACK_WEBHOOK }}
@@ -514,10 +204,7 @@ jobs:
 
   notify:
     needs:
-      - sqlite3
-      - mysql
-      - postgresql
-      - oracle
+      - test
       - rubocop
 
     runs-on: ubuntu-latest
