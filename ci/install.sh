@@ -6,13 +6,19 @@ if [ "${DATABASE}" = "mysql" ]; then
   sudo apt-get update
   sudo apt-get install -y libmysqlclient-dev
 
+  export BUNDLE_WITHOUT="postgresql sqlite3 oracle"
+
 elif [ "${DATABASE}" = "postgresql" ]; then
   sudo apt-get update
   sudo apt-get install -y libpq-dev
 
+  export BUNDLE_WITHOUT="mysql sqlite3 oracle"
+
 elif [ "${DATABASE}" = "sqlite3" ]; then
   sudo apt-get update
   sudo apt-get install -y libsqlite3-dev
+
+  export BUNDLE_WITHOUT="mysql postgresql oracle"
 
 elif [ "${DATABASE}" = "oracle" ]; then
   # c.f. https://github.com/kubo/ruby-oci8/blob/ruby-oci8-2.2.7/docs/install-instant-client.md#install-oracle-instant-client-packages
@@ -29,6 +35,8 @@ elif [ "${DATABASE}" = "oracle" ]; then
   sudo apt-get install -y libaio1
 
   popd
+
+  export BUNDLE_WITHOUT="mysql postgresql sqlite3"
 
 else
   export BUNDLE_WITHOUT="mysql postgresql sqlite3 oracle"
