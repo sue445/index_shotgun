@@ -6,19 +6,13 @@ if [ "${DATABASE}" = "mysql" ]; then
   sudo apt-get update
   sudo apt-get install -y libmysqlclient-dev
 
-  bundle install --path vendor/bundle/ --jobs 4 --retry 3 --without oracle postgresql sqlite3
-
 elif [ "${DATABASE}" = "postgresql" ]; then
   sudo apt-get update
   sudo apt-get install -y libpq-dev
 
-  bundle install --path vendor/bundle/ --jobs 4 --retry 3 --without mysql oracle sqlite3
-
 elif [ "${DATABASE}" = "sqlite3" ]; then
   sudo apt-get update
   sudo apt-get install -y libsqlite3-dev
-
-  bundle install --path vendor/bundle/ --jobs 4 --retry 3 --without mysql oracle postgresql
 
 elif [ "${DATABASE}" = "oracle" ]; then
   # c.f. https://github.com/kubo/ruby-oci8/blob/ruby-oci8-2.2.7/docs/install-instant-client.md#install-oracle-instant-client-packages
@@ -36,9 +30,10 @@ elif [ "${DATABASE}" = "oracle" ]; then
 
   popd
 
-  bundle install --path vendor/bundle/ --jobs 4 --retry 3 --without mysql postgresql sqlite3
-
 else
-  bundle install --path vendor/bundle/ --jobs 4 --retry 3 --without mysql postgresql sqlite3 oracle
+  export BUNDLE_WITHOUT="mysql postgresql sqlite3 oracle"
 
 fi
+
+bundle config set --local path "vendor/bundle/"
+bundle install --jobs $(nproc) --retry 3

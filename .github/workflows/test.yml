@@ -52,6 +52,7 @@ jobs:
 
     env:
       BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}.gemfile
+      BUNDLE_WITHOUT: mysql oracle postgresql
       DATABASE: sqlite3
 
     steps:
@@ -154,6 +155,7 @@ jobs:
 
     env:
       BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}.gemfile
+      BUNDLE_WITHOUT: oracle postgresql sqlite3
       DATABASE: mysql
 
     services:
@@ -258,6 +260,7 @@ jobs:
 
     env:
       BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}.gemfile
+      BUNDLE_WITHOUT: mysql oracle sqlite3
       DATABASE: postgresql
 
     services:
@@ -361,6 +364,7 @@ jobs:
 
     env:
       BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}.gemfile
+      BUNDLE_WITHOUT: mysql postgresql sqlite3
       DATABASE: oracle
       LD_LIBRARY_PATH: /opt/oracle/instantclient_19_3
       NLS_LANG: AMERICAN_AMERICA.UTF8
@@ -434,6 +438,7 @@ jobs:
 
     env:
       RUBY_VERSION: 2.4
+      BUNDLE_WITHOUT: mysql postgresql sqlite3 oracle
 
     steps:
       - uses: actions/checkout@v1
