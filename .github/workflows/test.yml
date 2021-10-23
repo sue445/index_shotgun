@@ -12,9 +12,6 @@ on:
   schedule:
     - cron: "0 20 * * 5" # JST 5:00 (Sat)
 
-env:
-  CI: "true"
-
 jobs:
   sqlite3:
     runs-on: ubuntu-latest
