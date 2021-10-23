@@ -374,7 +374,9 @@ jobs:
           - activerecord_5_2
           - activerecord_6_0
           - activerecord_6_1
-          - activerecord_7_0
+
+          # TODO: Enable this after activerecord-oracle_enhanced-adapter supports activerecord v7
+          # - activerecord_7_0
         exclude:
           # Rails 7.0+ requires Ruby 2.7+
           - ruby:    "2.4"

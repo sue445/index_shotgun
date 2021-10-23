@@ -13,7 +13,9 @@ group :mysql do
 end
 
 group :oracle do
-  gem "activerecord-oracle_enhanced-adapter", "~> 6.1.2"
+  # TODO: Enable this after activerecord-oracle_enhanced-adapter supports activerecord v7
+  # gem "activerecord-oracle_enhanced-adapter", "~> 6.1.2"
+
   gem "ruby-oci8"
 end
 
