@@ -1,6 +1,12 @@
 # Change Log
 ## Unreleased
-[Full Changelog](https://github.com/sue445/index_shotgun/compare/v1.0.0...master)
+[Full Changelog](https://github.com/sue445/index_shotgun/compare/v1.0.1...master)
+
+## [v1.0.1](https://github.com/sue445/index_shotgun/tree/v1.0.1) (2021/11/20)
+[Full Changelog](https://github.com/sue445/index_shotgun/compare/v1.0.0...v1.0.1)
+
+* Enable MFA requirement for gem releasing
+  * https://github.com/sue445/index_shotgun/pull/111
 
 ## [v1.0.0](https://github.com/sue445/index_shotgun/tree/v1.0.0) (2019/01/06)
 [Full Changelog](https://github.com/sue445/index_shotgun/compare/v0.3.0...v1.0.0)
