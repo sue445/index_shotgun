@@ -39,10 +39,6 @@ jobs:
           - postgresql
           - oracle
         exclude:
-          # TODO: Remove this after activerecord-oracle_enhanced-adapter supports activerecord v7
-          - database: oracle
-            gemfile:  activerecord_7_0
-
           # Rails 7.0+ requires Ruby 2.7+
           - ruby:    "2.4"
             gemfile: activerecord_7_0
