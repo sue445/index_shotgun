@@ -26,6 +26,7 @@ jobs:
           - "2.6"
           - "2.7"
           - "3.0"
+          - "3.1"
         gemfile:
           - activerecord_5_0
           - activerecord_5_1
