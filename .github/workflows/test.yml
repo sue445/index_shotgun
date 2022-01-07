@@ -26,6 +26,7 @@ jobs:
           - "2.6"
           - "2.7"
           - "3.0"
+          - "3.1"
         gemfile:
           - activerecord_5_0
           - activerecord_5_1
@@ -59,6 +60,12 @@ jobs:
           - ruby:    "3.0"
             gemfile: activerecord_5_1
           - ruby:    "3.0"
+            gemfile: activerecord_5_2
+          - ruby:    "3.1"
+            gemfile: activerecord_5_0
+          - ruby:    "3.1"
+            gemfile: activerecord_5_1
+          - ruby:    "3.1"
             gemfile: activerecord_5_2
 
     env:

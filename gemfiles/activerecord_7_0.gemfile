@@ -1,6 +1,8 @@
 source "https://rubygems.org"
 
-gem "activerecord", "~> 7.0.0"
+# NOTE: Ruby 3.1 + Rails 7.0.0 doesn't work
+# c.f. https://gist.github.com/yahonda/2776d8d7b6ea7045359f38c10449937b
+gem "activerecord", "~> 7.0.1"
 
 group :postgresql do
   # c.f. https://github.com/rails/rails/blob/v7.0.0/activerecord/lib/active_record/connection_adapters/postgresql_adapter.rb#L3
