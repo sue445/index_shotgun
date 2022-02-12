@@ -1,6 +1,9 @@
 #!/bin/bash -xe
 
-gem install bundler --no-document -v 1.17.3 || true
+gem update --system --quiet
+
+gem --version
+bundle --version
 
 if [ "${DATABASE}" = "mysql" ]; then
   sudo apt-get update
