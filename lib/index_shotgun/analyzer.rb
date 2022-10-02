@@ -70,7 +70,7 @@ module IndexShotgun
       # check duplicate indexes of table
       # @param table [String] table name
       # @return [Array<Hash>] array of index info
-      #   index: index info {ActiveRecord::ConnectionAdapters::IndexDefinition}
+      #   index: index info `ActiveRecord::ConnectionAdapters::IndexDefinition`
       #   result: search result message
       def check_indexes(table)
         indexes = table_indexes(table)
@@ -94,7 +94,6 @@ module IndexShotgun
 
       # get indexes of table
       # @param table [String]
-      # @see [ActiveRecord::ConnectionAdapters::TableDefinition#indexes]
       def table_indexes(table)
         ActiveRecord::Base.connection.indexes(table)
       end
