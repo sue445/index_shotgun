@@ -6,6 +6,8 @@ on:
   push:
     branches:
       - master
+    paths-ignore:
+      - ".github/workflows/test.yml"
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:

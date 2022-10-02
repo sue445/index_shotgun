@@ -4,11 +4,15 @@ on:
   push:
     branches:
       - master
+    paths-ignore:
+      - ".github/workflows/pages.yml"
   pull_request:
     types:
       - opened
       - synchronize
       - reopened
+    paths-ignore:
+      - ".github/workflows/pages.yml"
   schedule:
     - cron: "0 20 * * 5" # JST 5:00 (Sat)
 
