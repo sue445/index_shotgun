@@ -106,7 +106,7 @@ jobs:
           ORACLE_SYSTEM_PASSWORD: oracle
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - uses: ruby/setup-ruby@v1
         with:
@@ -173,7 +173,7 @@ jobs:
       BUNDLE_WITHOUT: mysql postgresql sqlite3 oracle
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
 
       - uses: ruby/setup-ruby@v1
         with:
