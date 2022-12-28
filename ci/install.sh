@@ -1,6 +1,6 @@
 #!/bin/bash -xe
 
-gem update --system --quiet
+gem update --system --quiet || true
 
 gem --version
 bundle --version

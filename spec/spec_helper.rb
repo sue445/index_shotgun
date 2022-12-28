@@ -13,7 +13,6 @@ end
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 require "index_shotgun"
 require "rspec/its"
-require "rspec-power_assert"
 require "rake_shared_context"
 
 begin
