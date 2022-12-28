@@ -72,6 +72,12 @@ jobs:
             gemfile: activerecord_5_1
           - ruby:    "3.1"
             gemfile: activerecord_5_2
+          - ruby:    "3.2"
+            gemfile: activerecord_5_0
+          - ruby:    "3.2"
+            gemfile: activerecord_5_1
+          - ruby:    "3.2"
+            gemfile: activerecord_5_2
 
     env:
       BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}.gemfile
