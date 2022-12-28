@@ -36,7 +36,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake_shared_context", "0.2.2"
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "rspec-its"
-  spec.add_development_dependency "rspec-power_assert"
   spec.add_development_dependency "rubocop", "0.62.0"
   spec.add_development_dependency "rubocop_auto_corrector"
   spec.add_development_dependency "simplecov", "< 0.18.0"
