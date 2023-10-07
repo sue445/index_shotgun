@@ -39,6 +39,7 @@ jobs:
           - activerecord_6_0
           - activerecord_6_1
           - activerecord_7_0
+          - activerecord_7_1
         database:
           - sqlite3
           - mysql
@@ -52,6 +53,12 @@ jobs:
             gemfile: activerecord_7_0
           - ruby:    "2.6"
             gemfile: activerecord_7_0
+          - ruby:    "2.4"
+            gemfile: activerecord_7_1
+          - ruby:    "2.5"
+            gemfile: activerecord_7_1
+          - ruby:    "2.6"
+            gemfile: activerecord_7_1
 
           # Rails 6.0+ requires Ruby 2.5+
           - ruby:    "2.4"
