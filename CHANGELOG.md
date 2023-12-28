@@ -1,6 +1,12 @@
 # Change Log
 ## Unreleased
-[Full Changelog](https://github.com/sue445/index_shotgun/compare/v1.0.1...master)
+[Full Changelog](https://github.com/sue445/index_shotgun/compare/v1.0.2...master)
+
+## [v1.0.2](https://github.com/sue445/index_shotgun/tree/v1.0.2) (2023/12/28)
+[Full Changelog](https://github.com/sue445/index_shotgun/compare/v1.0.1...v1.0.2)
+
+* Fixed deprecation warning in activesupport 7.1
+  * https://github.com/sue445/index_shotgun/pull/134
 
 ## [v1.0.1](https://github.com/sue445/index_shotgun/tree/v1.0.1) (2021/11/20)
 [Full Changelog](https://github.com/sue445/index_shotgun/compare/v1.0.0...v1.0.1)
