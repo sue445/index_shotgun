@@ -21,7 +21,7 @@ module IndexShotgun
       # @return [IndexShotgun::Analyzer::Response]
       def perform
         tables =
-          ActiveSupport::Deprecation.silence do
+          silence_deprecations do
             ActiveRecord::Base.connection.tables
           end
         tables.reject! {|table| exclude_tables.include?(table.downcase) }
@@ -286,6 +286,18 @@ module IndexShotgun
 
         @exclude_tables = tables.map(&:downcase)
         @exclude_tables
+      end
+
+      def silence_deprecations
+        if ActiveSupport.version >= Gem::Version.create("7.1.0")
+          ActiveSupport::Deprecation::Deprecators.new.silence do
+            yield
+          end
+        else
+          ActiveSupport::Deprecation.silence do
+            yield
+          end
+        end
       end
     end
   end
