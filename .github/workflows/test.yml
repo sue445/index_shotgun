@@ -138,7 +138,7 @@ jobs:
           ruby-version: ${{ matrix.ruby }}
 
       - name: Cache vendor/bundle
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: cache_gem
         with:
           path: vendor/bundle
@@ -205,7 +205,7 @@ jobs:
           ruby-version: ${{ env.RUBY_VERSION }}
 
       - name: Cache vendor/bundle
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: cache_gem_rubocop
         with:
           path: vendor/bundle
