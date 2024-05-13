@@ -78,6 +78,8 @@ module IndexShotgun
         indexes.permutation(2).each_with_object([]) do |(source_index, target_index), response|
           next unless source_index.columns.start_with?(target_index.columns)
 
+          next if source_index.unique && target_index.unique
+
           if target_index.unique
             response << {
               index:  source_index,

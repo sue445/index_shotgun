@@ -57,6 +57,17 @@ describe IndexShotgun::Analyzer do
       it { should include "user_id_article_id_already has column(s) on the right side of unique index (user_id_article_id). You can drop if low cardinality" }
     end
 
+    context "When exists duplicate indexes (unique index on 1 and 2 columns)" do
+      let(:table) { "unique_user_stocks" }
+
+      its(:count) { should eq 2 }
+
+      # rubocop:disable Metrics/LineLength
+      it { should include "index_unique_user_stocks_on_user_id_article_id_already has column(s) on the right side of unique index (index_unique_user_stocks_on_user_id_article_id). You can drop if low cardinality" }
+      it { should include "index_unique_user_stocks_on_user_id_article_id_already has column(s) on the right side of unique index (index_unique_user_stocks_on_user_id). You can drop if low cardinality" }
+      # rubocop:enable Metrics/LineLength
+    end
+
     context "When not exists duplicate indexes" do
       let(:table) { "comments" }
 
@@ -67,11 +78,11 @@ describe IndexShotgun::Analyzer do
   describe "#perform" do
     subject { IndexShotgun::Analyzer.perform }
 
-    its(:message) { should include "# Total Duplicate Indexes  3" }
-    its(:message) { should include "# Total Indexes            5" }
-    its(:message) { should include "# Total Tables             4" }
-    its(:duplicate_index_count) { should eq 3 }
-    its(:total_index_count)     { should eq 5 }
-    its(:total_table_count)     { should eq 4 }
+    its(:message) { should include "# Total Duplicate Indexes  5" }
+    its(:message) { should include "# Total Indexes            8" }
+    its(:message) { should include "# Total Tables             5" }
+    its(:duplicate_index_count) { should eq 5 }
+    its(:total_index_count)     { should eq 8 }
+    its(:total_table_count)     { should eq 5 }
   end
 end

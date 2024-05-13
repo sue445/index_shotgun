@@ -33,4 +33,16 @@ ActiveRecord::Schema.define(version: 1) do
   end
   add_index :user_stocks, [:user_id, :article_id], unique: true, name: "user_id_article_id"
   add_index :user_stocks, [:user_id, :article_id, :already_read], name: "user_id_article_id_already"
+
+  create_table :unique_user_stocks do |t|
+    t.references :user,    index: false
+    t.references :article, index: false
+    t.boolean    :already_read
+    t.text       :message
+
+    t.timestamps null: false
+  end
+  add_index :unique_user_stocks, [:user_id], unique: true, name: "index_unique_user_stocks_on_user_id"
+  add_index :unique_user_stocks, [:user_id, :article_id], unique: true, name: "index_unique_user_stocks_on_user_id_article_id"
+  add_index :unique_user_stocks, [:user_id, :article_id, :already_read], name: "index_unique_user_stocks_on_user_id_article_id_already"
 end
