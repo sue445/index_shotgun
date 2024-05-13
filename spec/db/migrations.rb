@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(version: 1) do
 
     t.timestamps null: false
   end
-  add_index :unique_user_stocks, [:user_id], unique: true, name: "index_unique_user_stocks_on_user_id"
-  add_index :unique_user_stocks, [:user_id, :article_id], unique: true, name: "index_unique_user_stocks_on_user_id_article_id"
-  add_index :unique_user_stocks, [:user_id, :article_id, :already_read], name: "index_unique_user_stocks_on_user_id_article_id_already"
+  add_index :unique_user_stocks, [:user_id], unique: true, name: "u_user_id"
+  add_index :unique_user_stocks, [:user_id, :article_id], unique: true, name: "u_user_id_article_id"
+  add_index :unique_user_stocks, [:user_id, :article_id, :already_read], name: "u_user_id_article_id_already"
 end
