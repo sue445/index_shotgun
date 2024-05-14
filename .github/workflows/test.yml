@@ -34,9 +34,6 @@ jobs:
           - "3.2"
           - "3.3"
         gemfile:
-          - activerecord_5_0
-          - activerecord_5_1
-          - activerecord_5_2
           - activerecord_6_0
           - activerecord_6_1
           - activerecord_7_0
@@ -66,32 +63,6 @@ jobs:
             gemfile: activerecord_6_0
           - ruby:    "2.4"
             gemfile: activerecord_6_1
-
-          # Rails 5.x doesn't works on Ruby 3.0+
-          - ruby:    "3.0"
-            gemfile: activerecord_5_0
-          - ruby:    "3.0"
-            gemfile: activerecord_5_1
-          - ruby:    "3.0"
-            gemfile: activerecord_5_2
-          - ruby:    "3.1"
-            gemfile: activerecord_5_0
-          - ruby:    "3.1"
-            gemfile: activerecord_5_1
-          - ruby:    "3.1"
-            gemfile: activerecord_5_2
-          - ruby:    "3.2"
-            gemfile: activerecord_5_0
-          - ruby:    "3.2"
-            gemfile: activerecord_5_1
-          - ruby:    "3.2"
-            gemfile: activerecord_5_2
-          - ruby:    "3.3"
-            gemfile: activerecord_5_0
-          - ruby:    "3.3"
-            gemfile: activerecord_5_1
-          - ruby:    "3.3"
-            gemfile: activerecord_5_2
 
           # TODO: latest activerecord-oracle_enhanced-adapter doesn't support activerecord 7.1
           - database: oracle
