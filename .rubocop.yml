@@ -5,6 +5,7 @@ inherit_gem:
 
 AllCops:
   TargetRubyVersion: 2.5
+  SuggestExtensions: false
 
 Layout/HashAlignment:
   EnforcedHashRocketStyle: table
