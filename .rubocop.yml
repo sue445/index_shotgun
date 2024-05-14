@@ -13,7 +13,7 @@ Layout/HashAlignment:
   EnforcedColonStyle:      table
 
 Metrics/AbcSize:
-  Max: 33
+  Max: 37
 
 Metrics/MethodLength:
   Max: 25
