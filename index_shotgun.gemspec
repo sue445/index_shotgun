@@ -31,7 +31,7 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "coveralls_reborn"
-  spec.add_development_dependency "onkcop", "0.53.0.2"
+  spec.add_development_dependency "onkcop", "1.0.0.0"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rake_shared_context", "0.2.2"
   spec.add_development_dependency "rspec"
