@@ -62,10 +62,10 @@ describe IndexShotgun::Analyzer do
 
       its(:count) { should eq 2 }
 
-      # rubocop:disable Metrics/LineLength
+      # rubocop:disable Layout/LineLength
       it { should include "u_user_id_article_id_already has column(s) on the right side of unique index (u_user_id_article_id). You can drop if low cardinality" }
       it { should include "u_user_id_article_id_already has column(s) on the right side of unique index (u_user_id). You can drop if low cardinality" }
-      # rubocop:enable Metrics/LineLength
+      # rubocop:enable Layout/LineLength
     end
 
     context "When not exists duplicate indexes" do

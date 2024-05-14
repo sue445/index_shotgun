@@ -31,13 +31,13 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "coveralls_reborn"
-  spec.add_development_dependency "onkcop", "0.53.0.2"
+  spec.add_development_dependency "onkcop", "1.0.0.0"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rake_shared_context", "0.2.2"
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "rspec-its"
-  spec.add_development_dependency "rubocop", "0.62.0"
-  spec.add_development_dependency "rubocop_auto_corrector"
+  spec.add_development_dependency "rubocop", "1.28.2"
+  spec.add_development_dependency "rubocop_auto_corrector", "< 0.4.4" # FIXME: rubocop --autocorrect doesn't available on rubocop 1.28.2
   spec.add_development_dependency "simplecov", "< 0.18.0"
   spec.add_development_dependency "yard"
 end

@@ -19,10 +19,10 @@ begin
   require "activerecord-oracle_enhanced-adapter"
   require "active_record/connection_adapters/oracle_enhanced_adapter"
   require "active_record/connection_adapters/oracle_enhanced/database_tasks"
-rescue LoadError # rubocop:disable Lint/HandleExceptions
+rescue LoadError # rubocop:disable Lint/SuppressedException
 end
 
-Dir["#{__dir__}/support/**/*.rb"].each {|f| require f }
+Dir["#{__dir__}/support/**/*.rb"].sort.each {|f| require f }
 
 DUMMY_APP_DIR = "#{__dir__}/dummy".freeze
 TASK_DIR      = "#{__dir__}/../lib/index_shotgun/tasks".freeze
