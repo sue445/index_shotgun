@@ -37,7 +37,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "rspec-its"
   spec.add_development_dependency "rubocop", "1.28.2"
-  spec.add_development_dependency "rubocop_auto_corrector", "< 0.4.4"
+  spec.add_development_dependency "rubocop_auto_corrector", "< 0.4.4" # FIXME: rubocop --autocorrect doesn't available on rubocop 1.28.2
   spec.add_development_dependency "simplecov", "< 0.18.0"
   spec.add_development_dependency "yard"
 end
