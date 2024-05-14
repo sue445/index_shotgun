@@ -1,6 +1,14 @@
 # Change Log
 ## Unreleased
-[Full Changelog](https://github.com/sue445/index_shotgun/compare/v1.0.3...master)
+[Full Changelog](https://github.com/sue445/index_shotgun/compare/v2.0.0...master)
+
+## [v2.0.0](https://github.com/sue445/index_shotgun/tree/v2.0.0) (2024/05/15)
+[Full Changelog](https://github.com/sue445/index_shotgun/compare/v1.0.3...v2.0.0)
+
+* :bomb: **[BREAKING CHANGE]** Requires Ruby2.5+ and activerecord 6.0+
+  * https://github.com/sue445/index_shotgun/pull/141
+* Upgrade to rubocop 1.28.2
+  * https://github.com/sue445/index_shotgun/pull/142
 
 ## [v1.0.3](https://github.com/sue445/index_shotgun/tree/v1.0.3) (2024/05/14)
 [Full Changelog](https://github.com/sue445/index_shotgun/compare/v1.0.2...v1.0.3)
