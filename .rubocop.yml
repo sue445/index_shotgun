@@ -21,6 +21,9 @@ Metrics/MethodLength:
 RSpec/NestedGroups:
   Enabled: false
 
+RSpec/RepeatedDescription:
+  Enabled: false
+
 RSpec/SharedExamples:
   Enabled: false
 
