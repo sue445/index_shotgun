@@ -22,6 +22,4 @@ group :sqlite3 do
   gem "sqlite3", "~> 1.4"
 end
 
-eval_gemfile "#{__dir__}/common.gemfile"
-
 gemspec path: "../"

@@ -19,14 +19,14 @@ Gem::Specification.new do |spec|
   spec.metadata["documentation_uri"] = "https://sue445.github.io/index_shotgun/"
   spec.metadata["rubygems_mfa_required"] = "true"
 
-  spec.required_ruby_version = ">= 2.4.0"
+  spec.required_ruby_version = ">= 2.5.0"
 
   spec.files         = `git ls-files -z`.split("\x0").reject {|f| f.match(%r{^(test|spec|features)/}) }
   spec.bindir        = "exe"
   spec.executables   = spec.files.grep(%r{^exe/}) {|f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "activerecord", ">= 5.0.0"
+  spec.add_dependency "activerecord", ">= 6.0.0"
   spec.add_dependency "thor"
 
   spec.add_development_dependency "bundler"
