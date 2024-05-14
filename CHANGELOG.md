@@ -1,6 +1,12 @@
 # Change Log
 ## Unreleased
-[Full Changelog](https://github.com/sue445/index_shotgun/compare/v1.0.2...master)
+[Full Changelog](https://github.com/sue445/index_shotgun/compare/v1.0.3...master)
+
+## [v1.0.2](https://github.com/sue445/index_shotgun/tree/v1.0.3) (2024/05/14)
+[Full Changelog](https://github.com/sue445/index_shotgun/compare/v1.0.2...v1.0.3)
+
+* Fixed false positives when there are multiple unique indexes on a single table
+  * https://github.com/sue445/index_shotgun/pull/140
 
 ## [v1.0.2](https://github.com/sue445/index_shotgun/tree/v1.0.2) (2023/12/28)
 [Full Changelog](https://github.com/sue445/index_shotgun/compare/v1.0.1...v1.0.2)
