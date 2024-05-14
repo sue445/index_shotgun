@@ -1,3 +1,3 @@
 module IndexShotgun
-  VERSION = "1.0.3".freeze
+  VERSION = "2.0.0".freeze
 end
