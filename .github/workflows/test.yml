@@ -37,6 +37,7 @@ jobs:
           - activerecord_6_1
           - activerecord_7_0
           - activerecord_7_1
+          - activerecord_7_2
         database:
           - sqlite3
           - mysql
@@ -53,9 +54,21 @@ jobs:
           - ruby:    "2.6"
             gemfile: activerecord_7_1
 
-          # TODO: latest activerecord-oracle_enhanced-adapter doesn't support activerecord 7.1
+          # Rails 7.2+ requires Ruby 3.1+
+          - ruby:    "2.5"
+            gemfile: activerecord_7_2
+          - ruby:    "2.6"
+            gemfile: activerecord_7_2
+          - ruby:    "2.7"
+            gemfile: activerecord_7_2
+          - ruby:    "3.0"
+            gemfile: activerecord_7_2
+
+          # TODO: latest activerecord-oracle_enhanced-adapter doesn't support activerecord 7.1+
           - database: oracle
             gemfile: activerecord_7_1
+          - database: oracle
+            gemfile: activerecord_7_2
 
     env:
       BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}.gemfile
