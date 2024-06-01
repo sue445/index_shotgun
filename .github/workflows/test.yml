@@ -48,8 +48,6 @@ jobs:
             gemfile: activerecord_7_0
           - ruby:    "2.6"
             gemfile: activerecord_7_0
-          - ruby:    "2.4"
-            gemfile: activerecord_7_1
           - ruby:    "2.5"
             gemfile: activerecord_7_1
           - ruby:    "2.6"
