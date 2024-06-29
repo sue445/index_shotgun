@@ -2,7 +2,6 @@
 [![Gem Version](https://badge.fury.io/rb/index_shotgun.svg)](http://badge.fury.io/rb/index_shotgun)
 [![Build Status](https://github.com/sue445/index_shotgun/workflows/test/badge.svg?branch=master)](https://github.com/sue445/index_shotgun/actions?query=workflow%3Atest)
 [![Code Climate](https://codeclimate.com/github/sue445/index_shotgun/badges/gpa.svg)](https://codeclimate.com/github/sue445/index_shotgun)
-[![Coverage Status](https://coveralls.io/repos/sue445/index_shotgun/badge.svg?branch=master&service=github)](https://coveralls.io/github/sue445/index_shotgun?branch=master)
 
 Duplicate index checker.
 
