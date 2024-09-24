@@ -64,9 +64,7 @@ jobs:
           - ruby:    "3.0"
             gemfile: activerecord_7_2
 
-          # TODO: latest activerecord-oracle_enhanced-adapter doesn't support activerecord 7.1+
-          - database: oracle
-            gemfile: activerecord_7_1
+          # TODO: latest activerecord-oracle_enhanced-adapter doesn't support activerecord 7.2+
           - database: oracle
             gemfile: activerecord_7_2
 
