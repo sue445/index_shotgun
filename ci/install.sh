@@ -35,7 +35,12 @@ elif [ "${DATABASE}" = "oracle" ]; then
   unzip instantclient-sdk-linux.x64-19.3.0.0.0dbru.zip
 
   sudo apt-get update
-  sudo apt-get install -y libaio1
+
+  # libaio1 is replaced to libaio1t64
+  # c.f. https://askubuntu.com/questions/1512196/libaio1-on-noble
+  # sudo apt-get install -y libaio1
+  sudo apt-get install -y libaio1t64
+  sudo ln -s /usr/lib/$(uname -m)-linux-gnu/libaio.so.1t64 /usr/lib/$(uname -m)-linux-gnu/libaio.so.1
 
   popd
 
