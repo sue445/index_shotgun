@@ -1,6 +1,6 @@
 # IndexShotgun :fire: :gun: :cop:
 [![Gem Version](https://badge.fury.io/rb/index_shotgun.svg)](http://badge.fury.io/rb/index_shotgun)
-[![Build Status](https://github.com/sue445/index_shotgun/workflows/test/badge.svg?branch=master)](https://github.com/sue445/index_shotgun/actions?query=workflow%3Atest)
+[![test](https://github.com/sue445/index_shotgun/actions/workflows/test.yml/badge.svg)](https://github.com/sue445/index_shotgun/actions/workflows/test.yml)
 [![Code Climate](https://codeclimate.com/github/sue445/index_shotgun/badges/gpa.svg)](https://codeclimate.com/github/sue445/index_shotgun)
 
 Duplicate index checker.
