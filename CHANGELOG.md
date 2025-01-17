@@ -1,6 +1,12 @@
 # Change Log
 ## Unreleased
-[Full Changelog](https://github.com/sue445/index_shotgun/compare/v2.0.0...master)
+[Full Changelog](https://github.com/sue445/index_shotgun/compare/v2.0.1...master)
+
+## [v2.0.1](https://github.com/sue445/index_shotgun/releases/tag/v2.0.1) (2025/01/18)
+[Full Changelog](https://github.com/sue445/index_shotgun/compare/v2.0.0...v2.0.1)
+
+* Fix `NameError: uninitialized constant ActiveSupport::LoggerThreadSafeLevel::Logger` when activesupport < 7.1
+  * https://github.com/sue445/index_shotgun/pull/151
 
 ## [v2.0.0](https://github.com/sue445/index_shotgun/releases/tag/v2.0.0) (2024/05/15)
 [Full Changelog](https://github.com/sue445/index_shotgun/compare/v1.0.3...v2.0.0)
