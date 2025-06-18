@@ -12,11 +12,10 @@ group :mysql do
   gem "mysql2", "~> 0.5"
 end
 
-# TODO: latest activerecord-oracle_enhanced-adapter doesn't support activerecord 7.2
-# group :oracle do
-#   gem "activerecord-oracle_enhanced-adapter", "~> 7.0.0"
-#   gem "ruby-oci8"
-# end
+group :oracle do
+  gem "activerecord-oracle_enhanced-adapter", "~> 7.2.0.rc1"
+  gem "ruby-oci8"
+end
 
 group :sqlite3 do
   # c.f. https://github.com/rails/rails/blob/v7.2.0.beta1/activerecord/lib/active_record/connection_adapters/sqlite3_adapter.rb#L14

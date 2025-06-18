@@ -80,8 +80,6 @@ jobs:
 
           # TODO: latest activerecord-oracle_enhanced-adapter doesn't support activerecord 7.2+
           - database: oracle
-            gemfile: activerecord_7_2
-          - database: oracle
             gemfile: activerecord_8_0
 
     env:
