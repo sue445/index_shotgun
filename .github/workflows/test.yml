@@ -78,10 +78,6 @@ jobs:
           - ruby:    "3.1"
             gemfile: activerecord_8_0
 
-          # TODO: latest activerecord-oracle_enhanced-adapter doesn't support activerecord 7.2+
-          - database: oracle
-            gemfile: activerecord_8_0
-
     env:
       BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}.gemfile
       DATABASE: ${{ matrix.database }}
