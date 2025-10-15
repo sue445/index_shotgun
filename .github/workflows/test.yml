@@ -40,12 +40,17 @@ jobs:
           - activerecord_7_1
           - activerecord_7_2
           - activerecord_8_0
+          - activerecord_8_1
         database:
           - sqlite3
           - mysql
           - postgresql
           - oracle
         exclude:
+          # TODO: latest activerecord-oracle_enhanced-adapter doesn't support activerecord 8.1+
+          - database: oracle
+            gemfile: activerecord_8_1
+
           # Rails 7.0+ requires Ruby 2.7+
           - ruby:    "2.5"
             gemfile: activerecord_7_0
@@ -77,6 +82,16 @@ jobs:
             gemfile: activerecord_8_0
           - ruby:    "3.1"
             gemfile: activerecord_8_0
+          - ruby:    "2.5"
+            gemfile: activerecord_8_1
+          - ruby:    "2.6"
+            gemfile: activerecord_8_1
+          - ruby:    "2.7"
+            gemfile: activerecord_8_1
+          - ruby:    "3.0"
+            gemfile: activerecord_8_1
+          - ruby:    "3.1"
+            gemfile: activerecord_8_1
 
     env:
       BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}.gemfile
