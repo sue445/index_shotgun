@@ -1,0 +1,25 @@
+source "https://rubygems.org"
+
+gem "activerecord", "~> 8.1.0.rc1"
+
+group :postgresql do
+  # c.f. https://github.com/rails/rails/blob/v8.1.0.rc1/activerecord/lib/active_record/connection_adapters/postgresql_adapter.rb#L3-L4
+  gem "pg", "~> 1.1"
+end
+
+group :mysql do
+  # c.f. https://github.com/rails/rails/blob/v8.1.0.rc1/activerecord/lib/active_record/connection_adapters/mysql2_adapter.rb#L6
+  gem "mysql2", "~> 0.5"
+end
+
+# group :oracle do
+#   gem "activerecord-oracle_enhanced-adapter", "~> 8.0.0.rc1"
+#   gem "ruby-oci8"
+# end
+
+group :sqlite3 do
+  # c.f. https://github.com/rails/rails/blob/v8.1.0.rc1/activerecord/lib/active_record/connection_adapters/sqlite3_adapter.rb#L14
+  gem "sqlite3", ">= 2.1"
+end
+
+gemspec path: "../"
