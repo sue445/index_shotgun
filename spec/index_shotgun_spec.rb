@@ -1,5 +1,5 @@
 describe IndexShotgun do
   it "has a version number" do
-    expect(IndexShotgun::VERSION).not_to be nil
+    expect(IndexShotgun::VERSION).not_to be_nil
   end
 end
