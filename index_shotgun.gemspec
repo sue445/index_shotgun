@@ -35,7 +35,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake_shared_context", "0.2.2"
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "rspec-its"
-  spec.add_development_dependency "rubocop", "1.28.2"
+  spec.add_development_dependency "rubocop", "1.81.7"
   spec.add_development_dependency "rubocop_auto_corrector", "< 0.4.4" # FIXME: rubocop --autocorrect doesn't available on rubocop 1.28.2
   spec.add_development_dependency "yard"
 end
