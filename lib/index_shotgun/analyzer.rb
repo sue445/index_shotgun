@@ -14,7 +14,7 @@ module IndexShotgun
       end
     end
 
-    class << self
+    class << self # rubocop:disable Metrics/ClassLength
       using IndexShotgun::ArrayStartWith
 
       # Search duplicate index
