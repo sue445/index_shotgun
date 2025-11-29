@@ -25,8 +25,6 @@ jobs:
 
       matrix:
         ruby:
-          - "2.5"
-          - "2.6"
           - "2.7"
           - "3.0"
           - "3.1"
@@ -48,41 +46,19 @@ jobs:
           - database: oracle
             gemfile: activerecord_8_1
 
-          # Rails 7.0+ requires Ruby 2.7+
-          - ruby:    "2.5"
-            gemfile: activerecord_7_0
-          - ruby:    "2.6"
-            gemfile: activerecord_7_0
-          - ruby:    "2.5"
-            gemfile: activerecord_7_1
-          - ruby:    "2.6"
-            gemfile: activerecord_7_1
-
           # Rails 7.2+ requires Ruby 3.1+
-          - ruby:    "2.5"
-            gemfile: activerecord_7_2
-          - ruby:    "2.6"
-            gemfile: activerecord_7_2
           - ruby:    "2.7"
             gemfile: activerecord_7_2
           - ruby:    "3.0"
             gemfile: activerecord_7_2
 
           # Rails 8.0+ requires Ruby 3.2+
-          - ruby:    "2.5"
-            gemfile: activerecord_8_0
-          - ruby:    "2.6"
-            gemfile: activerecord_8_0
           - ruby:    "2.7"
             gemfile: activerecord_8_0
           - ruby:    "3.0"
             gemfile: activerecord_8_0
           - ruby:    "3.1"
             gemfile: activerecord_8_0
-          - ruby:    "2.5"
-            gemfile: activerecord_8_1
-          - ruby:    "2.6"
-            gemfile: activerecord_8_1
           - ruby:    "2.7"
             gemfile: activerecord_8_1
           - ruby:    "3.0"
