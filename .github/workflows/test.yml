@@ -161,7 +161,6 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      RUBY_VERSION: 2.5
       BUNDLE_WITHOUT: mysql postgresql sqlite3 oracle
 
     steps:
@@ -169,16 +168,16 @@ jobs:
 
       - uses: ruby/setup-ruby@8aeb6ff8030dd539317f8e1769a044873b56ea71 # v1.268.0
         with:
-          ruby-version: ${{ env.RUBY_VERSION }}
+          ruby-version: ruby
 
       - name: Cache vendor/bundle
         uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         id: cache_gem_rubocop
         with:
           path: vendor/bundle
-          key: v1-gem-rubocop-${{ runner.os }}-${{ env.RUBY_VERSION }}-${{ github.sha }}
+          key: v1-gem-rubocop-${{ runner.os }}-${{ github.sha }}
           restore-keys: |
-            v1-gem-rubocop-${{ runner.os }}-${{ env.RUBY_VERSION }}-
+            v1-gem-rubocop-${{ runner.os }}-
 
       - name: Install
         run: |
