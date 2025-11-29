@@ -16,6 +16,10 @@ on:
   schedule:
     - cron: "0 20 * * 5" # JST 5:00 (Sat)
 
+concurrency:
+  group: ci-${{ github.ref }}-${{ github.workflow }}
+  cancel-in-progress: true
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -25,8 +29,6 @@ jobs:
 
       matrix:
         ruby:
-          - "2.5"
-          - "2.6"
           - "2.7"
           - "3.0"
           - "3.1"
@@ -34,9 +36,6 @@ jobs:
           - "3.3"
           - "3.4"
         gemfile:
-          - activerecord_6_0
-          - activerecord_6_1
-          - activerecord_7_0
           - activerecord_7_1
           - activerecord_7_2
           - activerecord_8_0
@@ -51,41 +50,19 @@ jobs:
           - database: oracle
             gemfile: activerecord_8_1
 
-          # Rails 7.0+ requires Ruby 2.7+
-          - ruby:    "2.5"
-            gemfile: activerecord_7_0
-          - ruby:    "2.6"
-            gemfile: activerecord_7_0
-          - ruby:    "2.5"
-            gemfile: activerecord_7_1
-          - ruby:    "2.6"
-            gemfile: activerecord_7_1
-
           # Rails 7.2+ requires Ruby 3.1+
-          - ruby:    "2.5"
-            gemfile: activerecord_7_2
-          - ruby:    "2.6"
-            gemfile: activerecord_7_2
           - ruby:    "2.7"
             gemfile: activerecord_7_2
           - ruby:    "3.0"
             gemfile: activerecord_7_2
 
           # Rails 8.0+ requires Ruby 3.2+
-          - ruby:    "2.5"
-            gemfile: activerecord_8_0
-          - ruby:    "2.6"
-            gemfile: activerecord_8_0
           - ruby:    "2.7"
             gemfile: activerecord_8_0
           - ruby:    "3.0"
             gemfile: activerecord_8_0
           - ruby:    "3.1"
             gemfile: activerecord_8_0
-          - ruby:    "2.5"
-            gemfile: activerecord_8_1
-          - ruby:    "2.6"
-            gemfile: activerecord_8_1
           - ruby:    "2.7"
             gemfile: activerecord_8_1
           - ruby:    "3.0"
@@ -188,7 +165,6 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      RUBY_VERSION: 2.5
       BUNDLE_WITHOUT: mysql postgresql sqlite3 oracle
 
     steps:
@@ -196,16 +172,16 @@ jobs:
 
       - uses: ruby/setup-ruby@8aeb6ff8030dd539317f8e1769a044873b56ea71 # v1.268.0
         with:
-          ruby-version: ${{ env.RUBY_VERSION }}
+          ruby-version: ruby
 
       - name: Cache vendor/bundle
         uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         id: cache_gem_rubocop
         with:
           path: vendor/bundle
-          key: v1-gem-rubocop-${{ runner.os }}-${{ env.RUBY_VERSION }}-${{ github.sha }}
+          key: v1-gem-rubocop-${{ runner.os }}-${{ github.sha }}
           restore-keys: |
-            v1-gem-rubocop-${{ runner.os }}-${{ env.RUBY_VERSION }}-
+            v1-gem-rubocop-${{ runner.os }}-
 
       - name: Install
         run: |
