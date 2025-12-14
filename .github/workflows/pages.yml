@@ -16,3 +16,5 @@ jobs:
     uses: sue445/workflows/.github/workflows/pages-yard.yml@main
     secrets:
       slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+    with:
+      bundle-without: mysql postgresql sqlite3 oracle
