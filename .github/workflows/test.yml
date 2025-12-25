@@ -111,7 +111,7 @@ jobs:
           ruby-version: ${{ matrix.ruby }}
 
       - name: Cache vendor/bundle
-        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
         id: cache_gem
         with:
           path: vendor/bundle
@@ -175,7 +175,7 @@ jobs:
           ruby-version: ruby
 
       - name: Cache vendor/bundle
-        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
         id: cache_gem_rubocop
         with:
           path: vendor/bundle
