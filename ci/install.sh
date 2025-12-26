@@ -55,4 +55,4 @@ else
 fi
 
 bundle config set --local path "vendor/bundle/"
-bundle update --jobs $(nproc) --retry 3
+bundle update --all --jobs $(nproc) --retry 3
