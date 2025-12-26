@@ -126,13 +126,6 @@ jobs:
           set -xe
           ./ci/install.sh
 
-      - name: Setup Code Climate Test Reporter
-        uses: aktions/codeclimate-test-reporter@7634aa9ac7883182f583f15ff7b6ff519939dd0a # v1.2.0
-        with:
-          codeclimate-test-reporter-id: ${{ secrets.CC_TEST_REPORTER_ID }}
-          command: before-build
-        continue-on-error: true
-
       # c.f. https://github.com/actions/virtual-environments/issues/4732#issuecomment-992614476
       - run: sudo systemctl start mysql
 
@@ -144,14 +137,6 @@ jobs:
           MYSQL_PORT: ${{ job.services.mysql.ports['3306'] }}
           POSTGRESQL_PORT: ${{ job.services.postgresql.ports['5432'] }}
           ORACLE_PORT: ${{ job.services.oracle.ports['1521'] }}
-
-      - name: Teardown Code Climate Test Reporter
-        uses: aktions/codeclimate-test-reporter@7634aa9ac7883182f583f15ff7b6ff519939dd0a # v1.2.0
-        with:
-          codeclimate-test-reporter-id: ${{ secrets.CC_TEST_REPORTER_ID }}
-          command: after-build
-        if: always()
-        continue-on-error: true
 
       - name: Slack Notification (not success)
         uses: act10ns/slack@cfcc30955fe9377f4f55e1079e5419ee1014269f # v2
