@@ -47,10 +47,6 @@ jobs:
           - postgresql
           - oracle
         exclude:
-          # TODO: latest activerecord-oracle_enhanced-adapter doesn't support activerecord 8.1+
-          - database: oracle
-            gemfile: activerecord_8_1
-
           # Rails 7.2+ requires Ruby 3.1+
           - ruby:    "2.7"
             gemfile: activerecord_7_2
