@@ -19,3 +19,5 @@ end
 group :sqlite3 do
   gem "sqlite3"
 end
+
+eval_gemfile "./gemfiles/common.gemfile"
