@@ -1,6 +1,12 @@
 # Change Log
 ## Unreleased
-[Full Changelog](https://github.com/sue445/index_shotgun/compare/v3.0.0...master)
+[Full Changelog](https://github.com/sue445/index_shotgun/compare/v3.0.1...master)
+
+## [v3.0.1](https://github.com/sue445/index_shotgun/releases/tag/v3.0.1) (2026/08/23)
+[Full Changelog](https://github.com/sue445/index_shotgun/compare/v3.0.0...v3.0.1)
+
+* Migrate release_gem workflow to sue445/workflows (Also testing the gem release)
+  * https://github.com/sue445/index_shotgun/pull/206
 
 ## [v3.0.0](https://github.com/sue445/index_shotgun/releases/tag/v3.0.0) (2025/11/29)
 [Full Changelog](https://github.com/sue445/index_shotgun/compare/v2.0.1...v3.0.0)
