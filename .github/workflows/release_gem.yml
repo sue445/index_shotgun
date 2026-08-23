@@ -5,40 +5,11 @@ on:
 
 jobs:
   release:
-    if: github.repository == 'sue445/index_shotgun'
-    runs-on: ubuntu-latest
-
-    environment:
-      name: rubygems.org
-      url: https://rubygems.org/gems/index_shotgun
-
+    uses: sue445/workflows/.github/workflows/release_gem.yml@main
+    with:
+      repo-name:      sue445/index_shotgun
+      gem-name:       index_shotgun
+      bundle-without: mysql postgresql sqlite3 oracle
     permissions:
       contents: write
       id-token: write
-
-    env:
-      BUNDLE_WITHOUT: mysql postgresql sqlite3 oracle
-
-    steps:
-      - name: Harden Runner
-        uses: step-security/harden-runner@bf7454d06d71f1098171f2acdf0cd4708d7b5920 # v2.20.0
-        with:
-          egress-policy: audit
-
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b # v1.321.0
-        with:
-          bundler-cache: true
-          ruby-version: ruby
-
-      - name: Publish to RubyGems
-        uses: rubygems/release-gem@052cc82692552de3ef2b81fd670e41d13cba8092 # v1.4.0
-
-      - name: Create GitHub release
-        run: |
-          tag_name="$(git describe --tags --abbrev=0)"
-          gh release create "${tag_name}" --verify-tag --generate-notes
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
