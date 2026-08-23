@@ -9,7 +9,7 @@ jobs:
     with:
       repo-name:      sue445/index_shotgun
       gem-name:       index_shotgun
-      bundle-without: mysql postgresql sqlite3 oracle
+      bundle-without: mysql:postgresql:sqlite3:oracle
     permissions:
       contents: write
       id-token: write
